@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import CtaButton from "../components/CtaButton";
 import FadeIn from "../components/FadeIn";
-import { faqs, services, steps } from "../data/services";
+import { faqs, lpServices, services, steps } from "../data/services";
 import { LINE_URL, SITE_NAME } from "../constants";
 import { usePageMeta } from "../hooks/usePageMeta";
+
+const otherServices = services.filter((s) => !s.hasLp);
 
 const pains = [
   "社長が事務作業までやっている",
@@ -14,56 +16,6 @@ const pains = [
   "固定費を増やさず、業務を外に出したい",
 ];
 
-const team = [
-  {
-    n: "3,000+",
-    title: "実務経験者からアサイン",
-    body: "3,000名以上の子育て世帯ワーカーが在籍。必要な業務・期間に合わせて配置します。",
-    image:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    n: "実務経験",
-    title: "大手企業などの経歴",
-    body: "大手企業での勤務経験など、選んだ領域の実務があるアシスタントが入ります。",
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    n: "15分〜",
-    title: "まずは概略から",
-    body: "いきなり契約ではありません。LINEと、短いオンラインで現状を整理します。",
-    image:
-      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80",
-  },
-];
-
-const cases = [
-  {
-    who: "IT企業・従業員50名規模",
-    n: "週8h→2h",
-    title: "代表の経理兼務を減らす",
-    body: "請求・入金・経費の定型を外出し、最終確認だけ社内に残す使い方です。",
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    who: "建設業・従業員30名規模",
-    n: "40h→16h",
-    title: "月初の経理を薄くする",
-    body: "請求確認と振込準備を代行し、繁忙期の残業目安も月60時間から15時間へ寄せます。",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    who: "小規模・従業員8名規模",
-    n: "採用 0",
-    title: "退職後も、処理を止めない",
-    body: "棚卸しとマニュアルのあと定型を代行し、採用せずに翌月から回します。",
-    image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=80",
-  },
-];
 
 export default function HomePage() {
   const reduce = useReducedMotion();
@@ -96,7 +48,7 @@ export default function HomePage() {
               業務を外に出しませんか？
             </h1>
             <p className="hero__lead">
-              バックオフィスを中心に、採用・マーケティング・業務管理まで。必要な業務だけを、必要な分だけ外部化できます。いきなり契約ではありません。
+              経理・総務・人事・営業事務などのバックオフィス業務を代行し、属人化や繁忙期の揺れにも耐えられる体制をつくります。いきなり契約ではありません。
             </p>
             <div className="cta-row">
               <CtaButton className="btn--large btn--pulse" />
@@ -136,7 +88,7 @@ export default function HomePage() {
             必要な期間だけ。
           </h2>
           <p className="section__lead">
-            コネクトボックスなら、バックオフィスを中心に外部化できます。まとめて契約する必要はありません。関心のある領域から始められます。
+            請求・経費・営業事務など、繰り返し発生する業務から外に出せます。採用の固定費をかけず、必要な時期・時間だけ体制を厚くできます。
           </p>
         </FadeIn>
       </section>
@@ -145,86 +97,47 @@ export default function HomePage() {
         <FadeIn className="section__inner">
           <p className="section__label">Services</p>
           <h2 className="section__title" id="services-title">
-            {services.length}つのサービス
+            まずはここから
           </h2>
           <p className="section__lead">
-            まずはバックオフィスから、という使い方が多いです。ほかの領域は、必要になったタイミングで足せます。
+            バックオフィスの代行から始める企業様が多いです。出張管理の自動化もご相談いただけます。
           </p>
-          <div className="catalog-grid">
-            {services.map((s) =>
-              s.hasLp ? (
-                <Link
-                  className="catalog-card catalog-card--lp"
-                  to={s.path}
-                  key={s.slug}
-                >
-                  <img src={s.heroImage} alt="" />
-                  <p className="catalog-card__en">{s.en}</p>
-                  <h3>{s.name}</h3>
-                  <p>{s.tagline}</p>
-                  <span className="catalog-card__more">案内を見る</span>
-                </Link>
-              ) : (
-                <article className="catalog-card catalog-card--static" key={s.slug}>
-                  <img src={s.heroImage} alt="" />
-                  <p className="catalog-card__en">{s.en}</p>
-                  <h3>{s.name}</h3>
-                  <p>{s.tagline}</p>
-                </article>
-              ),
-            )}
+          <div className="catalog-grid catalog-grid--main">
+            {lpServices.map((s) => (
+              <Link
+                className="catalog-card catalog-card--lp"
+                to={s.path}
+                key={s.slug}
+              >
+                <img src={s.heroImage} alt="" />
+                <p className="catalog-card__en">{s.en}</p>
+                <h3>{s.name}</h3>
+                <p>{s.tagline}</p>
+                <span className="catalog-card__more">案内を見る</span>
+              </Link>
+            ))}
           </div>
         </FadeIn>
       </section>
 
-      <section className="section section--muted" aria-labelledby="team-title">
+      <section className="section section--muted" id="other-services" aria-labelledby="other-services-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Team</p>
-          <h2 className="section__title" id="team-title">
-            3,000名以上の実務経験者から、
-            <br />
-            必要な人材をアサイン
+          <p className="section__label">Other Services</p>
+          <h2 className="section__title" id="other-services-title">
+            その他の支援
           </h2>
           <p className="section__lead">
-            子育て世帯のワーカーが在籍しています。人数ではなく、御社の業務に合う人を配置できることが強みです。
+            必要になったタイミングで足せます。バックオフィスと合わせてご相談いただくこともできます。
           </p>
-          <ul className="home-team">
-            {team.map((item) => (
-              <li key={item.title}>
-                <img src={item.image} alt="" />
-                <div>
-                  <p className="home-team__n">{item.n}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </div>
-              </li>
+          <div className="catalog-grid catalog-grid--sub">
+            {otherServices.map((s) => (
+              <article className="catalog-card catalog-card--static" key={s.slug}>
+                <p className="catalog-card__en">{s.en}</p>
+                <h3>{s.name}</h3>
+                <p>{s.tagline}</p>
+              </article>
             ))}
-          </ul>
-        </FadeIn>
-      </section>
-
-      <section className="section" aria-labelledby="cases-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">Cases</p>
-          <h2 className="section__title" id="cases-title">
-            よくある使い方
-          </h2>
-          <p className="section__lead">
-            数字はよくある変化のイメージです。実在顧客の成果保証ではありません。現状を伺ったうえで、御社の範囲でご提案します。
-          </p>
-          <ul className="home-cases">
-            {cases.map((item) => (
-              <li key={item.title}>
-                <img src={item.image} alt="" />
-                <div>
-                  <p className="home-cases__who">{item.who}</p>
-                  <p className="home-team__n">{item.n}</p>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          </div>
         </FadeIn>
       </section>
 

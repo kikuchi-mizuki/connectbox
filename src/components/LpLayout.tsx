@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { COMPANY_NAME, SITE_NAME } from "../constants";
+import { COMPANY_NAME } from "../constants";
 import { getService } from "../data/services";
 import CtaButton from "./CtaButton";
 import "../lp.css";
@@ -46,7 +46,7 @@ export default function LpLayout() {
           <Link className="lp-header__home" to="/">
             <img src="/tconnect-logo.png" alt="" width={40} height={40} />
             <span>
-              <small>{SITE_NAME}</small>
+              <small>{COMPANY_NAME}</small>
               <strong>{service?.name ?? "案内"}</strong>
             </span>
           </Link>
@@ -72,7 +72,7 @@ export default function LpLayout() {
 
       <footer className="lp-footer">
         <div className="lp-footer__inner">
-          <Link to="/">{SITE_NAME}（サービスサイト）</Link>
+          <Link to="/">{COMPANY_NAME}（サービスサイト）</Link>
           <Link to="/company">会社情報</Link>
           <span>{COMPANY_NAME}</span>
         </div>
