@@ -3,6 +3,10 @@ import HpLayout from "./components/HpLayout";
 import LpLayout from "./components/LpLayout";
 import CompanyPage from "./pages/CompanyPage";
 import HomePage from "./pages/HomePage";
+import ConnectBoxPage from "./pages/business/ConnectBoxPage";
+import DetectivePage from "./pages/business/DetectivePage";
+import JewelryPage from "./pages/business/JewelryPage";
+import IncubationPage from "./pages/business/IncubationPage";
 import LpPage from "./pages/LpPage";
 
 function LegacyServiceRedirect() {
@@ -16,6 +20,10 @@ export default function App() {
       <Routes>
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/business/connectbox" element={<ConnectBoxPage />} />
+          <Route path="/business/detective" element={<DetectivePage />} />
+          <Route path="/business/jewelry" element={<JewelryPage />} />
+          <Route path="/business/incubation" element={<IncubationPage />} />
           <Route path="/company" element={<CompanyPage />} />
         </Route>
         <Route path="/lp/:slug" element={<LpLayout />}>

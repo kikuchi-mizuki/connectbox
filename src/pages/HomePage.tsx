@@ -1,204 +1,170 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import CtaButton from "../components/CtaButton";
 import FadeIn from "../components/FadeIn";
-import { faqs, lpServices, services, steps } from "../data/services";
-import { LINE_URL, SITE_NAME } from "../constants";
+import { businesses } from "../data/businesses";
+import { COMPANY_NAME } from "../constants";
 import { usePageMeta } from "../hooks/usePageMeta";
-
-const otherServices = services.filter((s) => !s.hasLp);
-
-const pains = [
-  "社長が事務作業までやっている",
-  "経理・総務に時間が取られている",
-  "採用担当が足りない",
-  "人を採用するほどではないが、業務量が多い",
-  "固定費を増やさず、業務を外に出したい",
-];
-
 
 export default function HomePage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: SITE_NAME,
+    title: "T-connect",
     description:
-      "人を増やす前に、業務を外に出す。バックオフィスを中心に、必要な業務だけを必要な分だけ外部化。まずは15分、LINEで相談。",
+      "株式会社T-connect。人と人との縁を紡ぐ企業。BPO・コンサルティング、探偵、宝飾、起業家育成の4事業を展開。",
   });
 
   return (
-    <main>
-      <section className="hero" id="page-hero" aria-label="メインビジュアル">
-        <div className="hero__media" aria-hidden="true">
-          <img
-            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80"
-            alt=""
+    <main className="top-page">
+      <section className="top-hero" id="page-hero" aria-label="メインビジュアル">
+        {/* 稲穂の装飾 */}
+        <svg
+          className="top-hero__grain"
+          viewBox="0 0 600 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M520 -20 Q480 120 380 280 Q280 440 200 580 Q140 680 80 820 Q60 870 30 920"
+            stroke="#d6c8a0"
+            strokeWidth="2.5"
+            fill="none"
+            opacity="0.5"
           />
-          <div className="hero__shade" />
-        </div>
-        <div className="hero__content">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="hero__brand">{SITE_NAME}</p>
-            <h1 className="hero__title">
-              人を増やす前に、
-              <br />
-              業務を外に出しませんか？
-            </h1>
-            <p className="hero__lead">
-              経理・総務・人事・営業事務などのバックオフィス業務を代行し、属人化や繁忙期の揺れにも耐えられる体制をつくります。いきなり契約ではありません。
-            </p>
-            <div className="cta-row">
-              <CtaButton className="btn--large btn--pulse" />
-            </div>
-          </motion.div>
-        </div>
+          <path
+            d="M540 -10 Q510 100 430 240 Q350 380 280 520 Q220 620 160 740 Q130 800 100 900"
+            stroke="#d6c8a0"
+            strokeWidth="2"
+            fill="none"
+            opacity="0.35"
+          />
+          {/* 稲穂の粒 */}
+          {[
+            [400, 160], [420, 140], [380, 180], [410, 120], [440, 110],
+            [360, 200], [390, 100], [430, 90], [350, 220], [370, 80],
+            [340, 240], [450, 80], [460, 100], [380, 70], [330, 260],
+            [320, 280], [470, 120], [390, 60], [360, 60], [440, 70],
+          ].map(([cx, cy], i) => (
+            <ellipse
+              key={i}
+              cx={cx}
+              cy={cy}
+              rx="6"
+              ry="3.5"
+              fill="#d6c8a0"
+              opacity={0.35 + (i % 3) * 0.12}
+              transform={`rotate(${-30 + (i % 5) * 12} ${cx} ${cy})`}
+            />
+          ))}
+        </svg>
+        {/* 下部の装飾曲線 */}
+        <svg
+          className="top-hero__curve"
+          viewBox="0 0 800 200"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M-50 180 Q150 60 400 100 Q550 120 700 50 Q780 20 850 30"
+            stroke="#d6c8a0"
+            strokeWidth="2"
+            fill="none"
+            opacity="0.45"
+          />
+          <path
+            d="M-50 200 Q200 90 420 130 Q580 150 750 70 Q820 40 880 50"
+            stroke="#d6c8a0"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.3"
+          />
+        </svg>
+
+        <motion.div
+          className="top-hero__inner"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          <h1 className="top-hero__title">
+            人と人との縁を紡ぐ企業
+          </h1>
+          <div className="top-hero__logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="72" height="48">
+              <path d="M5 30 L15 10 L25 30" stroke="#4056a1" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <path d="M25 30 L35 10 L45 30" stroke="#e8952f" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+          </div>
+          <p className="top-hero__brand">T-connect</p>
+        </motion.div>
       </section>
 
-      <section className="section" aria-labelledby="pain-title">
+      <section className="section top-biz" id="business" aria-labelledby="biz-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Challenges</p>
-          <h2 className="section__title" id="pain-title">
-            こんなお悩み、ありませんか
+          <p className="section__label">Business</p>
+          <h2 className="section__title" id="biz-title">
+            事業紹介
           </h2>
-          <p className="section__lead">
-            人を足すほどではないが、社内の時間が事務に取られている。そんな相談から始まっています。
-          </p>
-          <ul className="pain-list">
-            {pains.map((item, i) => (
-              <li key={item}>
-                <span className="pain-list__num">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </FadeIn>
-      </section>
-
-      <section className="section section--ink" aria-labelledby="promise-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">Promise</p>
-          <h2 className="section__title" id="promise-title">
-            必要な業務だけ、
-            <br />
-            必要な期間だけ。
-          </h2>
-          <p className="section__lead">
-            請求・経費・営業事務など、繰り返し発生する業務から外に出せます。採用の固定費をかけず、必要な時期・時間だけ体制を厚くできます。
-          </p>
-        </FadeIn>
-      </section>
-
-      <section className="section" id="services" aria-labelledby="services-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">Services</p>
-          <h2 className="section__title" id="services-title">
-            まずはここから
-          </h2>
-          <p className="section__lead">
-            バックオフィスの代行から始める企業様が多いです。出張管理の自動化もご相談いただけます。
-          </p>
-          <div className="catalog-grid catalog-grid--main">
-            {lpServices.map((s) => (
-              <Link
-                className="catalog-card catalog-card--lp"
-                to={s.path}
-                key={s.slug}
-              >
-                <img src={s.heroImage} alt="" />
-                <p className="catalog-card__en">{s.en}</p>
-                <h3>{s.name}</h3>
-                <p>{s.tagline}</p>
-                <span className="catalog-card__more">案内を見る</span>
+          <div className="biz-grid">
+            {businesses.map((b) => (
+              <Link className="biz-card" to={b.path} key={b.slug}>
+                <img src={b.heroImage} alt="" />
+                <div className="biz-card__body">
+                  <p className="biz-card__en">{b.en}</p>
+                  <h3>{b.name}</h3>
+                  <p>{b.tagline}</p>
+                  {b.status === "preparing" && (
+                    <span className="biz-card__badge">準備中</span>
+                  )}
+                  <span className="biz-card__more">詳しく見る</span>
+                </div>
               </Link>
             ))}
           </div>
         </FadeIn>
       </section>
 
-      <section className="section section--muted" id="other-services" aria-labelledby="other-services-title">
+      <section className="section top-stance" aria-labelledby="stance-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Other Services</p>
-          <h2 className="section__title" id="other-services-title">
-            その他の支援
+          <p className="section__label">Stance</p>
+          <h2 className="section__title" id="stance-title">
+            目先ではなく、未来を選べ
           </h2>
           <p className="section__lead">
-            必要になったタイミングで足せます。バックオフィスと合わせてご相談いただくこともできます。
+            日々の判断で、目先の利益よりも長期的な信頼を優先します。その積み重ねが、選ばれ続ける関係をつくります。
           </p>
-          <div className="catalog-grid catalog-grid--sub">
-            {otherServices.map((s) => (
-              <article className="catalog-card catalog-card--static" key={s.slug}>
-                <p className="catalog-card__en">{s.en}</p>
-                <h3>{s.name}</h3>
-                <p>{s.tagline}</p>
-              </article>
-            ))}
-          </div>
         </FadeIn>
       </section>
 
-      <section className="section approach-note" aria-labelledby="flow-title">
+      <section className="section" aria-labelledby="company-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Process</p>
-          <h2 className="section__title" id="flow-title">
-            ご相談から開始までの流れ
+          <p className="section__label">Company</p>
+          <h2 className="section__title" id="company-title">
+            会社概要
           </h2>
-          <p className="section__lead">
-            いきなり契約ではありません。まずはLINEでの現状共有から。オンラインは15分程度です。
-          </p>
-          <ol className="flow">
-            {steps.map((s, i) => (
-              <li className="flow-step" key={s.title}>
-                <span className="flow-step__dot">{i + 1}</span>
-                <div>
-                  <h3>{s.title}</h3>
-                  <p>{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </FadeIn>
-      </section>
-
-      <section className="section section--muted" aria-labelledby="faq-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">FAQ</p>
-          <h2 className="section__title" id="faq-title">
-            よくあるご質問
-          </h2>
-          <div className="faq">
-            {faqs.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
-        <FadeIn className="final-cta__inner">
-          <h2 id="cta-title">
-            まずは15分、
-            <br />
-            LINEでお聞かせください
-          </h2>
-          <p>
-            どの領域からがよいか分からなくても構いません。公式アカウントを友だち追加のうえ、ご状況を簡単にお送りください。
-          </p>
-          <div className="cta-row">
-            <CtaButton className="btn--large btn--pulse" />
-          </div>
-          <p className="mail-hint">
-            友だち追加：{" "}
-            <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-              lin.ee/RiVp6pb
-            </a>
+          <dl className="company-dl company-dl--compact">
+            <div>
+              <dt>商号</dt>
+              <dd>{COMPANY_NAME}</dd>
+            </div>
+            <div>
+              <dt>代表者</dt>
+              <dd>代表取締役　田中 辰弥</dd>
+            </div>
+            <div>
+              <dt>所在地</dt>
+              <dd>東京都新宿区西新宿３丁目１−３ MITSUWAビル１０階</dd>
+            </div>
+            <div>
+              <dt>事業内容</dt>
+              <dd>
+                BPO・コンサルティング（Connect Box）、探偵事業、宝飾事業、起業家育成事業
+              </dd>
+            </div>
+          </dl>
+          <p className="section__more-link">
+            <Link to="/company">会社情報の詳細を見る →</Link>
           </p>
         </FadeIn>
       </section>

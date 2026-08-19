@@ -1,14 +1,13 @@
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import CtaButton from "../components/CtaButton";
 import FadeIn from "../components/FadeIn";
-import { LINE_URL } from "../constants";
 import { company } from "../data/company";
+import { businesses } from "../data/businesses";
 import { usePageMeta } from "../hooks/usePageMeta";
 
 const overview = [
   { label: "商号", value: company.legalName },
   { label: "英文名", value: company.englishName },
-  { label: "サービス名", value: company.serviceName },
   {
     label: "代表者",
     value: `${company.representativeTitle}　${company.representative}`,
@@ -23,8 +22,8 @@ const overview = [
 export default function CompanyPage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "会社情報",
-    description: `${company.serviceName}は、${company.legalName}が運営するサービスです。`,
+    title: "会社情報｜T-connect",
+    description: `${company.legalName}の会社情報。BPO・コンサルティング、探偵、宝飾、起業家育成の4事業を展開。`,
   });
 
   return (
@@ -46,7 +45,7 @@ export default function CompanyPage() {
             <p className="hero__brand">Company</p>
             <h1 className="hero__title">会社情報</h1>
             <p className="hero__lead">
-              {company.serviceName}の運営会社、{company.legalName}の概要です。
+              {company.legalName}の概要です。
             </p>
           </motion.div>
         </div>
@@ -69,6 +68,27 @@ export default function CompanyPage() {
         </FadeIn>
       </section>
 
+      <section className="section section--muted" aria-labelledby="biz-title">
+        <FadeIn className="section__inner">
+          <p className="section__label">Business</p>
+          <h2 className="section__title" id="biz-title">
+            事業一覧
+          </h2>
+          <div className="biz-detail-grid">
+            {businesses.map((b) => (
+              <Link to={b.path} key={b.slug} className="biz-detail-card biz-detail-card--link">
+                <p className="biz-detail-card__en">{b.en}</p>
+                <h3>{b.name}</h3>
+                <p>{b.tagline}</p>
+                {b.status === "preparing" && (
+                  <span className="biz-card__badge">準備中</span>
+                )}
+              </Link>
+            ))}
+          </div>
+        </FadeIn>
+      </section>
+
       <section className="section section--ink" aria-labelledby="value-title">
         <FadeIn className="section__inner prose">
           <p className="section__label">Stance</p>
@@ -80,28 +100,6 @@ export default function CompanyPage() {
           </p>
           <p>
             目先の利益よりも長期的な信頼を優先します。相談の段階で、今やらなくてよい範囲もお伝えします。その積み重ねが、選ばれ続ける関係をつくります。
-          </p>
-        </FadeIn>
-      </section>
-
-      <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
-        <FadeIn className="final-cta__inner">
-          <h2 id="cta-title">
-            ご相談は、
-            <br />
-            LINEからどうぞ
-          </h2>
-          <p>
-            公式アカウントを友だち追加のうえ、ご状況を簡単にお送りください。
-          </p>
-          <div className="cta-row">
-            <CtaButton className="btn--large btn--pulse" />
-          </div>
-          <p className="mail-hint">
-            友だち追加：{" "}
-            <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-              lin.ee/RiVp6pb
-            </a>
           </p>
         </FadeIn>
       </section>

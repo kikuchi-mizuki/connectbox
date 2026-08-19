@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { COMPANY_NAME, LINE_URL, SITE_NAME } from "../constants";
-import { lpServices } from "../data/services";
-import CtaButton from "./CtaButton";
+import { COMPANY_NAME } from "../constants";
+import { businesses } from "../data/businesses";
 
 export default function HpLayout() {
   const { pathname } = useLocation();
   const [solid, setSolid] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showStickyCta, setShowStickyCta] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,27 +14,11 @@ export default function HpLayout() {
   }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => {
-      setSolid(window.scrollY > 24);
-      const hero = document.getElementById("page-hero");
-      const finalCta = document.getElementById("final-cta");
-      if (!hero || !finalCta) {
-        setShowStickyCta(false);
-        return;
-      }
-      const pastHero = hero.getBoundingClientRect().bottom < 64;
-      const finalVisible =
-        finalCta.getBoundingClientRect().top < window.innerHeight * 0.85;
-      setShowStickyCta(pastHero && !finalVisible);
-    };
+    const onScroll = () => setSolid(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [pathname]);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -51,29 +33,29 @@ export default function HpLayout() {
         <div className="site-header__inner">
           <Link className="brand-lockup" to="/">
             <img src="/tconnect-logo.png" alt="" width={56} height={56} />
-            <span className="brand-lockup__name">{COMPANY_NAME}</span>
+            <span className="brand-lockup__name">T-connect</span>
           </Link>
 
           <nav className="desk-nav" aria-label="メイン">
             <div className="nav-dropdown">
               <button type="button" className="nav-dropdown__btn">
-                サービス
+                事業一覧
               </button>
               <div className="nav-dropdown__panel">
-                {lpServices.map((s) => (
-                  <Link key={s.slug} to={s.path}>
-                    {s.name}
-                    <span className="nav-dropdown__hint">案内</span>
+                {businesses.map((b) => (
+                  <Link key={b.slug} to={b.path}>
+                    {b.name}
+                    {b.status === "preparing" && (
+                      <span className="nav-dropdown__badge">準備中</span>
+                    )}
                   </Link>
                 ))}
-                <Link to="/#services">すべて見る</Link>
               </div>
             </div>
             <NavLink to="/company">会社</NavLink>
           </nav>
 
           <div className="header-actions">
-            <CtaButton className="header-cta btn--compact">15分で相談</CtaButton>
             <button
               type="button"
               className={`menu-btn${menuOpen ? " is-open" : ""}`}
@@ -94,44 +76,30 @@ export default function HpLayout() {
         className={`mobile-menu${menuOpen ? " is-open" : ""}`}
         aria-hidden={!menuOpen}
       >
-        <p className="mobile-menu__label">案内ページ</p>
-        {lpServices.map((s) => (
-          <Link key={s.slug} to={s.path}>
-            {s.name}
+        <p className="mobile-menu__label">事業一覧</p>
+        {businesses.map((b) => (
+          <Link key={b.slug} to={b.path}>
+            {b.name}
+            {b.status === "preparing" && " （準備中）"}
           </Link>
         ))}
-        <Link to="/#services">サービス一覧</Link>
         <Link to="/company">会社</Link>
-        <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-          LINEで15分相談する
-        </a>
       </div>
 
       <Outlet />
 
-      <div
-        className={`sticky-cta${showStickyCta ? " sticky-cta--visible" : ""}`}
-        aria-hidden={!showStickyCta}
-      >
-        <CtaButton className="btn--large sticky-cta__btn" />
-      </div>
-
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div className="site-footer__brand-block">
-            <span className="site-footer__service">{SITE_NAME}</span>
+            <span className="site-footer__service">T-connect</span>
             <span className="site-footer__brand">{COMPANY_NAME}</span>
-            <span className="site-footer__hint">
-              サービスサイト ／ 案内: {lpServices.map((s) => s.name).join("・")}
-            </span>
           </div>
           <nav className="site-footer__nav" aria-label="フッター">
-            {lpServices.map((s) => (
-              <Link key={s.slug} to={s.path}>
-                {s.name}
+            {businesses.map((b) => (
+              <Link key={b.slug} to={b.path}>
+                {b.name}
               </Link>
             ))}
-            <Link to="/#services">サービス一覧</Link>
             <Link to="/company">会社</Link>
           </nav>
           <span>© {new Date().getFullYear()} T-connect Inc.</span>
