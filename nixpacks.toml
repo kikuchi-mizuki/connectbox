@@ -2,5 +2,10 @@
 NIXPACKS_NODE_VERSION = "22"
 
 [phases.setup]
-nixpkgsArchive = "ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7"
-nixPkgs = ["nodejs_22", "npm-9_x"]
+nixPkgs = ["nodejs_22", "npm-10_x"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npx vite preview --host 0.0.0.0 --port ${PORT:-3000}"
