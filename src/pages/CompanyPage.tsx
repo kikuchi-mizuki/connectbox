@@ -1,10 +1,8 @@
-import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../components/FadeIn";
 import MessageSection from "../components/MessageSection";
 import ValueSection from "../components/ValueSection";
 import { company, companyMission } from "../data/company";
-import { businesses } from "../data/businesses";
 import { usePageMeta } from "../hooks/usePageMeta";
 
 const overview = [
@@ -71,33 +69,6 @@ export default function CompanyPage() {
               </div>
             ))}
           </dl>
-        </FadeIn>
-      </section>
-
-      <section className="section top-biz" aria-labelledby="biz-title">
-        <FadeIn className="section__inner">
-          <header className="top-section-head top-section-head--stack">
-            <p className="section__label">Business</p>
-            <h2 className="section__title" id="biz-title">
-              事業一覧
-            </h2>
-          </header>
-          <div className="biz-detail-grid">
-            {businesses.map((b) => (
-              <Link
-                to={b.path}
-                key={b.slug}
-                className="biz-detail-card biz-detail-card--link"
-              >
-                <p className="biz-detail-card__en">{b.en}</p>
-                <h3>{b.name}</h3>
-                <p>{b.tagline}</p>
-                {b.status === "preparing" && (
-                  <span className="biz-card__badge">準備中</span>
-                )}
-              </Link>
-            ))}
-          </div>
         </FadeIn>
       </section>
     </main>
