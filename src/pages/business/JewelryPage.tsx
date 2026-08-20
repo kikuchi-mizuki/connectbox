@@ -19,7 +19,7 @@ export default function JewelryPage() {
       <section className="hero hero--page" id="page-hero" aria-label="宝飾事業">
         <div className="hero__media" aria-hidden="true">
           <img
-            src="https://images.unsplash.com/photo-1515562141589-67f0d569b6ac?auto=format&fit=crop&w=2400&q=80"
+            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=2400&q=80"
             alt=""
           />
           <div className="hero__shade" />

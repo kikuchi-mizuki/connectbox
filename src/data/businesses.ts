@@ -41,7 +41,7 @@ export const businesses: Business[] = [
     tagline: "金・プラチナ・ブランド品の買取。",
     description: "大阪を拠点に、金・プラチナ・ブランド品買取を展開しています。",
     heroImage:
-      "https://images.unsplash.com/photo-1515562141589-67f0d569b6ac?auto=format&fit=crop&w=2400&q=80",
+      "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=2400&q=80",
     status: "active",
   },
   {

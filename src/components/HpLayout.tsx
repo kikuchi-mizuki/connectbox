@@ -39,7 +39,7 @@ export default function HpLayout() {
         <div className="site-header__inner">
           <Link className="brand-lockup" to="/">
             <img src="/tconnect-logo.png" alt="" width={56} height={56} />
-            <span className="brand-lockup__name">T-connect</span>
+            <span className="brand-lockup__name">{COMPANY_NAME}</span>
           </Link>
 
           <nav className="desk-nav" aria-label="メイン">
@@ -103,7 +103,6 @@ export default function HpLayout() {
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div className="site-footer__brand-block">
-            <span className="site-footer__service">T-connect</span>
             <span className="site-footer__brand">{COMPANY_NAME}</span>
             <p className="site-footer__tagline">{companyMission.tagline}</p>
           </div>

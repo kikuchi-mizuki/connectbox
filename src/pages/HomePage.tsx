@@ -9,27 +9,32 @@ import { usePageMeta } from "../hooks/usePageMeta";
 
 function GrainDecor() {
   return (
-    <>
+    <div className="top-hero__bg" aria-hidden="true">
+      <img
+        className="top-hero__decor"
+        src="/meishi-decor.png?v=9"
+        alt=""
+        width={1386}
+        height={2232}
+      />
       <svg
         className="top-hero__grain"
         viewBox="0 0 600 900"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
       >
         <path
           d="M520 -20 Q480 120 380 280 Q280 440 200 580 Q140 680 80 820 Q60 870 30 920"
-          stroke="#d6c8a0"
-          strokeWidth="2.5"
+          stroke="#c4b48a"
+          strokeWidth="2.2"
           fill="none"
-          opacity="0.5"
         />
         <path
           d="M540 -10 Q510 100 430 240 Q350 380 280 520 Q220 620 160 740 Q130 800 100 900"
-          stroke="#d6c8a0"
-          strokeWidth="2"
+          stroke="#c4b48a"
+          strokeWidth="1.7"
           fill="none"
-          opacity="0.35"
+          opacity="0.75"
         />
         {[
           [400, 160], [420, 140], [380, 180], [410, 120], [440, 110],
@@ -43,8 +48,8 @@ function GrainDecor() {
             cy={cy}
             rx="6"
             ry="3.5"
-            fill="#d6c8a0"
-            opacity={0.35 + (i % 3) * 0.12}
+            fill="#c4b48a"
+            opacity={0.7 + (i % 3) * 0.08}
             transform={`rotate(${-30 + (i % 5) * 12} ${cx} ${cy})`}
           />
         ))}
@@ -54,24 +59,22 @@ function GrainDecor() {
         viewBox="0 0 800 200"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
       >
         <path
           d="M-50 180 Q150 60 400 100 Q550 120 700 50 Q780 20 850 30"
-          stroke="#d6c8a0"
-          strokeWidth="2"
+          stroke="#c4b48a"
+          strokeWidth="1.8"
           fill="none"
-          opacity="0.45"
         />
         <path
           d="M-50 200 Q200 90 420 130 Q580 150 750 70 Q820 40 880 50"
-          stroke="#d6c8a0"
-          strokeWidth="1.5"
+          stroke="#c4b48a"
+          strokeWidth="1.4"
           fill="none"
-          opacity="0.3"
+          opacity="0.75"
         />
       </svg>
-    </>
+    </div>
   );
 }
 
@@ -93,19 +96,24 @@ export default function HomePage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
-          <h1 className="top-hero__title">{companyMission.tagline}</h1>
-          <div className="top-hero__mark">
-            <img
-              className="top-hero__logo"
-              src="/tconnect-logo.png"
-              alt="T-connect"
-              width={80}
-              height={80}
-            />
-            <p className="top-hero__brand">T-connect</p>
-            <p className="top-hero__company">{company.legalName}</p>
+          <div className="top-hero__core">
+            <h1 className="top-hero__title">{companyMission.tagline}</h1>
+            <p className="top-hero__lead">
+              {companyMission.heroLead.split("\n").map((line, i) => (
+                <span key={line}>
+                  {i > 0 && <br />}
+                  {line}
+                </span>
+              ))}
+            </p>
           </div>
         </motion.div>
+        <a className="top-hero__scroll" href="#value">
+          <span>Scroll</span>
+          <span className="top-hero__scroll-arrow" aria-hidden="true">
+            ↓
+          </span>
+        </a>
       </section>
 
       <ValueSection />
@@ -120,7 +128,9 @@ export default function HomePage() {
               事業紹介
             </h2>
             <p className="top-section-head__lead">
-              4つの事業を通じて、人と人とのつながりに価値を生み出しています。
+              人と企業の「困った」と「これから」に向き合う。
+              <br />
+              T-connectは、それぞれ異なる領域から、人と人とのつながりに価値を生み出す事業を展開しています。
             </p>
           </header>
           <div className="biz-grid">

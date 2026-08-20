@@ -16,16 +16,28 @@ export default function ValueSection({ id = "value" }: Props) {
         <header className="top-section-head">
           <p className="section__label">Value</p>
           <h2 className="top-value__title" id="value-title">
-            {companyMission.valueTitle}
+            {companyMission.valueTitleLines.map((line) => (
+              <span key={line} className="top-value__title-line">
+                {line}
+              </span>
+            ))}
           </h2>
           <p className="top-section-head__lead">{companyMission.valueLead}</p>
         </header>
         <div className="top-value__content">
-          <ul className="top-value__list">
-            {companyMission.valueBody.map((line) => (
-              <li key={line}>{line}</li>
+          <ol className="top-value__principles">
+            {companyMission.valuePrinciples.map((item, i) => (
+              <li key={item.title}>
+                <span className="top-value__num">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+              </li>
             ))}
-          </ul>
+          </ol>
           <aside className="top-value__note" aria-labelledby="value-reason-label">
             <p className="top-value__note-label" id="value-reason-label">
               {companyMission.valueReasonLabel}
