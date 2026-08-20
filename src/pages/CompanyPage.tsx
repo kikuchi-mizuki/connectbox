@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../components/FadeIn";
-import { company } from "../data/company";
+import MessageSection from "../components/MessageSection";
+import ValueSection from "../components/ValueSection";
+import { company, companyMission } from "../data/company";
 import { businesses } from "../data/businesses";
 import { usePageMeta } from "../hooks/usePageMeta";
 
@@ -27,7 +29,7 @@ export default function CompanyPage() {
   });
 
   return (
-    <main>
+    <main className="top-page">
       <section className="hero hero--page" id="page-hero" aria-label="会社情報">
         <div className="hero__media" aria-hidden="true">
           <img
@@ -44,19 +46,23 @@ export default function CompanyPage() {
           >
             <p className="hero__brand">Company</p>
             <h1 className="hero__title">会社情報</h1>
-            <p className="hero__lead">
-              {company.legalName}の概要です。
-            </p>
+            <p className="hero__lead">{companyMission.tagline}</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="overview-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">Overview</p>
-          <h2 className="section__title" id="overview-title">
-            会社概要
-          </h2>
+      <ValueSection id="company-value" />
+
+      <MessageSection />
+
+      <section className="section section--muted top-company" aria-labelledby="overview-title">
+        <FadeIn className="section__inner top-company__inner">
+          <header className="top-section-head top-section-head--stack">
+            <p className="section__label">Overview</p>
+            <h2 className="section__title" id="overview-title">
+              会社概要
+            </h2>
+          </header>
           <dl className="company-dl">
             {overview.map((row) => (
               <div key={row.label}>
@@ -68,15 +74,21 @@ export default function CompanyPage() {
         </FadeIn>
       </section>
 
-      <section className="section section--muted" aria-labelledby="biz-title">
+      <section className="section top-biz" aria-labelledby="biz-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Business</p>
-          <h2 className="section__title" id="biz-title">
-            事業一覧
-          </h2>
+          <header className="top-section-head top-section-head--stack">
+            <p className="section__label">Business</p>
+            <h2 className="section__title" id="biz-title">
+              事業一覧
+            </h2>
+          </header>
           <div className="biz-detail-grid">
             {businesses.map((b) => (
-              <Link to={b.path} key={b.slug} className="biz-detail-card biz-detail-card--link">
+              <Link
+                to={b.path}
+                key={b.slug}
+                className="biz-detail-card biz-detail-card--link"
+              >
                 <p className="biz-detail-card__en">{b.en}</p>
                 <h3>{b.name}</h3>
                 <p>{b.tagline}</p>
@@ -86,21 +98,6 @@ export default function CompanyPage() {
               </Link>
             ))}
           </div>
-        </FadeIn>
-      </section>
-
-      <section className="section section--ink" aria-labelledby="value-title">
-        <FadeIn className="section__inner prose">
-          <p className="section__label">Stance</p>
-          <h2 className="section__title" id="value-title">
-            目先ではなく、未来を選べ
-          </h2>
-          <p className="section__lead">
-            日々の判断で、自分本位ではなく、相手・仲間・会社の未来にとって最善かを考えます。
-          </p>
-          <p>
-            目先の利益よりも長期的な信頼を優先します。相談の段階で、今やらなくてよい範囲もお伝えします。その積み重ねが、選ばれ続ける関係をつくります。
-          </p>
         </FadeIn>
       </section>
     </main>

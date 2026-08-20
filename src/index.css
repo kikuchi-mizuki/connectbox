@@ -99,6 +99,14 @@ button {
   backdrop-filter: blur(12px);
 }
 
+.site-header--light {
+  color: var(--ink);
+}
+
+.site-header--light .brand-lockup img {
+  filter: none;
+}
+
 .site-header__inner {
   max-width: var(--max);
   margin: 0 auto;
@@ -1090,6 +1098,13 @@ button {
   color: var(--ink);
 }
 
+.site-footer__tagline {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
 .site-footer__hint {
   font-size: 0.75rem;
   color: var(--ink-soft);
@@ -1332,7 +1347,34 @@ button {
 
 /* —— Top page (名刺デザイン) —— */
 .top-page {
+  --top-ink: #4a3f2e;
+  --top-grain: #d6c8a0;
+  --top-cream: #faf8f3;
+  --top-cream-2: #f5f0e6;
+  --top-read: 36em;
   background: #fff;
+}
+
+.top-page .section {
+  padding-block: clamp(4.5rem, 12vw, 9rem);
+}
+
+.top-section-head {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.top-section-head--stack {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  max-width: var(--top-read);
+}
+
+.top-section-head__lead {
+  margin: 0.35rem 0 0;
+  max-width: 28em;
+  font-size: clamp(0.92rem, 2.5vw, 1rem);
+  line-height: 1.85;
+  color: var(--ink-soft);
 }
 
 .top-hero {
@@ -1340,7 +1382,10 @@ button {
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 3rem var(--space);
+  padding:
+    calc(5rem + env(safe-area-inset-top, 0px))
+    var(--space)
+    clamp(3rem, 8vw, 5rem);
   background: #fff;
   position: relative;
   overflow: hidden;
@@ -1372,48 +1417,199 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  gap: clamp(2.5rem, 7vw, 4rem);
 }
 
 .top-hero__title {
-  font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+  font-size: clamp(1.45rem, 4.2vw, 2.35rem);
   font-weight: 400;
-  letter-spacing: 0.2em;
-  line-height: 1.7;
-  margin: 0 0 2.5rem;
-  color: #6b5c3e;
+  letter-spacing: 0.22em;
+  line-height: 1.75;
+  margin: 0;
+  color: var(--top-ink);
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  height: clamp(14rem, 38vw, 21rem);
+  height: clamp(13rem, 36vw, 20rem);
 }
 
-.top-hero__logo-mark {
-  margin: 0 0 0.6rem;
+.top-hero__mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.top-hero__logo {
+  width: clamp(4rem, 10vw, 5rem);
+  height: clamp(4rem, 10vw, 5rem);
+  object-fit: contain;
 }
 
 .top-hero__brand {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: #555;
 }
 
-.top-biz {
-  background: #faf8f3;
-}
-
-.top-stance {
-  background: #f5f0e6;
-}
-
-.top-stance .section__title {
+.top-hero__company {
+  margin: 0;
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
+  color: #a0917a;
 }
 
-.top-stance .section__lead {
-  max-width: 30em;
+.top-value {
+  background: linear-gradient(165deg, var(--top-cream) 0%, var(--top-cream-2) 100%);
+}
+
+.top-value__inner,
+.top-message__inner {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.top-value__title {
+  margin: 0;
+  font-size: clamp(1.55rem, 4.8vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  color: var(--top-ink);
+}
+
+.top-value__content {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  max-width: var(--top-read);
+}
+
+.top-value__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.top-value__list li {
+  position: relative;
+  margin: 0;
+  padding-left: 1.35rem;
+  font-size: clamp(1rem, 2.6vw, 1.06rem);
+  line-height: 2;
+  color: var(--ink-soft);
+}
+
+.top-value__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: 0.65;
+}
+
+.top-value__note {
+  margin: 0;
+  padding: clamp(1.35rem, 3vw, 1.75rem) clamp(1.35rem, 3vw, 2rem);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(214, 200, 160, 0.45);
+}
+
+.top-value__note-label {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.top-value__note p:last-child {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.95;
+  color: var(--ink);
+}
+
+.top-message {
+  background: #fff;
+}
+
+.top-message__name {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.05em;
+}
+
+.top-message__body {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+  max-width: var(--top-read);
+}
+
+.top-message__body p {
+  margin: 0;
+  font-size: clamp(1rem, 2.6vw, 1.05rem);
+  line-height: 2;
+  color: var(--ink-soft);
+}
+
+.top-message__body p:first-child {
+  font-size: clamp(1.02rem, 2.7vw, 1.08rem);
+  color: var(--ink);
+}
+
+.top-biz {
+  background: var(--surface);
+}
+
+.top-biz .biz-grid {
+  margin-top: 0;
+}
+
+.top-company {
+  background: var(--surface-2);
+}
+
+.top-company__inner {
+  max-width: 40rem;
+}
+
+.top-company .company-dl {
+  margin-top: 0;
+  gap: 0;
+}
+
+.top-company .company-dl div {
+  padding: 1.25rem 0;
+  gap: 0.4rem;
+}
+
+.top-company .company-dl dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.top-company .company-dl dd {
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+.top-page .section__more-link {
+  margin-top: 2.5rem;
 }
 
 @media (min-width: 768px) {
@@ -1423,50 +1619,75 @@ button {
   }
 
   .top-hero__title {
-    font-size: 2.4rem;
-    height: 22rem;
+    font-size: 2.35rem;
+    height: 21rem;
   }
 
-  .top-hero__logo-mark svg {
-    width: 88px;
-    height: 58px;
+  .top-value__inner,
+  .top-message__inner {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: clamp(3rem, 7vw, 6rem);
+    align-items: start;
+  }
+
+  .top-section-head {
+    position: sticky;
+    top: 6.5rem;
+  }
+
+  .top-section-head--stack {
+    position: static;
+  }
+
+  .top-value__content,
+  .top-message__body {
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .top-value__inner,
+  .top-message__inner {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
   }
 }
 
 /* —— Business grid (T-connect top) —— */
 .biz-grid {
   display: grid;
-  gap: 1.25rem;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
 }
 
 .biz-card {
   display: block;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid var(--line);
   background: #fff;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .biz-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(21, 34, 56, 0.07);
 }
 
 .biz-card img {
   width: 100%;
-  height: 12rem;
+  height: 11rem;
   object-fit: cover;
 }
 
 .biz-card__body {
-  padding: 1.15rem 1.25rem 1.35rem;
+  padding: 1.35rem 1.4rem 1.5rem;
 }
 
 .biz-card__en {
-  margin: 0 0 0.2rem;
+  margin: 0 0 0.35rem;
   font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 700;
@@ -1476,15 +1697,16 @@ button {
 }
 
 .biz-card h3 {
-  margin: 0 0 0.4rem;
-  font-size: 1.15rem;
+  margin: 0 0 0.55rem;
+  font-size: 1.1rem;
+  line-height: 1.4;
 }
 
-.biz-card__body > p:last-of-type {
+.biz-card__desc {
   margin: 0;
   color: var(--ink-soft);
-  font-size: 0.92rem;
-  line-height: 1.65;
+  font-size: 0.9rem;
+  line-height: 1.75;
 }
 
 .biz-card__badge {
@@ -1500,10 +1722,11 @@ button {
 
 .biz-card__more {
   display: inline-block;
-  margin-top: 0.65rem;
-  font-size: 0.85rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--accent);
+  letter-spacing: 0.02em;
+  color: var(--brand);
 }
 
 @media (min-width: 640px) {
@@ -1575,18 +1798,19 @@ button {
 }
 
 .section__more-link {
-  margin-top: 1.25rem;
+  margin-top: 2rem;
 }
 
 .section__more-link a {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--accent);
+  letter-spacing: 0.02em;
+  color: var(--brand);
   text-decoration: none;
 }
 
 .section__more-link a:hover {
-  text-decoration: underline;
+  color: var(--brand-deep);
 }
 
 .nav-dropdown__badge {

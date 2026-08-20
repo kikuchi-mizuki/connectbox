@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { COMPANY_NAME } from "../constants";
 import { businesses } from "../data/businesses";
+import { companyMission } from "../data/company";
 
 export default function HpLayout() {
   const { pathname } = useLocation();
+  const isTop = pathname === "/";
   const [solid, setSolid] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,7 +31,11 @@ export default function HpLayout() {
 
   return (
     <div className="hp">
-      <header className={`site-header${solid ? " is-solid" : ""}`}>
+      <header
+        className={`site-header${solid || !isTop ? " is-solid" : ""}${
+          isTop && !solid ? " site-header--light" : ""
+        }`}
+      >
         <div className="site-header__inner">
           <Link className="brand-lockup" to="/">
             <img src="/tconnect-logo.png" alt="" width={56} height={56} />
@@ -53,6 +59,7 @@ export default function HpLayout() {
               </div>
             </div>
             <NavLink to="/company">会社</NavLink>
+            {isTop && <a href="#value">想い</a>}
           </nav>
 
           <div className="header-actions">
@@ -84,6 +91,11 @@ export default function HpLayout() {
           </Link>
         ))}
         <Link to="/company">会社</Link>
+        {isTop && (
+          <a href="#value" onClick={() => setMenuOpen(false)}>
+            想い
+          </a>
+        )}
       </div>
 
       <Outlet />
@@ -93,6 +105,7 @@ export default function HpLayout() {
           <div className="site-footer__brand-block">
             <span className="site-footer__service">T-connect</span>
             <span className="site-footer__brand">{COMPANY_NAME}</span>
+            <p className="site-footer__tagline">{companyMission.tagline}</p>
           </div>
           <nav className="site-footer__nav" aria-label="フッター">
             {businesses.map((b) => (
