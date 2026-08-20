@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /lp/back-office/deck
+Disallow: /lp/back-office/deck.html
+Disallow: /presentations/
