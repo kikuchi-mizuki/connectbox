@@ -1557,3 +1557,123 @@
     min-height: 32rem;
   }
 }
+
+/* —— Back Office LP：活用ユースケース —— */
+.use-cases {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.use-case {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  display: grid;
+}
+
+.use-case img {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.use-case__body {
+  padding: 1.15rem 1.2rem 1.35rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.use-case__industry {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: 0.04em;
+}
+
+.use-case__industry span {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.use-case__metric {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3.5vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.use-case__metric-label {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+.use-case h3 {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.8vw, 1.18rem);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+
+.use-case__points {
+  margin: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.use-case__points div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.use-case__points dt {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--brand-deep);
+}
+
+.use-case__points dd {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 768px) {
+  .use-cases {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.35rem;
+  }
+
+  .use-case img {
+    height: 11rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .use-case {
+    grid-template-columns: 14rem 1fr;
+    align-items: stretch;
+  }
+
+  .use-case img {
+    height: 100%;
+    min-height: 14rem;
+  }
+}

@@ -39,25 +39,60 @@ const offerings = [
 
 const cases = [
   {
-    n: "週8h → 2h",
-    title: "代表の経理兼務を減らす",
-    body: "請求・入金・経費の定型を外出しし、最終確認だけ社内に残す使い方です。",
+    industry: "人材会社",
+    metric: "月200件+",
+    metricLabel: "応募対応の定型を外出し",
+    title: "採用事務を切り出し、人事をコア業務へ",
+    challenge:
+      "自社求人へ月200件以上の応募があり、メッセージ対応・面談調整・リマインド・確認連絡に人事の時間が取られていた。",
+    action:
+      "応募者対応・日程調整・リマインド・確認連絡など、定型化できる採用事務を切り出して代行。",
+    effect:
+      "人事は面談・採用判断・社員対応・人事施策など、人事にしかできないコア業務へ集中できる。",
     image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    n: "月40h → 16h",
-    title: "月初の定型処理を薄くする",
-    body: "請求確認と振込準備を代行し、月初の定型処理にかかる時間を約6割削減。",
+    industry: "経理部門",
+    metric: "月初 約6割減",
+    metricLabel: "定型処理にかかる時間のイメージ",
+    title: "定型的な経理事務を切り出す",
+    challenge:
+      "請求書発行・データ入力・入金確認・経費集計など、毎月の定型に時間が取られ、月末月初の残業につながっている。",
+    action:
+      "「請求データ確認 → 請求書作成・発行 → 管理表更新 → 入金状況確認」といった定型フローを整理し、対応可能な範囲を代行。",
+    effect:
+      "経理は資金管理・予実管理・数値分析など、判断が必要な業務に集中。繁忙期だけの人員増も抑えられる。",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    n: "採用 0",
-    title: "退職後も、処理を止めない",
-    body: "棚卸しとマニュアル化のあと定型を代行し、採用せずに翌月から継続。",
+    industry: "管理部門",
+    metric: "採用 0",
+    metricLabel: "退職後も処理を止めない",
+    title: "「○○さんしか分からない」を仕組み化",
+    challenge:
+      "Excel管理や日々の事務が特定社員に集中。「休むと止まる」「退職すると引き継ぎが大変」という属人化が発生。",
+    action:
+      "既存業務をヒアリングしてフローを整理。マニュアル化したうえで、定型業務をConnect Box側で運用。",
+    effect:
+      "人に依存する業務から、仕組みで回る業務へ。採用→教育→退職→再採用の負の循環を減らせる。",
     image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    industry: "中小企業",
+    metric: "週8h → 2h",
+    metricLabel: "代表・営業の事務兼務のイメージ",
+    title: "採用せず、必要な業務だけ外部化",
+    challenge:
+      "事務員を1名採用するほどではない。ただ、社長や営業が事務作業までやっている状態。",
+    action:
+      "総務・経理・人事・営業事務から必要な業務だけ選択。週次の集計、月末の請求、随時のメール・資料作成など、使い方は柔軟。",
+    effect:
+      "新たに1名採用するのではなく、必要な分だけ外部化。社員は売上や事業成長につながる仕事へ集中できる。",
+    image:
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -224,21 +259,39 @@ export default function BackOfficeLp() {
       {/* ⑤ 実際どう変わるか */}
       <section className="section section--muted" aria-labelledby="cases-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Cases</p>
+          <p className="section__label">Use Cases</p>
           <h2 className="section__title" id="cases-title">
             よくある使い方
           </h2>
           <p className="section__lead">
-            数字はよくある変化のイメージです。現状を伺ったうえで、御社の範囲でご提案します。
+            数字はよくある変化のイメージです。課題・対応・効果とともに、切り出し方の具体像を示しています。
           </p>
-          <ul className="home-cases">
-            {cases.map((c) => (
-              <li key={c.title}>
+          <ul className="use-cases">
+            {cases.map((c, i) => (
+              <li className="use-case" key={c.title}>
                 <img src={c.image} alt="" />
-                <div>
-                  <p className="home-team__n">{c.n}</p>
+                <div className="use-case__body">
+                  <p className="use-case__industry">
+                    <span>{String(i + 1).padStart(2, "0")}</span>
+                    {c.industry}
+                  </p>
+                  <p className="use-case__metric">{c.metric}</p>
+                  <p className="use-case__metric-label">{c.metricLabel}</p>
                   <h3>{c.title}</h3>
-                  <p>{c.body}</p>
+                  <dl className="use-case__points">
+                    <div>
+                      <dt>課題</dt>
+                      <dd>{c.challenge}</dd>
+                    </div>
+                    <div>
+                      <dt>Connect Boxで対応</dt>
+                      <dd>{c.action}</dd>
+                    </div>
+                    <div>
+                      <dt>効果</dt>
+                      <dd>{c.effect}</dd>
+                    </div>
+                  </dl>
                 </div>
               </li>
             ))}
