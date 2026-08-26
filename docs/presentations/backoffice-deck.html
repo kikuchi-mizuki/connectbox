@@ -111,7 +111,8 @@
     }
 
     .hearing-panel input,
-    .hearing-panel textarea {
+    .hearing-panel textarea,
+    .hearing-panel select {
       font: inherit;
       font-weight: 400;
       font-size: 0.85rem;
@@ -120,6 +121,12 @@
       border-radius: 6px;
       padding: 0.45rem 0.6rem;
       width: 100%;
+      background: var(--white);
+    }
+
+    .hearing-panel select {
+      cursor: pointer;
+      appearance: auto;
     }
 
     .hearing-panel textarea { min-height: 4.2rem; resize: vertical; }
@@ -470,10 +477,10 @@
 
     .case-card .num {
       font-family: "Outfit", sans-serif;
-      font-size: 1.1rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--accent);
-      margin-bottom: 0.35rem;
+      margin: 0;
     }
 
     .case-card h3 {
@@ -510,15 +517,373 @@
       margin-bottom: 0.5rem;
     }
 
+    .pain-item.is-focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 0;
+      background: #fff8ee;
+    }
+
+    .service-grid li.is-focus {
+      font-weight: 700;
+      color: var(--brand-deep);
+    }
+
+    .service-grid li.is-focus::before {
+      background: var(--accent);
+    }
+
+    .case-card .detail {
+      margin-top: 0.35rem;
+      font-size: 0.72rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    .case-card .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .case-card .meta-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.45rem;
+      border-radius: 99px;
+      background: #eef1f8;
+      color: var(--brand-deep);
+    }
+
+    .case-card .flow-line {
+      margin: 0.3rem 0 0;
+      font-size: 0.72rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    .case-card .flow-line strong {
+      display: inline-block;
+      min-width: 2.2em;
+      color: var(--brand);
+      font-size: 0.68rem;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      align-content: start;
+    }
+
+    .plan-setup {
+      margin-top: 0.75rem;
+      padding: 0.7rem 1rem;
+      background: #f3f6fb;
+      border: 1px solid #dde2eb;
+      border-radius: 10px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.15rem 1.25rem;
+      align-items: baseline;
+    }
+
+    .plan-setup__label {
+      grid-column: 1;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--brand);
+    }
+
+    .plan-setup__price {
+      grid-column: 2;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .plan-setup__desc {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .plan-note {
+      margin-top: 0.45rem;
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .plan-card {
+      padding: 1rem;
+      background: var(--white);
+      border: 1px solid #dde2eb;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .plan-card.is-recommend {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(232, 148, 26, 0.2);
+    }
+
+    .plan-card .plan-name {
+      font-family: "Outfit", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand);
+    }
+
+    .plan-card .plan-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .plan-card .plan-price small {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+
+    .plan-card .plan-hours {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .plan-card ul {
+      margin: 0.35rem 0 0;
+      padding-left: 1rem;
+    }
+
+    .plan-card li {
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.25rem;
+      line-height: 1.45;
+    }
+
+    .plan-card .plan-badge {
+      align-self: flex-start;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      padding: 0.15rem 0.5rem;
+      border-radius: 99px;
+    }
+
+    .slide-hero-img {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .slide-hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide-hero-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(15,24,42,0.88) 0%, rgba(21,34,56,0.55) 55%, rgba(21,34,56,0.25) 100%);
+    }
+
+    .slide--cover > *:not(.slide-hero-img) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pain-with-photo {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.25rem;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .pain-with-photo .pain-photo {
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .pain-with-photo .pain-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pain-with-photo .pain-grid {
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+      align-content: start;
+    }
+
+    .pain-with-photo .pain-item {
+      padding: 0.65rem 0.85rem;
+    }
+
+    .pain-with-photo .pain-photo {
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .pain-with-photo .pain-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .case-card {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-card .case-photo {
+      height: 4.5rem;
+      overflow: hidden;
+    }
+
+    .case-card .case-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .case-card .case-body {
+      padding: 0.75rem 0.9rem 0.9rem;
+    }
+
+    .talent-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      flex: 1;
+      align-content: start;
+    }
+
+    .talent-card {
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #dde2eb;
+    }
+
+    .talent-card img {
+      width: 100%;
+      height: 7rem;
+      object-fit: cover;
+    }
+
+    .talent-card .talent-body {
+      padding: 0.75rem 0.85rem 0.9rem;
+    }
+
+    .talent-card .talent-role {
+      margin: 0 0 0.25rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .talent-card .talent-bg {
+      margin: 0 0 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .talent-card .talent-can {
+      margin: 0;
+      font-size: 0.75rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      margin-top: 0.35rem;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      border: 1px solid #dde2eb;
+      padding: 0.55rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.45;
+    }
+
+    .compare-table th {
+      background: var(--surface);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .compare-table th.ours,
+    .compare-table td.ours {
+      background: #fff8ee;
+      border-color: rgba(232, 148, 26, 0.35);
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .compare-table th:first-child,
+    .compare-table td:first-child {
+      width: 18%;
+      font-weight: 700;
+      color: var(--brand-deep);
+      background: #f7f8fc;
+    }
+
+    .compare-punch {
+      margin-top: auto;
+      padding: 0.75rem 1rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .compare-note {
+      margin-top: 0.55rem;
+      font-size: 0.68rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+
     .phase-card ul {
       margin: 0;
       padding-left: 1.1rem;
     }
 
     .phase-card li {
-      font-size: 0.82rem;
-      margin-bottom: 0.35rem;
-      color: var(--ink-soft);
+      font-size: 0.78rem;
+      margin-bottom: 0.3rem;
+      color: var(--ink);
+      line-height: 1.5;
     }
 
     .phase-card .goal {
@@ -604,32 +969,44 @@
 
     .next-steps ol {
       padding-left: 1.25rem;
+      margin: 0;
     }
 
     .next-steps li {
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       color: var(--ink);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       font-weight: 500;
+      line-height: 1.55;
+    }
+
+    .slide--dark .next-steps li {
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .slide--dark .next-steps li strong {
+      color: #fff;
     }
 
     .cta-box {
       padding: 1.25rem 1.5rem;
-      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, #d47d0f 100%);
       color: var(--white);
       border-radius: 10px;
       text-align: center;
+      min-width: 11rem;
     }
 
     .cta-box p {
       font-size: 0.78rem !important;
-      color: rgba(255,255,255,0.75) !important;
+      color: rgba(255,255,255,0.9) !important;
       margin-bottom: 0.35rem;
     }
 
     .cta-box strong {
-      font-size: 1rem;
+      font-size: 1.05rem;
       letter-spacing: 0.02em;
+      color: #fff;
     }
 
     .company-grid {
@@ -697,8 +1074,9 @@
 </head>
 <body>
   <div class="toolbar">
-    <span>Connect Box｜初回商談資料（全12枚）</span>
+    <span>Connect Box｜初回商談資料（課題起点・全12枚）</span>
     <div class="toolbar-actions">
+      <a class="toolbar-btn--ghost" href="/lp/back-office/deck-admin.html" style="display:inline-flex;align-items:center;padding:0.45rem 1rem;border:1px solid rgba(255,255,255,0.35);border-radius:6px;color:#fff;text-decoration:none;font-weight:700;">管理</a>
       <button type="button" class="toolbar-btn--ghost" id="hearing-toggle">ヒアリングを記入</button>
       <button type="button" onclick="window.print()">PDFとして保存（印刷）</button>
     </div>
@@ -707,51 +1085,67 @@
   <aside class="hearing-panel" id="hearing-panel" aria-hidden="true">
     <h2>ヒアリング項目</h2>
     <form id="hearing-form">
-      <p class="field-hint">入力すると資料の表紙・スライド3・8・11がすぐ更新されます。このブラウザに保存されます。</p>
+      <p class="field-hint">課題タイプを選ぶと、以降の具体例・パック・Phaseが切り替わります。課題タイプは管理画面で追加できます。</p>
       <label>御社名
         <input name="company" placeholder="例：株式会社サンプル" />
       </label>
       <label>商談日
-        <input name="date" placeholder="例：2026年8月20日" />
+        <input name="date" placeholder="例：2026年8月26日" />
       </label>
       <label>担当者
         <input name="staff" placeholder="例：山田" />
       </label>
-      <label>業種・規模
-        <input name="industry" placeholder="例：製造 / 従業員28名" />
+      <label>課題タイプ（最重要）
+        <select name="challengeId" id="challenge-select">
+          <option value="">選択してください</option>
+        </select>
       </label>
-      <label>いま困っていること
-        <textarea name="pain" placeholder="例：月初の請求確認に代表の時間が取られる"></textarea>
+      <label>業種
+        <select name="industryKey">
+          <option value="">選択してください</option>
+          <option value="manufacturing">製造</option>
+          <option value="construction">建設・工事</option>
+          <option value="retail">小売・店舗</option>
+          <option value="professional">士業・専門サービス</option>
+          <option value="it">IT・Web</option>
+          <option value="care">医療・介護</option>
+          <option value="trading">商社・卸</option>
+          <option value="startup">スタートアップ／新規事業</option>
+          <option value="other">その他</option>
+        </select>
       </label>
-      <label>バックオフィス担当
-        <input name="staffing" placeholder="例：代表兼務 / 経理1名" />
+      <label>従業員規模
+        <select name="sizeKey">
+          <option value="">選択してください</option>
+          <option value="s10">〜10名</option>
+          <option value="s30">11〜30名</option>
+          <option value="s50">31〜50名</option>
+          <option value="s51">51名〜</option>
+        </select>
       </label>
-      <label>負担が大きい業務
-        <textarea name="burden" placeholder="例：請求書作成・入金確認・経費精算"></textarea>
+      <label>いまの体制
+        <select name="staffingKey">
+          <option value="">選択してください</option>
+          <option value="ceo">代表が兼務</option>
+          <option value="one">担当1名</option>
+          <option value="team">少人数チーム</option>
+          <option value="retire">退職・休職の予定あり</option>
+        </select>
       </label>
       <label>理想の状態
-        <textarea name="ideal" placeholder="例：代表は最終確認のみ。定型は外に出す"></textarea>
+        <select name="idealKey">
+          <option value="">選択してください</option>
+          <option value="focus">本業／商談に集中したい</option>
+          <option value="nohire">採用せずに回したい</option>
+          <option value="launch">立ち上げを早く形にしたい</option>
+          <option value="stable">欠員でも止まらない状態にしたい</option>
+        </select>
       </label>
-      <label>Phase 1（最初の1〜2ヶ月）
-        <textarea name="phase1" placeholder="例：請求書作成・入金確認"></textarea>
+      <label>Phase案の提示日
+        <input name="deadline" placeholder="例：9月2日" />
       </label>
-      <label>Phase 1 の目標
-        <input name="phase1goal" placeholder="例：代表の月初作業を半分に" />
-      </label>
-      <label>Phase 2（安定後）
-        <textarea name="phase2" placeholder="例：経費精算・データ入力"></textarea>
-      </label>
-      <label>Phase 2 の目標
-        <input name="phase2goal" placeholder="例：月初処理を翌営業日までに完了" />
-      </label>
-      <label>Phase 3（必要に応じて）
-        <textarea name="phase3" placeholder="例：マニュアル化・フロー整理"></textarea>
-      </label>
-      <label>Phase 3 の目標
-        <input name="phase3goal" placeholder="例：属人化を解消し引き継ぎ可能に" />
-      </label>
-      <label>Phase案の提示日（スライド11）
-        <input name="deadline" placeholder="例：8月27日" />
+      <label>次回候補日（現行フロー共有）
+        <input name="nextdate" placeholder="例：9月5日 14:00〜" />
       </label>
       <div class="hearing-actions">
         <button type="submit">資料に反映</button>
@@ -763,302 +1157,324 @@
 
   <div class="deck">
 
-    <!-- 1. 表紙 -->
     <section class="slide slide--cover" data-num="01 / 12">
+      <div class="slide-hero-img" aria-hidden="true">
+        <img data-dyn-src="heroImage" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80" alt="" />
+      </div>
       <div class="logo-row">
         <img src="/tconnect-logo.png" alt="" />
         <strong>T-connect</strong>
       </div>
       <p class="slide__label">Connect Box</p>
-      <h1>バックオフィス業務代行<br />ご案内資料</h1>
+      <h1>課題に合わせた、<br />実行支援のご提案</h1>
       <p class="slide__lead">
-        バックオフィスの負担を、採用せずに減らす。<br />
-        経理・総務・人事・営業事務などの業務代行サービス
+        <strong data-bind="company" data-fallback="●●株式会社">●●株式会社</strong> 様<br />
+        集客・事務・立上げ・仕組み化まで。必要な領域だけ外に出せます。
       </p>
       <div class="slide__meta">
-        <span>株式会社T-connect</span>
+        <span>株式会社T-connect　Connect Box事業</span>
         <span><span data-bind="date" data-fallback="2026年●月●日">2026年●月●日</span>　担当：<span data-bind="staff" data-fallback="●●">●●</span></span>
       </div>
     </section>
 
-    <!-- 2. 本日のゴール -->
     <section class="slide" data-num="02 / 12">
       <p class="slide__label">Agenda</p>
       <h2>本日のゴール</h2>
       <ul class="goal-list">
-        <li data-n="1"><span><strong>現状の整理</strong> — いま困っている業務・負担の把握</span></li>
-        <li data-n="2"><span><strong>任せられる範囲の確認</strong> — どこから始められるかの擦り合わせ</span></li>
-        <li data-n="3"><span><strong>次のステップの確認</strong> — いきなり契約ではありません</span></li>
+        <li data-n="1"><span><strong>現状のすり合わせ</strong> — 事前にお伺いした内容の確認と深掘り</span></li>
+        <li data-n="2"><span><strong>始め方のイメージ共有</strong> — どこから外に出せそうかの擦り合わせ</span></li>
+        <li data-n="3"><span><strong>次回日程の確定</strong> — 現行フロー共有（30分）の日程を取る</span></li>
       </ul>
-      <p class="note-box">今日は「合うかどうか」を一緒に見る時間です。御社の状況に合わせて、無理のない始め方を一緒に考えます。</p>
     </section>
 
-    <!-- 3. 御社の状況（カスタム） -->
     <section class="slide slide--accent" data-num="03 / 12">
       <p class="slide__label">Hearing</p>
-      <h2>御社の状況（ヒアリングメモ）</h2>
-      <p class="slide__lead"><strong data-bind="company" data-fallback="●●株式会社">●●株式会社</strong> 様 — 商談後に更新してください</p>
+      <h2>事前にお伺いした内容</h2>
+      <p class="slide__lead"><strong data-bind="company" data-fallback="●●株式会社">●●株式会社</strong> 様</p>
       <table class="fill-table">
-        <tr><th>業種・規模</th><td class="placeholder" data-bind="industry" data-fallback="●● / 従業員●●名">●● / 従業員●●名</td></tr>
-        <tr><th>いま困っていること</th><td class="placeholder" data-bind="pain" data-fallback="●●">●●</td></tr>
-        <tr><th>バックオフィス担当</th><td class="placeholder" data-bind="staffing" data-fallback="●●（例：代表兼務 / 1名）">●●（例：代表兼務 / 1名）</td></tr>
-        <tr><th>負担が大きい業務</th><td class="placeholder" data-bind="burden" data-fallback="●●">●●</td></tr>
-        <tr><th>理想の状態</th><td class="placeholder" data-bind="ideal" data-fallback="●●">●●</td></tr>
+        <tr><th>課題タイプ</th><td class="placeholder" data-bind="challengeLabel" data-fallback="未選択">未選択</td></tr>
+        <tr><th>業種・規模</th><td class="placeholder" data-bind="industryLabel" data-fallback="未選択">未選択</td></tr>
+        <tr><th>いまの体制</th><td class="placeholder" data-bind="staffingLabel" data-fallback="未選択">未選択</td></tr>
+        <tr><th>理想の状態</th><td class="placeholder" data-bind="idealLabel" data-fallback="未選択">未選択</td></tr>
+        <tr><th>ご提案パック</th><td class="placeholder" data-bind="packName" data-fallback="課題選択後に表示">課題選択後に表示</td></tr>
       </table>
     </section>
 
-    <!-- 4. 課題 -->
-    <section class="slide" data-num="04 / 12">
+        <section class="slide" data-num="04 / 12">
       <p class="slide__label">Challenges</p>
-      <h2>こんなお悩み、ありませんか</h2>
-      <div class="pain-grid">
-        <div class="pain-item"><span>01</span><span>経理や総務に時間が取られ、本業に手が回らない</span></div>
-        <div class="pain-item"><span>02</span><span>担当者しか分からない属人化した業務がある</span></div>
-        <div class="pain-item"><span>03</span><span>繁忙期だけ業務量が増え、対応が難しい</span></div>
-        <div class="pain-item"><span>04</span><span>採用は増やしたくないが、バックオフィスのコストを見直したい</span></div>
+      <h2>この課題で起きやすいこと</h2>
+      <p class="slide__lead" data-dyn="sceneLead">課題タイプを選ぶと、現場の風景に合わせて内容が切り替わります。</p>
+      <div class="pain-with-photo">
+        <div class="pain-grid" id="dyn-pains">
+          <div class="pain-item"><span>01</span><span data-dyn="pain0">…</span></div>
+          <div class="pain-item"><span>02</span><span data-dyn="pain1">…</span></div>
+          <div class="pain-item"><span>03</span><span data-dyn="pain2">…</span></div>
+          <div class="pain-item"><span>04</span><span data-dyn="pain3">…</span></div>
+        </div>
+        <div class="pain-photo">
+          <img data-dyn-src="heroImage" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80" alt="" />
+        </div>
       </div>
-      <p class="note-box">人を足すほどではないが、社内の時間が事務に取られている——そんな相談から始まっています。</p>
     </section>
 
-    <!-- 5. サービス -->
     <section class="slide slide--accent" data-num="05 / 12">
       <p class="slide__label">Services</p>
-      <h2>こんな業務をお任せいただけます</h2>
-      <p class="slide__lead">全部ではなく、必要なところから。業務量の増減にも柔軟に対応します。</p>
-      <ul class="service-grid">
-        <li>請求書・見積書・発注書の作成</li>
-        <li>売掛金・買掛金管理</li>
-        <li>経費精算・データ入力</li>
-        <li>勤怠管理・給与計算補助</li>
-        <li>営業事務（受発注・資料作成）</li>
-        <li>人事・労務・総務業務</li>
-        <li>マニュアル作成・業務フロー整理</li>
+      <h2>この課題で任せやすいこと</h2>
+      <p class="slide__lead" data-dyn="servicesLead">課題に合わせて、具体的な支援メニューに切り替えます。</p>
+      <ul class="service-grid" id="dyn-services">
+        <li data-dyn="svc0">請求書・見積書・発注書の作成</li>
+        <li data-dyn="svc1">売掛金・買掛金管理</li>
+        <li data-dyn="svc2">経費精算・データ入力</li>
+        <li data-dyn="svc3">勤怠管理・給与計算補助</li>
+        <li data-dyn="svc4">営業事務（受発注・資料作成）</li>
+        <li data-dyn="svc5">人事・労務・総務業務</li>
+        <li data-dyn="svc6">マニュアル作成・業務フロー整理</li>
       </ul>
     </section>
 
-    <!-- 6. 強み -->
-    <section class="slide" data-num="06 / 12">
-      <p class="slide__label">Team</p>
-      <h2>3,000名以上の実務経験者から、<br />御社に合う人材をアサイン</h2>
-      <ul class="stat-row">
-        <li><strong>3,000+</strong><span>登録人材</span></li>
-        <li><strong>実務経験</strong><span>経理・総務・営業事務</span></li>
-        <li><strong>柔軟対応</strong><span>業務量に合わせてアサイン</span></li>
-      </ul>
-      <p class="note-box">請求・経費・営業事務など、繰り返し発生する業務から外に出せます。採用の固定費をかけず、必要な時期・時間だけ体制を厚くできます。</p>
-    </section>
-
-    <!-- 7. 事例 -->
-    <section class="slide slide--accent" data-num="07 / 12">
+        <section class="slide" data-num="06 / 12">
       <p class="slide__label">Cases</p>
-      <h2>よくある使い方（変化のイメージ）</h2>
-      <div class="cases-grid">
+      <h2>こう変わります（具体イメージ）</h2>
+      <div class="cases-grid" id="dyn-cases">
         <div class="case-card">
-          <p class="num">週8h → 2h</p>
-          <h3>代表の経理兼務を減らす</h3>
-          <p>請求・入金・経費の定型を外出し。最終確認だけ社内に残す使い方。</p>
+          <div class="case-photo"><img data-dyn-src="case0image" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80" alt="" /></div>
+          <div class="case-body">
+            <div class="meta-row">
+              <span class="meta-tag" data-dyn="case0industry">中小企業</span>
+              <span class="num" data-dyn="case0num">週8h → 2h</span>
+            </div>
+            <h3 data-dyn="case0title">タイトル</h3>
+            <p class="flow-line"><strong>課題</strong><span data-dyn="case0challenge">…</span></p>
+            <p class="flow-line"><strong>施策</strong><span data-dyn="case0action">…</span></p>
+            <p class="flow-line"><strong>効果</strong><span data-dyn="case0effect">…</span></p>
+          </div>
         </div>
         <div class="case-card">
-          <p class="num">月40h → 16h</p>
-          <h3>月初の定型処理を薄くする</h3>
-          <p>請求確認と振込準備を代行。月初の定型処理を約6割削減。</p>
+          <div class="case-photo"><img data-dyn-src="case1image" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="" /></div>
+          <div class="case-body">
+            <div class="meta-row">
+              <span class="meta-tag" data-dyn="case1industry">経理部門</span>
+              <span class="num" data-dyn="case1num">月初 約6割減</span>
+            </div>
+            <h3 data-dyn="case1title">タイトル</h3>
+            <p class="flow-line"><strong>課題</strong><span data-dyn="case1challenge">…</span></p>
+            <p class="flow-line"><strong>施策</strong><span data-dyn="case1action">…</span></p>
+            <p class="flow-line"><strong>効果</strong><span data-dyn="case1effect">…</span></p>
+          </div>
         </div>
         <div class="case-card">
-          <p class="num">採用 0</p>
-          <h3>退職後も、処理を止めない</h3>
-          <p>棚卸しとマニュアル化のあと定型を代行。採用せずに翌月から継続。</p>
+          <div class="case-photo"><img data-dyn-src="case2image" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="" /></div>
+          <div class="case-body">
+            <div class="meta-row">
+              <span class="meta-tag" data-dyn="case2industry">管理部門</span>
+              <span class="num" data-dyn="case2num">採用 0</span>
+            </div>
+            <h3 data-dyn="case2title">タイトル</h3>
+            <p class="flow-line"><strong>課題</strong><span data-dyn="case2challenge">…</span></p>
+            <p class="flow-line"><strong>施策</strong><span data-dyn="case2action">…</span></p>
+            <p class="flow-line"><strong>効果</strong><span data-dyn="case2effect">…</span></p>
+          </div>
         </div>
       </div>
-      <p class="note-box">※ 数字はよくある変化のイメージです。御社の範囲はヒアリング後にご提案します。</p>
     </section>
 
-    <!-- 8. Phase提案（カスタム） -->
-    <section class="slide" data-num="08 / 12">
+    <section class="slide slide--accent" data-num="07 / 12">
       <p class="slide__label">Proposal</p>
-      <h2>御社向けの開始案（Phase提案）</h2>
-      <p class="slide__lead"><strong data-bind="company" data-fallback="●●株式会社">●●株式会社</strong> 様 — ヒアリング後に記入</p>
+      <h2>御社向けパック（仮）</h2>
+      <p class="slide__lead"><strong data-bind="company" data-fallback="●●株式会社">●●株式会社</strong> 様 ／ <span data-dyn="packName">パック名</span> — 次回のフロー共有で確定します</p>
       <div class="phase-grid">
         <div class="phase-card">
           <p class="phase-label">Phase 1（1〜2ヶ月目）</p>
           <ul>
-            <li class="placeholder" data-bind="phase1" data-fallback="●●（例：請求・入金確認）">●●（例：請求・入金確認）</li>
+            <li data-dyn="phase1a">請求書作成（PDF発行・送付）</li>
+            <li data-dyn="phase1b">入金消込・未入金の一覧化</li>
           </ul>
-          <p class="goal">目標：<span class="placeholder" data-bind="phase1goal" data-fallback="●●">●●</span></p>
+          <p class="goal">目標：<span data-dyn="phase1goal">代表の月初作業を半分に</span></p>
         </div>
         <div class="phase-card">
           <p class="phase-label">Phase 2（安定後）</p>
           <ul>
-            <li class="placeholder" data-bind="phase2" data-fallback="●●（例：経費精算）">●●（例：経費精算）</li>
+            <li data-dyn="phase2a">経費精算の受付・仕訳補助</li>
+            <li data-dyn="phase2b">領収書のデータ化</li>
           </ul>
-          <p class="goal">目標：<span class="placeholder" data-bind="phase2goal" data-fallback="●●">●●</span></p>
+          <p class="goal">目標：<span data-dyn="phase2goal">月末の経費締めを翌営業日までに</span></p>
         </div>
         <div class="phase-card">
           <p class="phase-label">Phase 3（必要に応じて）</p>
           <ul>
-            <li class="placeholder" data-bind="phase3" data-fallback="●●（例：マニュアル化）">●●（例：マニュアル化）</li>
+            <li data-dyn="phase3a">業務マニュアルの作成</li>
+            <li data-dyn="phase3b">チェックリスト化・引き継ぎ整備</li>
           </ul>
-          <p class="goal">目標：<span class="placeholder" data-bind="phase3goal" data-fallback="●●">●●</span></p>
+          <p class="goal">目標：<span data-dyn="phase3goal">担当が変わっても処理が止まらない</span></p>
         </div>
       </div>
-      <p class="note-box">いきなり全部ではなく、小さく始めて効果を見ながら広げる進め方が多いです。</p>
     </section>
 
-    <!-- 9. 流れ -->
+        <section class="slide" data-num="08 / 12">
+      <p class="slide__label">Team</p>
+      <h2>こんな人材を、課題に合わせてアサインします</h2>
+      <p class="slide__lead"><span data-dyn="teamSkill">実務経験者</span> ／ <span data-dyn="teamStart">小さく開始</span></p>
+      <div class="talent-grid" id="dyn-talent">
+        <article class="talent-card">
+          <img data-dyn-src="talent0photo" src="https://images.unsplash.com/photo-1573497019940-1cfe4bda5f71?auto=format&fit=crop&w=400&q=80" alt="" />
+          <div class="talent-body">
+            <p class="talent-role" data-dyn="talent0role">役割</p>
+            <p class="talent-bg" data-dyn="talent0bg">経歴</p>
+            <p class="talent-can" data-dyn="talent0can">できること</p>
+          </div>
+        </article>
+        <article class="talent-card">
+          <img data-dyn-src="talent1photo" src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=400&q=80" alt="" />
+          <div class="talent-body">
+            <p class="talent-role" data-dyn="talent1role">役割</p>
+            <p class="talent-bg" data-dyn="talent1bg">経歴</p>
+            <p class="talent-can" data-dyn="talent1can">できること</p>
+          </div>
+        </article>
+        <article class="talent-card">
+          <img data-dyn-src="talent2photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="" />
+          <div class="talent-body">
+            <p class="talent-role" data-dyn="talent2role">役割</p>
+            <p class="talent-bg" data-dyn="talent2bg">経歴</p>
+            <p class="talent-can" data-dyn="talent2can">できること</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="slide slide--accent" data-num="09 / 12">
-      <p class="slide__label">Process</p>
-      <h2>ご相談から開始までの流れ</h2>
-      <ol class="flow-list">
-        <li>
-          <span class="step-num">1</span>
-          <h3>LINEでご相談</h3>
-          <p>困っている点を簡単にお送りください</p>
-        </li>
-        <li>
-          <span class="step-num">2</span>
-          <h3>ヒアリング</h3>
-          <p>15分程度。どこから始めるか整理</p>
-        </li>
-        <li>
-          <span class="step-num">3</span>
-          <h3>範囲をご提案</h3>
-          <p>やる範囲と今やらなくてよい範囲を提示</p>
-        </li>
-        <li>
-          <span class="step-num">4</span>
-          <h3>運用開始</h3>
-          <p>合意後に引き継ぎ、安定運用へ</p>
-        </li>
-      </ol>
-      <p class="note-box">いきなり契約ではありません。まずは現状共有から。</p>
+      <p class="slide__label">Compare</p>
+      <h2 data-dyn="compareTitle">アルバイト・正社員との違い</h2>
+      <p class="slide__lead" data-dyn="compareLead">同じ時間ならアルバイトが安いが不安。正社員を雇って同じ時間やらせると、社保込みでほぼ同額になり、本業の時間が減る。Connect Boxなら同水準の月額で、正社員を増やさずに回せる。</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>アルバイト</th>
+            <th>正社員</th>
+            <th class="ours">Connect Box</th>
+          </tr>
+        </thead>
+        <tbody id="dyn-compare-body">
+          <tr>
+            <td data-dyn="cmp0item">スキル・品質</td>
+            <td data-dyn="cmp0part">教育前提。品質・継続が不安</td>
+            <td data-dyn="cmp0full">高いが、この業務に充てるのは勿体ない</td>
+            <td class="ours" data-dyn="cmp0ours">実務経験者を課題に合わせてアサイン</td>
+          </tr>
+          <tr>
+            <td data-dyn="cmp1item">稼働の柔軟さ</td>
+            <td data-dyn="cmp1part">…</td>
+            <td data-dyn="cmp1full">…</td>
+            <td class="ours" data-dyn="cmp1ours">…</td>
+          </tr>
+          <tr>
+            <td data-dyn="cmp2item">月コスト（月20時間で比較）</td>
+            <td data-dyn="cmp2part">約3〜4万円（最安）</td>
+            <td data-dyn="cmp2full">約6万円相当（雇って充てる場合）</td>
+            <td class="ours" data-dyn="cmp2ours">約6万円〜（雇わずに回せる）</td>
+          </tr>
+          <tr>
+            <td data-dyn="cmp3item">属人化リスク</td>
+            <td data-dyn="cmp3part">…</td>
+            <td data-dyn="cmp3full">…</td>
+            <td class="ours" data-dyn="cmp3ours">…</td>
+          </tr>
+          <tr>
+            <td data-dyn="cmp4item">向いている仕事</td>
+            <td data-dyn="cmp4part">…</td>
+            <td data-dyn="cmp4full">…</td>
+            <td class="ours" data-dyn="cmp4ours">…</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="compare-note" data-dyn="compareNote">※正社員欄は、雇った正社員（給与＋会社負担社保）に月20時間分を充てた場合の換算です。1名を通年採用する固定費そのものは月約35〜45万円です。</p>
     </section>
 
-    <!-- 10. FAQ -->
     <section class="slide" data-num="10 / 12">
-      <p class="slide__label">FAQ</p>
-      <h2>よくあるご質問</h2>
-      <dl class="faq-grid">
-        <div class="faq-item">
-          <dt>どのくらいの業務量から相談できますか？</dt>
-          <dd>月数十時間程度のスポット的なご相談からでも問題ありません。</dd>
-        </div>
-        <div class="faq-item">
-          <dt>セキュリティや情報管理は？</dt>
-          <dd>業務に必要な範囲での情報共有を前提に、取り扱いルールをご説明します。</dd>
-        </div>
-        <div class="faq-item">
-          <dt>いきなり契約する必要がありますか？</dt>
-          <dd>いいえ。まずはご相談と短いヒアリングからで大丈夫です。</dd>
-        </div>
-        <div class="faq-item">
-          <dt>掲載の数字は必ずその通りになりますか？</dt>
-          <dd>いいえ。現状を伺ったうえで、御社の数字でご提案します。</dd>
-        </div>
-      </dl>
+      <p class="slide__label">Pricing</p>
+      <h2>料金プラン（目安）</h2>
+      <p class="slide__lead">月額は、正社員を雇って同じ時間充てる場合とほぼ同水準。立ち上げ時のみ初回費用をいただきます。</p>
+      <div class="plan-grid" id="dyn-plans">
+        <article class="plan-card" data-plan="0">
+          <p class="plan-name" data-dyn="plan0name">Light</p>
+          <p class="plan-price"><span data-dyn="plan0price">月6万円〜</span> <small>（税別）</small></p>
+          <p class="plan-hours" data-dyn="plan0hours">目安：月20時間</p>
+          <ul>
+            <li data-dyn="plan0f0">小さな範囲から試せる</li>
+            <li data-dyn="plan0f1">週次の進捗共有</li>
+            <li data-dyn="plan0f2">まずは効果検証したい企業向け</li>
+          </ul>
+        </article>
+        <article class="plan-card is-recommend" data-plan="1">
+          <span class="plan-badge">よく選ばれる</span>
+          <p class="plan-name" data-dyn="plan1name">Standard</p>
+          <p class="plan-price"><span data-dyn="plan1price">月11万円〜</span> <small>（税別）</small></p>
+          <p class="plan-hours" data-dyn="plan1hours">目安：月40時間</p>
+          <ul>
+            <li data-dyn="plan1f0">本格運用の標準プラン</li>
+            <li data-dyn="plan1f1">2領域までの並行支援</li>
+            <li data-dyn="plan1f2">マニュアル整備を含む</li>
+          </ul>
+        </article>
+        <article class="plan-card" data-plan="2">
+          <p class="plan-name" data-dyn="plan2name">Flex</p>
+          <p class="plan-price"><span data-dyn="plan2price">月16万円〜</span> <small>（税別）</small></p>
+          <p class="plan-hours" data-dyn="plan2hours">目安：月60時間〜</p>
+          <ul>
+            <li data-dyn="plan2f0">複数領域の本格運用向け</li>
+            <li data-dyn="plan2f1">繁忙期の厚付けに強い</li>
+            <li data-dyn="plan2f2">追加時間は時間単価で調整</li>
+          </ul>
+        </article>
+      </div>
+      <div class="plan-setup">
+        <span class="plan-setup__label" data-dyn="setupLabel">初回費用（一度きり）</span>
+        <span class="plan-setup__price"><span data-dyn="setupPrice">10万円</span> <small>（税別）</small></span>
+        <span class="plan-setup__desc" data-dyn="setupDesc">業務設計・手順化・ツール連携の立ち上げ</span>
+      </div>
+      <p class="plan-note" data-dyn="planNote">料金は税別の目安。初回費用は契約時のみ。課題と範囲の確認後に、御社向け見積へ落とし込みます。</p>
     </section>
 
-    <!-- 11. 次のステップ -->
     <section class="slide slide--dark" data-num="11 / 12">
       <p class="slide__label">Next Step</p>
       <h2>次のステップ</h2>
       <div class="next-steps">
         <ol>
-          <li>本日の内容を整理（担当よりメモをお送りします）</li>
-          <li>Phase案の具体化 — <span data-bind="deadline" data-fallback="●月●日">●月●日</span>までに御社向け案をご提示</li>
-          <li>次回：現行フローの共有（30分）— 実際の業務を見ながら範囲を確定</li>
+          <li>本日の内容を整理し、メモをお送りします</li>
+          <li>Phase案の更新 — <span data-bind="deadline" data-fallback="●月●日">●月●日</span>までにお送りします</li>
+          <li><strong>次回：現行フローの共有（30分）</strong> — 候補：<span data-bind="nextdate" data-fallback="●月●日 ●:●●">●月●日 ●:●●</span></li>
         </ol>
         <div class="cta-box">
-          <p>ご相談・お問い合わせ</p>
-          <strong>LINE：lin.ee/RiVp6pb</strong>
+          <p>本日のゴール</p>
+          <strong>次回日程を確定する</strong>
         </div>
       </div>
     </section>
 
-    <!-- 12. 会社紹介 -->
     <section class="slide" data-num="12 / 12">
       <p class="slide__label">Company</p>
-      <h2>会社紹介</h2>
+      <h2>Connect Box について</h2>
       <div class="company-grid">
         <div>
           <p class="slide__lead" style="margin-bottom: 1rem;"><strong>株式会社T-connect</strong><br />Connect Box事業</p>
           <ul>
-            <li>BPO・コンサルティング（バックオフィス業務代行）</li>
-            <li>探偵事業 / 宝飾事業 / 起業家育成事業</li>
+            <li>営業・集客支援（テレアポ、顧客管理など）</li>
+            <li>バックオフィス代行（経理・総務・営業事務）</li>
+            <li>立上げ支援（LP・販促・初期の型づくり）</li>
+            <li>必要な領域だけ、必要な分だけ外に出せる</li>
           </ul>
         </div>
         <div class="value-quote">
           <p>目先ではなく、未来を選べ</p>
-          <p>人と人との縁を紡ぐ企業として、長期的な信頼を大切にしています。</p>
+          <p>長期的な信頼を優先し、今やらなくてよい範囲もお伝えします。</p>
         </div>
       </div>
     </section>
 
   </div>
-  <script>
-    (function () {
-      var STORAGE_KEY = "connectbox-backoffice-hearing";
-      var form = document.getElementById("hearing-form");
-      var panel = document.getElementById("hearing-panel");
-      var toggle = document.getElementById("hearing-toggle");
 
-      function setOpen(open) {
-        panel.classList.toggle("is-open", open);
-        panel.setAttribute("aria-hidden", open ? "false" : "true");
-      }
 
-      function readForm() {
-        var data = {};
-        Array.prototype.forEach.call(form.elements, function (el) {
-          if (el.name) data[el.name] = el.value;
-        });
-        return data;
-      }
-
-      function writeForm(data) {
-        Array.prototype.forEach.call(form.elements, function (el) {
-          if (el.name && data[el.name] != null) el.value = data[el.name];
-        });
-      }
-
-      function apply() {
-        var data = readForm();
-        document.querySelectorAll("[data-bind]").forEach(function (el) {
-          var key = el.getAttribute("data-bind");
-          var fallback = el.getAttribute("data-fallback") || "";
-          var value = (data[key] || "").trim();
-          el.textContent = value || fallback;
-          el.classList.toggle("placeholder", !value);
-        });
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        } catch (e) {}
-      }
-
-      try {
-        var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        writeForm(saved);
-      } catch (e) {}
-
-      apply();
-
-      form.addEventListener("input", apply);
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        apply();
-        setOpen(false);
-      });
-
-      toggle.addEventListener("click", function () {
-        setOpen(!panel.classList.contains("is-open"));
-      });
-      document.getElementById("hearing-close").addEventListener("click", function () {
-        setOpen(false);
-      });
-      document.getElementById("hearing-reset").addEventListener("click", function () {
-        form.reset();
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-        apply();
-      });
-    })();
-  </script>
+  <script src="/lp/back-office/deck-logic.js"></script>
 </body>
 </html>
