@@ -134,9 +134,20 @@
     <section class="card">
       <h2>使い方</h2>
       <p class="hint">
-        課題タイプを追加・編集できます。保存すると同じブラウザの商談資料にすぐ反映されます。<br />
-        共有・本番反映は「JSONダウンロード」→ <code>public/lp/back-office/deck-content.json</code> を差し替え。
+        この画面でスライド文言を編集できます。「ブラウザに保存」で同じPCの商談資料にすぐ反映されます。<br />
+        本番反映は「JSONダウンロード」→ <code>public/lp/back-office/deck-content.json</code> を差し替えてデプロイ。<br />
+        編集できる主な項目：2ページ目の事業フェーズ、料金プラン、課題タイプごとの御社向けプラン（Phase・目標数字）。
       </p>
+    </section>
+
+    <section class="card">
+      <h2>なぜT-connectなのか</h2>
+      <div id="why-editor"></div>
+    </section>
+
+    <section class="card">
+      <h2>企業がやることのフェーズ</h2>
+      <div id="about-editor"></div>
     </section>
 
     <section class="card">
@@ -145,7 +156,7 @@
     </section>
 
     <section class="card">
-      <h2>課題タイプ</h2>
+      <h2>課題タイプ（御社向けプラン含む）</h2>
       <div class="toolbar-row">
         <label>編集する課題
           <select id="challenge-select"></select>
@@ -165,6 +176,8 @@
       var currentId = "";
 
       var statusEl = document.getElementById("status");
+      var whyEditor = document.getElementById("why-editor");
+      var aboutEditor = document.getElementById("about-editor");
       var plansEditor = document.getElementById("plans-editor");
       var challengeSelect = document.getElementById("challenge-select");
       var challengeEditor = document.getElementById("challenge-editor");
@@ -188,6 +201,11 @@
           teamSkill: "",
           teamStart: "",
           recommendPlan: 1,
+          detachPhases: [
+            { label: "今すぐ外に出す", hint: "定型で回せる仕事", items: ["", "", ""] },
+            { label: "型づくり後に外に出す", hint: "手順が固まってから任せる", items: ["", "", ""] },
+            { label: "社内に残す", hint: "判断・関係性が要る仕事", items: ["", "", ""] }
+          ],
           cases: [0, 1, 2].map(function () {
             return {
               industry: "",
@@ -215,7 +233,12 @@
         try {
           local = JSON.parse(localStorage.getItem(CONTENT_KEY) || "null");
         } catch (e) {}
-        if (local && Array.isArray(local.challenges) && local.challenges.length) {
+        if (
+          local &&
+          Array.isArray(local.challenges) &&
+          local.challenges.length &&
+          (local.version || 0) >= 14
+        ) {
           content = local;
           setStatus("ブラウザ保存データを表示中");
           return Promise.resolve(content);
@@ -230,6 +253,8 @@
       }
 
       function saveLocal() {
+        readWhyFromForm();
+        readAboutFromForm();
         readPlansFromForm();
         readChallengeFromForm();
         localStorage.setItem(CONTENT_KEY, JSON.stringify(content));
@@ -237,6 +262,8 @@
       }
 
       function download() {
+        readWhyFromForm();
+        readAboutFromForm();
         readPlansFromForm();
         readChallengeFromForm();
         var blob = new Blob([JSON.stringify(content, null, 2)], {
@@ -248,6 +275,115 @@
         a.click();
         URL.revokeObjectURL(a.href);
         setStatus("JSONをダウンロードしました");
+      }
+
+
+      function renderWhy() {
+        if (!content.why) {
+          content.why = {
+            title: "なぜ、T-connectなのか",
+            lead: "",
+            belief: "",
+            body: ["", ""],
+            closing: "",
+            closingShort: ""
+          };
+        }
+        if (!whyEditor) return;
+        whyEditor.innerHTML =
+          "<label>タイトル<input id='why-title' /></label>" +
+          "<label>リード（代表の背景）<textarea id='why-lead'></textarea></label>" +
+          "<label>信念（大きく出す一文）<input id='why-belief' /></label>" +
+          "<label>本文1<textarea id='why-body0'></textarea></label>" +
+          "<label>本文2<textarea id='why-body1'></textarea></label>" +
+          "<label>締めの一文<textarea id='why-closing'></textarea></label>" +
+          "<label>Teamスライド用の短い締め<input id='why-closing-short' /></label>";
+        var w = content.why;
+        document.getElementById("why-title").value = w.title || "";
+        document.getElementById("why-lead").value = w.lead || "";
+        document.getElementById("why-belief").value = w.belief || "";
+        document.getElementById("why-body0").value = (w.body && w.body[0]) || "";
+        document.getElementById("why-body1").value = (w.body && w.body[1]) || "";
+        document.getElementById("why-closing").value = w.closing || "";
+        document.getElementById("why-closing-short").value = w.closingShort || "";
+      }
+
+      function readWhyFromForm() {
+        if (!whyEditor || !document.getElementById("why-title")) return;
+        if (!content.why) content.why = {};
+        content.why.title = document.getElementById("why-title").value;
+        content.why.lead = document.getElementById("why-lead").value;
+        content.why.belief = document.getElementById("why-belief").value;
+        content.why.body = [
+          document.getElementById("why-body0").value,
+          document.getElementById("why-body1").value
+        ];
+        content.why.closing = document.getElementById("why-closing").value;
+        content.why.closingShort = document.getElementById("why-closing-short").value;
+      }
+
+      function renderAbout() {
+        if (!content.about) {
+          content.about = {
+            title: "企業がやることのフェーズ",
+            lead: "",
+            phases: [],
+          };
+        }
+        if (!content.about.phases || !content.about.phases.length) {
+          content.about.phases = (content.about.items || []).map(function (it) {
+            return { title: it.title || "", desc: it.desc || "", items: ["", "", "", "", ""] };
+          });
+        }
+        while (content.about.phases.length < 4) {
+          content.about.phases.push({ title: "", desc: "", items: ["", "", "", "", ""] });
+        }
+        var html = "";
+        html += "<label>タイトル<input id='about-title' /></label>";
+        html += "<label>リード文<textarea id='about-lead'></textarea></label>";
+        content.about.phases.forEach(function (phase, i) {
+          html += '<div class="case-block"><h3>フェーズ ' + (i + 1) + "</h3>";
+          html += "<div class='grid-2'>";
+          html += "<label>フェーズ名<input data-about='" + i + "' data-field='title' /></label>";
+          html += "<label>一言説明<input data-about='" + i + "' data-field='desc' /></label>";
+          html += "</div>";
+          for (var j = 0; j < 5; j++) {
+            html += "<label>項目 " + (j + 1) + "<input data-about='" + i + "' data-item='" + j + "' /></label>";
+          }
+          html += "</div>";
+        });
+        aboutEditor.innerHTML = html;
+        document.getElementById("about-title").value = content.about.title || "";
+        document.getElementById("about-lead").value = content.about.lead || "";
+        content.about.phases.forEach(function (phase, i) {
+          aboutEditor.querySelector("[data-about='" + i + "'][data-field='title']").value = phase.title || "";
+          aboutEditor.querySelector("[data-about='" + i + "'][data-field='desc']").value = phase.desc || "";
+          (phase.items || []).forEach(function (line, j) {
+            var el = aboutEditor.querySelector("[data-about='" + i + "'][data-item='" + j + "']");
+            if (el) el.value = line || "";
+          });
+        });
+      }
+
+      function readAboutFromForm() {
+        if (!aboutEditor.querySelector("#about-title")) return;
+        if (!content.about) content.about = { phases: [] };
+        content.about.title = document.getElementById("about-title").value;
+        content.about.lead = document.getElementById("about-lead").value;
+        content.about.phases = [0, 1, 2, 3].map(function (i) {
+          var items = [0, 1, 2, 3, 4].map(function (j) {
+            var el = aboutEditor.querySelector("[data-about='" + i + "'][data-item='" + j + "']");
+            return el ? el.value : "";
+          }).filter(function (v, idx, arr) {
+            // keep trailing empties for fixed 5 slots in deck; keep all
+            return true;
+          });
+          return {
+            title: aboutEditor.querySelector("[data-about='" + i + "'][data-field='title']").value,
+            desc: aboutEditor.querySelector("[data-about='" + i + "'][data-field='desc']").value,
+            items: items,
+          };
+        });
       }
 
       function renderPlans() {
@@ -330,24 +466,33 @@
         for (var p = 0; p < 4; p++) {
           html += "<label>起きやすいこと " + (p + 1) + "<textarea id='ch-pain-" + p + "'></textarea></label>";
         }
-        for (var s = 0; s < 7; s++) {
-          html += "<label>任せやすいこと " + (s + 1) + "<input id='ch-svc-" + s + "' /></label>";
-        }
-        html += "<label>重点番号（カンマ区切り・0始まり）<input id='ch-focus' /></label>";
 
-        html += '<div class="case-block"><h3>Phase 1</h3>';
-        html += "<label>内容A<input id='ph1a' /></label><label>内容B<input id='ph1b' /></label><label>目標<input id='ph1g' /></label></div>";
-        html += '<div class="case-block"><h3>Phase 2</h3>';
-        html += "<label>内容A<input id='ph2a' /></label><label>内容B<input id='ph2b' /></label><label>目標<input id='ph2g' /></label></div>";
-        html += '<div class="case-block"><h3>Phase 3</h3>';
-        html += "<label>内容A<input id='ph3a' /></label><label>内容B<input id='ph3b' /></label><label>目標<input id='ph3g' /></label></div>";
+        html += '<div class="case-block"><h3>任せやすいこと（フェーズで切り離す）</h3>';
+        for (var d = 0; d < 3; d++) {
+          html += "<label>列" + (d + 1) + " 見出し<input id='detach-" + d + "-label' /></label>";
+          html += "<label>列" + (d + 1) + " 補足<input id='detach-" + d + "-hint' /></label>";
+          for (var di = 0; di < 3; di++) {
+            html += "<label>列" + (d + 1) + " 項目" + (di + 1) + "<input id='detach-" + d + "-i" + di + "' /></label>";
+          }
+        }
+        html += "</div>";
+
+        html += '<div class="case-block"><h3>御社向けプラン（編集可）</h3>';
+        html += "<p class='hint'>課題タイプごとに Phase 内容と目標数字を変えられます。</p>";
+        html += "<h3>Phase 1</h3>";
+        html += "<label>内容A<input id='ph1a' /></label><label>内容B<input id='ph1b' /></label><label>目標（数字）<input id='ph1g' /></label>";
+        html += "<h3>Phase 2</h3>";
+        html += "<label>内容A<input id='ph2a' /></label><label>内容B<input id='ph2b' /></label><label>目標（数字）<input id='ph2g' /></label>";
+        html += "<h3>Phase 3</h3>";
+        html += "<label>内容A<input id='ph3a' /></label><label>内容B<input id='ph3b' /></label><label>目標（数字）<input id='ph3g' /></label>";
+        html += "</div>";
 
         for (var c = 0; c < 3; c++) {
           html +=
             '<div class="case-block"><h3>具体イメージ ' + (c + 1) + "</h3>" +
             "<div class='grid-2'>" +
             "<label>タグ<input id='case-" + c + "-industry' /></label>" +
-            "<label>数字<input id='case-" + c + "-num' /></label>" +
+            "<label>想定効果（数値イメージ）<input id='case-" + c + "-num' /></label>" +
             "</div>" +
             "<label>タイトル<input id='case-" + c + "-title' /></label>" +
             "<label>課題<textarea id='case-" + c + "-challenge'></textarea></label>" +
@@ -370,11 +515,18 @@
           var el = document.getElementById("ch-pain-" + i);
           if (el) el.value = t;
         });
-        (ch.services || []).forEach(function (t, i) {
-          var el = document.getElementById("ch-svc-" + i);
-          if (el) el.value = t;
+        if (!ch.detachPhases) ch.detachPhases = [];
+        while (ch.detachPhases.length < 3) {
+          ch.detachPhases.push({ label: "", hint: "", items: ["", "", ""] });
+        }
+        ch.detachPhases.forEach(function (phase, d) {
+          document.getElementById("detach-" + d + "-label").value = phase.label || "";
+          document.getElementById("detach-" + d + "-hint").value = phase.hint || "";
+          (phase.items || []).forEach(function (item, di) {
+            var el = document.getElementById("detach-" + d + "-i" + di);
+            if (el) el.value = item || "";
+          });
         });
-        document.getElementById("ch-focus").value = (ch.focusSvc || []).join(",");
         document.getElementById("ph1a").value = ch.phase1a || "";
         document.getElementById("ph1b").value = ch.phase1b || "";
         document.getElementById("ph1g").value = ch.phase1goal || "";
@@ -412,14 +564,15 @@
         ch.pains = [0, 1, 2, 3].map(function (i) {
           return document.getElementById("ch-pain-" + i).value;
         });
-        ch.services = [0, 1, 2, 3, 4, 5, 6].map(function (i) {
-          return document.getElementById("ch-svc-" + i).value;
+        ch.detachPhases = [0, 1, 2].map(function (d) {
+          return {
+            label: document.getElementById("detach-" + d + "-label").value,
+            hint: document.getElementById("detach-" + d + "-hint").value,
+            items: [0, 1, 2].map(function (di) {
+              return document.getElementById("detach-" + d + "-i" + di).value;
+            }),
+          };
         });
-        ch.focusSvc = document
-          .getElementById("ch-focus")
-          .value.split(",")
-          .map(function (v) { return parseInt(v.trim(), 10); })
-          .filter(function (n) { return !isNaN(n); });
         ch.phase1a = document.getElementById("ph1a").value;
         ch.phase1b = document.getElementById("ph1b").value;
         ch.phase1goal = document.getElementById("ph1g").value;
@@ -445,6 +598,8 @@
         if (!content.challenges) content.challenges = [];
         if (!content.plans) content.plans = [];
         if (!currentId && content.challenges[0]) currentId = content.challenges[0].id;
+        renderWhy();
+        renderAbout();
         renderPlans();
         fillChallengeSelect();
         renderChallenge();
