@@ -15,7 +15,7 @@ export const businesses: Business[] = [
     slug: "connectbox",
     name: "Connect Box",
     en: "BPO & Consulting",
-    path: "/business/connectbox",
+    path: "/connectbox",
     tagline: "企業の課題解決を、BPOとコンサルティングで。",
     description:
       "バックオフィス代行・DX推進・Webマーケ・採用支援・経営戦略など、必要な領域から始められる業務支援。",
@@ -27,7 +27,7 @@ export const businesses: Business[] = [
     slug: "jewelry",
     name: "宝飾事業",
     en: "Jewelry",
-    path: "/business/jewelry",
+    path: "/jewelry",
     tagline: "金・プラチナ・ブランド品の買取。",
     description: "大阪を拠点に、金・プラチナ・ブランド品買取を展開しています。",
     heroImage:
@@ -38,7 +38,7 @@ export const businesses: Business[] = [
     slug: "incubation",
     name: "起業家育成事業",
     en: "Incubation",
-    path: "/business/incubation",
+    path: "/incubation",
     tagline: "次の起業家を、育てる。",
     description: "起業を目指す方への支援事業です。",
     heroImage:

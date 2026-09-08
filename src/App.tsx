@@ -10,9 +10,9 @@ import JewelryPage from "./pages/business/JewelryPage";
 import IncubationPage from "./pages/business/IncubationPage";
 import LpPage from "./pages/LpPage";
 
-function LegacyServiceRedirect() {
+function LegacyConnectBoxServiceRedirect() {
   const { slug } = useParams();
-  return <Navigate to={`/lp/${slug ?? ""}`} replace />;
+  return <Navigate to={`/connectbox/${slug ?? ""}`} replace />;
 }
 
 export default function App() {
@@ -21,19 +21,28 @@ export default function App() {
       <Routes>
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/business/connectbox" element={<ConnectBoxPage />} />
-          <Route path="/business/jewelry" element={<JewelryPage />} />
-          <Route path="/business/incubation" element={<IncubationPage />} />
+          <Route path="/connectbox" element={<ConnectBoxPage />} />
+          <Route path="/jewelry" element={<JewelryPage />} />
+          <Route path="/incubation" element={<IncubationPage />} />
           <Route path="/company" element={<CompanyPage />} />
         </Route>
+
         <Route element={<DetectiveLayout />}>
           <Route path="/detective" element={<DetectivePage />} />
         </Route>
-        <Route path="/business/detective" element={<Navigate to="/detective" replace />} />
-        <Route path="/lp/:slug" element={<LpLayout />}>
+
+        <Route path="/connectbox/:slug" element={<LpLayout />}>
           <Route index element={<LpPage />} />
         </Route>
-        <Route path="/services/:slug" element={<LegacyServiceRedirect />} />
+
+        {/* 旧URL互換 */}
+        <Route path="/business/connectbox" element={<Navigate to="/connectbox" replace />} />
+        <Route path="/business/jewelry" element={<Navigate to="/jewelry" replace />} />
+        <Route path="/business/incubation" element={<Navigate to="/incubation" replace />} />
+        <Route path="/business/detective" element={<Navigate to="/detective" replace />} />
+        <Route path="/lp/:slug" element={<LegacyConnectBoxServiceRedirect />} />
+        <Route path="/services/:slug" element={<LegacyConnectBoxServiceRedirect />} />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

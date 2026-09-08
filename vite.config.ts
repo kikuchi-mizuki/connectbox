@@ -13,6 +13,12 @@ function unlistedBackOfficeDeck(): Plugin {
       return;
     }
     const [path, query] = req.url.split("?");
+    if (
+      path === "/connectbox/back-office/deck" ||
+      path === "/connectbox/back-office/deck/"
+    ) {
+      req.url = "/connectbox/back-office/deck.html" + (query ? `?${query}` : "");
+    }
     if (path === "/lp/back-office/deck" || path === "/lp/back-office/deck/") {
       req.url = "/lp/back-office/deck.html" + (query ? `?${query}` : "");
     }
