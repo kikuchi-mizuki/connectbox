@@ -1,4 +1,7 @@
 export const LINE_URL = "https://lin.ee/RiVp6pb";
 
+/** 探偵事業の相談フォーム（URL確定後に差し替え） */
+export const DETECTIVE_FORM_URL = "https://forms.gle/REPLACE_DETECTIVE_FORM";
+
 export const SITE_NAME = "T-connect";
 export const COMPANY_NAME = "株式会社T-connect";

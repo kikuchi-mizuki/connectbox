@@ -322,6 +322,30 @@ button {
   background: var(--line-green-hover);
 }
 
+.btn--secondary {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  box-shadow: none;
+}
+
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.section:not(.section--ink) .btn--secondary,
+.section--muted .btn--secondary {
+  color: var(--ink);
+  border-color: rgba(21, 34, 56, 0.28);
+}
+
+.section:not(.section--ink) .btn--secondary:hover,
+.section--muted .btn--secondary:hover {
+  background: rgba(21, 34, 56, 0.06);
+  border-color: rgba(21, 34, 56, 0.5);
+}
+
 .btn--large {
   padding: 1.15rem 2rem;
   font-size: 1.05rem;
@@ -1929,13 +1953,18 @@ button {
   gap: 1rem;
 }
 
-.biz-detail-card {
-  padding: 1.25rem 1.35rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fff;
-  text-decoration: none;
-  color: inherit;
+.section--ink .biz-detail-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--white);
+}
+
+.section--ink .biz-detail-card h3 {
+  color: var(--white);
+}
+
+.section--ink .biz-detail-card p {
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .biz-detail-card--link {

@@ -23,7 +23,7 @@ export default function CompanyPage() {
   const reduce = useReducedMotion();
   usePageMeta({
     title: "会社情報｜T-connect",
-    description: `${company.legalName}の会社情報。BPO・コンサルティング、探偵、宝飾、起業家育成の4事業を展開。`,
+    description: `${company.legalName}の会社情報。BPO・コンサルティング、宝飾、起業家育成などの事業を展開。`,
   });
 
   return (

@@ -83,7 +83,7 @@ export default function HomePage() {
   usePageMeta({
     title: "T-connect",
     description:
-      "株式会社T-connect。人と人との縁を紡ぐ企業。BPO・コンサルティング、探偵、宝飾、起業家育成の4事業を展開。",
+      "株式会社T-connect。人と人との縁を紡ぐ企業。BPO・コンサルティング、宝飾、起業家育成などの事業を展開。",
   });
 
   return (

@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes, useParams } from "react-router-dom";
+import DetectiveLayout from "./components/DetectiveLayout";
 import HpLayout from "./components/HpLayout";
 import LpLayout from "./components/LpLayout";
 import CompanyPage from "./pages/CompanyPage";
@@ -21,11 +22,14 @@ export default function App() {
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/business/connectbox" element={<ConnectBoxPage />} />
-          <Route path="/business/detective" element={<DetectivePage />} />
           <Route path="/business/jewelry" element={<JewelryPage />} />
           <Route path="/business/incubation" element={<IncubationPage />} />
           <Route path="/company" element={<CompanyPage />} />
         </Route>
+        <Route element={<DetectiveLayout />}>
+          <Route path="/detective" element={<DetectivePage />} />
+        </Route>
+        <Route path="/business/detective" element={<Navigate to="/detective" replace />} />
         <Route path="/lp/:slug" element={<LpLayout />}>
           <Route index element={<LpPage />} />
         </Route>

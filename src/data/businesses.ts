@@ -9,6 +9,7 @@ export type Business = {
   status: "active" | "preparing";
 };
 
+/** HP・ナビに出す事業（探偵は独立LPのため含めない） */
 export const businesses: Business[] = [
   {
     slug: "connectbox",
@@ -21,17 +22,6 @@ export const businesses: Business[] = [
     heroImage:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80",
     status: "active",
-  },
-  {
-    slug: "detective",
-    name: "探偵事業",
-    en: "Detective",
-    path: "/business/detective",
-    tagline: "不貞調査を、確かな証拠で。",
-    description: "探偵業の開業準備を進めています。SNS運用・SEO対策を含む中長期的なWeb集客基盤を構築中。",
-    heroImage:
-      "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=2400&q=80",
-    status: "preparing",
   },
   {
     slug: "jewelry",
