@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { DETECTIVE_FORM_URL, LINE_URL } from "../constants";
+import { tentOffice } from "../data/tent";
 import "../detective.css";
 
 function LineIcon() {
@@ -60,8 +61,8 @@ export default function DetectiveLayout() {
       <header className="det-header">
         <div className="det-header__inner">
           <a className="det-header__brand" href="#det-hero">
-            <span className="det-header__mark">Confidential Consultation</span>
-            <strong>不貞調査のご相談</strong>
+            <span className="det-header__mark">{tentOffice.nameEn}</span>
+            <strong>{tentOffice.name}</strong>
           </a>
           <div className="det-header__actions">
             <a className="det-btn det-btn--line" href={LINE_URL} target="_blank" rel="noopener noreferrer">
@@ -86,7 +87,9 @@ export default function DetectiveLayout() {
         className={`det-sticky${showSticky ? " is-visible" : ""}`}
         aria-hidden={!showSticky}
       >
-        <p className="det-sticky__label">秘密厳守｜まずは無料でご相談ください</p>
+        <p className="det-sticky__label">
+          {tentOffice.name}｜秘密厳守｜無料相談
+        </p>
         <div className="det-sticky__btns">
           <a className="det-btn det-btn--line" href={LINE_URL} target="_blank" rel="noopener noreferrer">
             <LineIcon />
@@ -105,8 +108,13 @@ export default function DetectiveLayout() {
 
       <footer className="det-footer">
         <div className="det-footer__inner">
-          <p>秘密厳守｜無料相談受付</p>
-          <span>© {new Date().getFullYear()} Detective Consultation</span>
+          <div className="det-footer__brand">
+            <p>{tentOffice.name}</p>
+            <span>秘密厳守｜無料相談受付</span>
+          </div>
+          <span>
+            © {new Date().getFullYear()} {tentOffice.name} / {tentOffice.legalNote}
+          </span>
         </div>
       </footer>
     </div>

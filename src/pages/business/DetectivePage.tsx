@@ -1,6 +1,8 @@
 import { motion, useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
 import FadeIn from "../../components/FadeIn";
 import { DETECTIVE_FORM_URL, LINE_URL } from "../../constants";
+import { tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 const pains = [
@@ -15,21 +17,25 @@ const reasons = [
     n: "01",
     title: "秘密を、最優先に守ります",
     body: "ご相談内容・調査内容は厳重に管理し、ご本人の同意なく第三者へ開示しません。周囲に知られない進め方を大切にします。",
+    icon: "lock" as const,
   },
   {
     n: "02",
     title: "不安に寄り添い、事実で整理します",
     body: "感情をあおるのではなく、状況を丁寧に伺い、何を確かめるべきかを一緒に整理します。迷っている段階でもご相談ください。",
+    icon: "listen" as const,
   },
   {
     n: "03",
     title: "証拠が、次の一手につながります",
     body: "報告書として事実を残し、話し合い・決断・専門家への相談など、その後の選択を支えます。",
+    icon: "doc" as const,
   },
   {
     n: "04",
     title: "法令を守った調査のみ行います",
     body: "探偵業法をはじめ、法令の範囲内で調査します。無理な勧誘はいたしません。",
+    icon: "scale" as const,
   },
 ];
 
@@ -37,14 +43,17 @@ const services = [
   {
     title: "尾行・行動確認",
     body: "「いつ・どこで・誰と」を事実として把握し、疑惑の有無をはっきりさせます。",
+    image: "/detective/thumb-tail.jpg",
   },
   {
     title: "証拠撮影",
     body: "判断や話し合いに使えるよう、必要な場面を適切に記録します。",
+    image: "/detective/thumb-camera.jpg",
   },
   {
     title: "調査報告書",
     body: "日時・場所・事実関係を整理した報告書をお渡しします。",
+    image: "/detective/thumb-report.jpg",
   },
 ];
 
@@ -52,22 +61,27 @@ const steps = [
   {
     title: "無料相談",
     body: "LINEまたはフォームで、いま感じている違和感をお聞かせください。",
+    icon: "chat" as const,
   },
   {
     title: "ヒアリング",
     body: "状況を整理し、調べるべきポイントを一緒に絞り込みます。",
+    icon: "listen" as const,
   },
   {
     title: "方針・お見積り",
     body: "調査の進め方と費用感をわかりやすくご案内します。",
+    icon: "plan" as const,
   },
   {
     title: "調査",
     body: "秘密厳守のもと、必要な範囲で調査を実施します。",
+    icon: "search" as const,
   },
   {
     title: "報告と今後の整理",
     body: "報告書をもとに、証拠の扱い方や次に取れる行動を整理します。",
+    icon: "doc" as const,
   },
 ];
 
@@ -89,6 +103,102 @@ const faqs = [
     a: "ご自身の判断材料としてご利用いただけます。法的な手続きでの活用については、必要に応じて専門家への相談もご案内します。",
   },
 ];
+
+type IconName =
+  | "lock"
+  | "listen"
+  | "doc"
+  | "scale"
+  | "chat"
+  | "plan"
+  | "search"
+  | "shield"
+  | "talk"
+  | "law";
+
+function DetIcon({ name }: { name: IconName }) {
+  const common = {
+    viewBox: "0 0 32 32",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.4,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+
+  const paths: Record<IconName, ReactNode> = {
+    lock: (
+      <>
+        <rect x="9" y="14" width="14" height="12" rx="2" />
+        <path d="M12 14v-3a4 4 0 0 1 8 0v3" />
+        <circle cx="16" cy="20" r="1.2" fill="currentColor" stroke="none" />
+      </>
+    ),
+    listen: (
+      <>
+        <path d="M8 18v-3a8 8 0 0 1 16 0v3" />
+        <path d="M7 18h3v5H9a2 2 0 0 1-2-2v-3zM25 18h-3v5h1a2 2 0 0 0 2-2v-3z" />
+      </>
+    ),
+    doc: (
+      <>
+        <path d="M10 6h9l5 5v15H10V6z" />
+        <path d="M19 6v5h5M13 16h8M13 20h8M13 24h5" />
+      </>
+    ),
+    scale: (
+      <>
+        <path d="M16 6v18M10 24h12" />
+        <path d="M16 10h-7l2.5 6H16M16 10h7l-2.5 6H16" />
+      </>
+    ),
+    chat: (
+      <>
+        <path d="M7 9h18v12H13l-4 4v-4H7V9z" />
+        <path d="M12 14h8M12 18h5" />
+      </>
+    ),
+    plan: (
+      <>
+        <rect x="8" y="7" width="16" height="18" rx="1.5" />
+        <path d="M12 12h8M12 16h8M12 20h5" />
+      </>
+    ),
+    search: (
+      <>
+        <circle cx="14" cy="14" r="6.5" />
+        <path d="M19 19l5 5" />
+      </>
+    ),
+    shield: (
+      <>
+        <path d="M16 5l10 4v7c0 6-4.5 10-10 11C10.5 26 6 22 6 16V9l10-4z" />
+        <path d="M12.5 16.5l2.5 2.5 5-5" />
+      </>
+    ),
+    talk: (
+      <>
+        <circle cx="11" cy="13" r="3.2" />
+        <circle cx="21" cy="13" r="3.2" />
+        <path d="M6.5 22c.8-3 2.8-4.5 4.5-4.5S14.5 19 15.2 22M16.8 22c.8-3 2.8-4.5 4.5-4.5s3.7 1.5 4.5 4.5" />
+      </>
+    ),
+    law: (
+      <>
+        <path d="M16 6v18M9 24h14" />
+        <path d="M11 10h10M13 10v3M19 10v3" />
+        <path d="M8 16h4l-2 5H8l2-5zM20 16h4l-2 5h-2l2-5z" />
+      </>
+    ),
+  };
+
+  return (
+    <svg className="det-icon" {...common}>
+      {paths[name]}
+    </svg>
+  );
+}
 
 function LineIcon() {
   return (
@@ -143,10 +253,9 @@ function FormButton({
 export default function DetectivePage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "不貞調査の無料相談｜秘密厳守",
-    description:
-      "パートナーへの不安を、一人で抱え込まないでください。不貞調査の無料相談を受付中。秘密厳守。LINEまたはフォームからご相談ください。",
-    keywords: "不貞調査,浮気調査,探偵,無料相談,秘密厳守",
+    title: `${tentOffice.name}｜不貞調査の無料相談`,
+    description: `${tentOffice.name}。${tentOffice.message}不貞調査の無料相談を受付中。秘密厳守。`,
+    keywords: "探偵事務所TENT,TENT,不貞調査,浮気調査,探偵,無料相談,秘密厳守",
     path: "/detective",
   });
 
@@ -159,12 +268,16 @@ export default function DetectivePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="det-hero__eyebrow">Infidelity Investigation</p>
+            <p className="det-hero__brand">
+              <span className="det-hero__brand-en">{tentOffice.nameEn}</span>
+              <span className="det-hero__brand-ja">{tentOffice.name}</span>
+            </p>
             <h1>
               その不安、
               <br />
               一人で抱え込まないでください。
             </h1>
+            <p className="det-hero__promise">{tentOffice.message}</p>
             <p className="det-hero__lead">
               「気のせい」で済ませたい気持ちと、「確かめたい」気持ちが、同時にあるかもしれません。
               不貞調査の無料相談では、状況の整理からお手伝いします。いきなり契約ではありません。
@@ -177,10 +290,10 @@ export default function DetectivePage() {
           </motion.div>
         </div>
         <div className="det-hero__media" aria-hidden="true">
-          <div className="det-hero__team">
-            <img src="/detective/member-1.jpg" alt="" />
-            <img src="/detective/member-2.jpg" alt="" />
-            <img src="/detective/member-3.jpg" alt="" />
+          <div className="det-hero__scenes">
+            <img src="/detective/scene-1.jpg" alt="" />
+            <img src="/detective/scene-2.jpg" alt="" />
+            <img src="/detective/scene-3.jpg" alt="" />
           </div>
           <div className="det-hero__shade" />
         </div>
@@ -189,41 +302,56 @@ export default function DetectivePage() {
       <section className="det-trust" aria-label="安心のポイント">
         <div className="det-trust__inner">
           <div className="det-trust__item">
+            <span className="det-trust__icon">
+              <DetIcon name="shield" />
+            </span>
             <strong>秘密厳守</strong>
             <span>相談内容を外部に漏らしません</span>
           </div>
           <div className="det-trust__item">
+            <span className="det-trust__icon">
+              <DetIcon name="talk" />
+            </span>
             <strong>まずは無料相談</strong>
             <span>迷っている段階でも大丈夫です</span>
           </div>
           <div className="det-trust__item">
+            <span className="det-trust__icon">
+              <DetIcon name="law" />
+            </span>
             <strong>法令遵守</strong>
             <span>探偵業法の範囲で調査します</span>
           </div>
         </div>
       </section>
 
-      <section className="det-section" aria-labelledby="pain-title">
-        <FadeIn className="det-section__inner">
-          <p className="det-section__label">Concerns</p>
-          <h2 id="pain-title">
-            こんな気持ち、
-            <br />
-            ありませんか
-          </h2>
-          <p className="det-section__lead">
-            疑いを口にできないまま、毎日が過ぎていく。その苦しさから、相談は始まっています。
-          </p>
-          <ul className="det-pain-list">
-            {pains.map((item, i) => (
-              <li key={item}>
-                <span className="det-pain-list__num">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+      <section className="det-section det-section--pain" aria-labelledby="pain-title">
+        <FadeIn className="det-section__inner det-split">
+          <div className="det-split__copy">
+            <p className="det-section__label">Concerns</p>
+            <h2 id="pain-title">
+              こんな気持ち、
+              <br />
+              ありませんか
+            </h2>
+            <p className="det-section__lead">
+              疑いを口にできないまま、毎日が過ぎていく。その苦しさから、相談は始まっています。
+            </p>
+            <ul className="det-pain-list">
+              {pains.map((item, i) => (
+                <li key={item}>
+                  <span className="det-pain-list__num">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <figure className="det-split__media">
+            <img src="/detective/scene-consult.jpg" alt="" />
+            <figcaption>一人で抱え込まなくていい。</figcaption>
+          </figure>
         </FadeIn>
       </section>
 
@@ -237,7 +365,12 @@ export default function DetectivePage() {
           <div className="det-reasons">
             {reasons.map((r) => (
               <article key={r.n} className="det-reason">
-                <span className="det-reason__n">{r.n}</span>
+                <div className="det-reason__mark">
+                  <span className="det-reason__icon">
+                    <DetIcon name={r.icon} />
+                  </span>
+                  <span className="det-reason__n">{r.n}</span>
+                </div>
                 <div>
                   <h3>{r.title}</h3>
                   <p>{r.body}</p>
@@ -255,11 +388,16 @@ export default function DetectivePage() {
           <p className="det-section__lead">
             主軸は不貞調査です。「知りたいこと」に合わせて、調査の範囲をご提案します。
           </p>
-          <div className="det-service-rows">
+          <div className="det-service-grid">
             {services.map((s) => (
-              <article key={s.title} className="det-service-row">
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
+              <article key={s.title} className="det-service-card">
+                <div className="det-service-card__media">
+                  <img src={s.image} alt="" />
+                </div>
+                <div className="det-service-card__body">
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                </div>
               </article>
             ))}
           </div>
@@ -277,9 +415,14 @@ export default function DetectivePage() {
             {steps.map((s, i) => (
               <li key={s.title}>
                 <span className="det-flow__n">{i + 1}</span>
-                <div>
-                  <h3>{s.title}</h3>
-                  <p>{s.body}</p>
+                <div className="det-flow__body">
+                  <span className="det-flow__icon">
+                    <DetIcon name={s.icon} />
+                  </span>
+                  <div>
+                    <h3>{s.title}</h3>
+                    <p>{s.body}</p>
+                  </div>
                 </div>
               </li>
             ))}
@@ -316,7 +459,11 @@ export default function DetectivePage() {
       </section>
 
       <section className="det-final" id="det-final-cta" aria-labelledby="cta-title">
+        <div className="det-final__bg" aria-hidden="true">
+          <img src="/detective/scene-report.jpg" alt="" />
+        </div>
         <FadeIn className="det-final__inner">
+          <p className="det-final__brand">{tentOffice.name}</p>
           <h2 id="cta-title">
             今夜も、一人で
             <br />
