@@ -44,7 +44,7 @@ export default function LpLayout() {
       <header className="lp-header">
         <div className="lp-header__inner">
           <Link className="lp-header__home" to="/">
-            <img src="/tconnect-logo.png" alt="" width={40} height={40} />
+            <img src="/tconnect-logo.png?v=10" alt="" width={40} height={40} />
             <span>
               <small>{COMPANY_NAME}</small>
               <strong>{service?.name ?? "案内"}</strong>

@@ -38,7 +38,7 @@ export default function HpLayout() {
       >
         <div className="site-header__inner">
           <Link className="brand-lockup" to="/">
-            <img src="/tconnect-logo.png" alt="" width={56} height={56} />
+            <img src="/tconnect-logo.png?v=10" alt="" width={56} height={56} />
             <span className="brand-lockup__name">{COMPANY_NAME}</span>
           </Link>
 
