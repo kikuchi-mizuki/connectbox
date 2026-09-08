@@ -22,8 +22,11 @@ const overview = [
 export default function CompanyPage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "会社情報｜T-connect",
-    description: `${company.legalName}の会社情報。BPO・コンサルティング、宝飾、起業家育成などの事業を展開。`,
+    title: "会社情報",
+    description:
+      "株式会社T-connectの会社情報。Connect Box（コネクトボックス）のBPO・コンサルティング、宝飾、起業家育成などの事業概要。",
+    keywords: "T-connect,会社情報,Connect Box,コネクトボックス",
+    path: "/company",
   });
 
   return (

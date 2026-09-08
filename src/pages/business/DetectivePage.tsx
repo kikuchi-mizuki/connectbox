@@ -146,6 +146,8 @@ export default function DetectivePage() {
     title: "不貞調査の無料相談｜秘密厳守",
     description:
       "パートナーへの不安を、一人で抱え込まないでください。不貞調査の無料相談を受付中。秘密厳守。LINEまたはフォームからご相談ください。",
+    keywords: "不貞調査,浮気調査,探偵,無料相談,秘密厳守",
+    path: "/detective",
   });
 
   return (

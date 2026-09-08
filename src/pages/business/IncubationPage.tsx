@@ -5,8 +5,11 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 export default function IncubationPage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "起業家育成事業｜T-connect",
-    description: "T-connectの起業家育成事業。次の起業家を育てる。",
+    title: "起業家育成事業",
+    description:
+      "T-connectの起業家育成事業。次の起業家を育てる支援を行います。",
+    keywords: "起業家育成,インキュベーション,起業支援,T-connect",
+    path: "/incubation",
   });
 
   return (

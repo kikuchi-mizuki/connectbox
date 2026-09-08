@@ -13,8 +13,11 @@ const funnel = [
 export default function MarketingLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "WEBマーケ",
-    description: "選ばれ続ける導線と信頼をつくる。コネクトボックスのWEBマーケ。",
+    title: "WEBマーケ｜Connect Box",
+    description:
+      "Connect Box（コネクトボックス）のWEBマーケ。選ばれ続ける導線と信頼をつくる。",
+    keywords: "WEBマーケ,Webマーケティング,集客,Connect Box,コネクトボックス",
+    path: "/connect-box/web-marketing",
   });
 
   return (

@@ -10,8 +10,11 @@ const items = [
 export default function JewelryPage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "宝飾事業｜T-connect",
-    description: "T-connectの宝飾事業。大阪を拠点に、金・プラチナ・ブランド品の買取を展開。",
+    title: "宝飾事業",
+    description:
+      "T-connectの宝飾事業。大阪を拠点に、金・プラチナ・ブランド品の買取を展開。",
+    keywords: "宝飾,金買取,プラチナ買取,ブランド買取,T-connect,大阪",
+    path: "/jewelry",
   });
 
   return (

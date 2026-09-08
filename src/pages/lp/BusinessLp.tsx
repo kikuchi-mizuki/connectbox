@@ -7,9 +7,11 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 export default function BusinessLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "既存事業ブラッシュアップ",
+    title: "既存事業ブラッシュアップ｜Connect Box",
     description:
-      "次に選ばれる理由を磨く。コネクトボックスの既存事業ブラッシュアップ。",
+      "Connect Box（コネクトボックス）の既存事業ブラッシュアップ。次に選ばれる理由を磨く。",
+    keywords: "事業改善,ブラッシュアップ,Connect Box,コネクトボックス",
+    path: "/connect-box/business-upgrade",
   });
 
   return (

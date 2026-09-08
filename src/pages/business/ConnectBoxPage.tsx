@@ -19,9 +19,12 @@ const pains = [
 export default function ConnectBoxPage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "Connect Box｜BPO・コンサルティング",
+    title: "Connect Box｜BPO・バックオフィス代行",
     description:
-      "人を増やす前に、業務を外に出す。バックオフィスを中心に、必要な業務だけを必要な分だけ外部化。まずは15分、LINEで相談。",
+      "Connect Box（コネクトボックス）のBPO・コンサルティング。人を増やす前に、バックオフィス業務を外に出す。経理・総務・人事・営業事務など、必要な分だけ外部化。",
+    keywords:
+      "Connect Box,コネクトボックス,BPO,バックオフィス代行,経理代行,総務代行,業務委託,T-connect",
+    path: "/connect-box",
   });
 
   return (

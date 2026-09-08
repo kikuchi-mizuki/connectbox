@@ -7,8 +7,11 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 export default function CoachingLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "組織コーチング",
-    description: "判断の軸を揃える。コネクトボックスの組織コーチング。",
+    title: "組織コーチング｜Connect Box",
+    description:
+      "Connect Box（コネクトボックス）の組織コーチング。判断の軸を揃える。",
+    keywords: "組織コーチング,コーチング,Connect Box,コネクトボックス",
+    path: "/connect-box/coaching",
   });
 
   return (

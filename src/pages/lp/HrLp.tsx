@@ -14,8 +14,11 @@ const journey = [
 export default function HrLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "採用・人事",
-    description: "長く働ける採用と定着をつくる。コネクトボックスの採用・人事。",
+    title: "採用・人事｜Connect Box",
+    description:
+      "Connect Box（コネクトボックス）の採用・人事支援。長く働ける採用と定着をつくる。",
+    keywords: "採用支援,人事代行,定着,Connect Box,コネクトボックス",
+    path: "/connect-box/hr",
   });
 
   return (

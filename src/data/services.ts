@@ -73,7 +73,7 @@ const backOffice: Service = {
     },
   ],
   description:
-    "コネクトボックスのバックオフィス。属人化しない回し方に変えます。",
+    "Connect Box（コネクトボックス）のバックオフィス代行。属人化しない回し方に変えます。",
 };
 
 const logTrack: Service = {
@@ -130,7 +130,7 @@ const logTrack: Service = {
     },
   ],
   description:
-    "LogTrack。出張の移動を自動記録し、日当と出張報告書までつなげる。",
+    "Connect BoxのLogTrack。出張の移動を自動記録し、日当と出張報告書までつなげる。",
 };
 
 export const services: Service[] = [
@@ -153,7 +153,7 @@ export const services: Service[] = [
     approachPoints: [],
     patterns: [],
     description:
-      "コネクトボックスのWEBマーケ。選ばれ続ける導線と信頼をつくります。",
+      "Connect Box（コネクトボックス）のWEBマーケ。選ばれ続ける導線と信頼をつくります。",
   },
   {
     slug: "hr",
@@ -172,7 +172,7 @@ export const services: Service[] = [
     approachPoints: [],
     patterns: [],
     description:
-      "コネクトボックスの採用・人事。長く働ける採用と定着をつくります。",
+      "Connect Box（コネクトボックス）の採用・人事。長く働ける採用と定着をつくります。",
   },
   {
     slug: "coaching",
@@ -191,7 +191,7 @@ export const services: Service[] = [
     approachPoints: [],
     patterns: [],
     description:
-      "コネクトボックスの組織コーチング。判断の軸を揃えます。",
+      "Connect Box（コネクトボックス）の組織コーチング。判断の軸を揃えます。",
   },
   {
     slug: "strategy",
@@ -210,7 +210,7 @@ export const services: Service[] = [
     approachPoints: [],
     patterns: [],
     description:
-      "コネクトボックスの経営戦略。未来を選ぶ意思決定を支えます。",
+      "Connect Box（コネクトボックス）の経営戦略。未来を選ぶ意思決定を支えます。",
   },
   {
     slug: "business-upgrade",
@@ -229,7 +229,7 @@ export const services: Service[] = [
     approachPoints: [],
     patterns: [],
     description:
-      "コネクトボックスの既存事業ブラッシュアップ。次に選ばれる理由を磨きます。",
+      "Connect Box（コネクトボックス）の既存事業ブラッシュアップ。次に選ばれる理由を磨きます。",
   },
 ];
 

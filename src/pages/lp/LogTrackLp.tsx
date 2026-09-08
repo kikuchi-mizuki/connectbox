@@ -70,9 +70,11 @@ const faqs = [
 export default function LogTrackLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "LogTrack",
+    title: "LogTrack｜出張管理｜Connect Box",
     description:
-      "出張の移動を自動記録し、日当の計算と出張報告書までつなげる。LogTrackの案内。",
+      "Connect BoxのLogTrack。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
+    keywords: "LogTrack,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
+    path: "/connect-box/log-track",
   });
 
   return (

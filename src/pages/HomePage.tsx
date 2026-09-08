@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../components/FadeIn";
 import MessageSection from "../components/MessageSection";
@@ -81,10 +82,39 @@ function GrainDecor() {
 export default function HomePage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "T-connect",
+    title: "T-connect｜人と人との縁を紡ぐ企業",
     description:
-      "株式会社T-connect。人と人との縁を紡ぐ企業。BPO・コンサルティング、宝飾、起業家育成などの事業を展開。",
+      "株式会社T-connect（ティーコネクト）。Connect Box（コネクトボックス）のBPO・コンサルティング、宝飾、起業家育成など、人と人との縁を紡ぐ事業を展開。",
+    keywords:
+      "T-connect,ティーコネクト,Connect Box,コネクトボックス,BPO,バックオフィス代行,宝飾,起業家育成",
+    path: "/",
   });
+
+  useEffect(() => {
+    const id = "org-jsonld";
+    let script = document.getElementById(id) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement("script");
+      script.id = id;
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "株式会社T-connect",
+      alternateName: ["T-connect", "ティーコネクト"],
+      url: "https://www.t-cnct.com/",
+      brand: {
+        "@type": "Brand",
+        name: "Connect Box",
+        alternateName: "コネクトボックス",
+      },
+    });
+    return () => {
+      script?.remove();
+    };
+  }, []);
 
   return (
     <main className="top-page">

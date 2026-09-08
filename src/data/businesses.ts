@@ -18,7 +18,7 @@ export const businesses: Business[] = [
     path: "/connect-box",
     tagline: "企業の課題解決を、BPOとコンサルティングで。",
     description:
-      "バックオフィス代行・DX推進・Webマーケ・採用支援・経営戦略など、必要な領域から始められる業務支援。",
+      "Connect Box（コネクトボックス）のBPO・コンサルティング。バックオフィス代行を中心に、必要な業務だけを外部化。",
     heroImage:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80",
     status: "active",

@@ -7,8 +7,11 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 export default function StrategyLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "経営戦略",
-    description: "未来を選ぶ意思決定を支える。コネクトボックスの経営戦略。",
+    title: "経営戦略｜Connect Box",
+    description:
+      "Connect Box（コネクトボックス）の経営戦略支援。未来を選ぶ意思決定を支える。",
+    keywords: "経営戦略,コンサルティング,Connect Box,コネクトボックス",
+    path: "/connect-box/strategy",
   });
 
   return (

@@ -1,16 +1,82 @@
 import { useEffect } from "react";
-import { SITE_NAME } from "../constants";
+import { getSiteUrl, SITE_NAME } from "../constants";
+
+function upsertMeta(
+  attr: "name" | "property",
+  key: string,
+  content: string,
+) {
+  const selector =
+    attr === "name" ? `meta[name="${key}"]` : `meta[property="${key}"]`;
+  let el = document.querySelector(selector) as HTMLMetaElement | null;
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+}
+
+function upsertLink(rel: string, href: string) {
+  let el = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", rel);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", href);
+}
+
+function buildTitle(title: string) {
+  if (title === SITE_NAME || title.includes(SITE_NAME)) return title;
+  return `${title} | ${SITE_NAME}`;
+}
 
 export function usePageMeta({
   title,
   description,
+  keywords,
+  path = "/",
+  noindex = false,
+  ogTitle,
+  ogDescription,
 }: {
   title: string;
   description: string;
+  /** 補助。Googleはほぼ参照しないが、表記ゆれ対策として設定 */
+  keywords?: string;
+  path?: string;
+  noindex?: boolean;
+  ogTitle?: string;
+  ogDescription?: string;
 }) {
   useEffect(() => {
-    document.title = title === SITE_NAME ? SITE_NAME : `${title} | ${SITE_NAME}`;
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", description);
-  }, [title, description]);
+    const fullTitle = buildTitle(title);
+    const ogT = ogTitle ?? fullTitle;
+    const ogD = ogDescription ?? description;
+    const normalized = path.startsWith("/") ? path : `/${path}`;
+    const url = `${getSiteUrl()}${normalized === "/" ? "/" : normalized}`;
+
+    document.title = fullTitle;
+    upsertMeta("name", "description", description);
+    if (keywords) upsertMeta("name", "keywords", keywords);
+    upsertMeta(
+      "name",
+      "robots",
+      noindex ? "noindex, nofollow" : "index, follow",
+    );
+
+    upsertMeta("property", "og:title", ogT);
+    upsertMeta("property", "og:description", ogD);
+    upsertMeta("property", "og:type", "website");
+    upsertMeta("property", "og:url", url);
+    upsertMeta("property", "og:locale", "ja_JP");
+    upsertMeta("property", "og:site_name", SITE_NAME);
+
+    upsertMeta("name", "twitter:card", "summary_large_image");
+    upsertMeta("name", "twitter:title", ogT);
+    upsertMeta("name", "twitter:description", ogD);
+
+    upsertLink("canonical", url);
+  }, [title, description, keywords, path, noindex, ogTitle, ogDescription]);
 }
