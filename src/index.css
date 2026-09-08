@@ -1518,7 +1518,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: clamp(1.5rem, 4vw, 2.75rem);
-  max-height: min(58svh, 26rem);
+  max-height: min(68svh, 32rem);
   width: min(100%, 18rem);
 }
 
@@ -1541,19 +1541,23 @@ button {
 .top-hero__title {
   margin: 0;
   font-family: var(--font-brand);
-  font-size: clamp(1.4rem, 3.4vw, 2.05rem);
+  font-size: clamp(1.35rem, 3.1vw, 1.95rem);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  line-height: 1.55;
+  letter-spacing: 0;
+  line-height: 1;
   color: var(--top-ink);
   writing-mode: vertical-rl;
   text-orientation: mixed;
   white-space: nowrap;
-  max-height: min(58svh, 26rem);
+  max-height: min(68svh, 32rem);
 }
 
 .top-hero__char {
   display: inline-block;
+}
+
+.top-hero__char:not(:last-child) {
+  margin-inline-end: 0.42em;
 }
 
 .top-hero__scroll {
@@ -1942,7 +1946,11 @@ button {
 
 @media (min-width: 768px) {
   .top-hero__title {
-    font-size: 2.05rem;
+    font-size: 1.95rem;
+  }
+
+  .top-hero__char:not(:last-child) {
+    margin-inline-end: 0.46em;
   }
 
   .top-hero__stage {
