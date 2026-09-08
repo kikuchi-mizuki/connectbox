@@ -59,7 +59,7 @@ export default function HpLayout() {
               </div>
             </div>
             <NavLink to="/company">会社</NavLink>
-            {isTop && <a href="#value">想い</a>}
+            {isTop && <a href="#brand">想い</a>}
           </nav>
 
           <div className="header-actions">
@@ -92,7 +92,7 @@ export default function HpLayout() {
         ))}
         <Link to="/company">会社</Link>
         {isTop && (
-          <a href="#value" onClick={() => setMenuOpen(false)}>
+          <a href="#brand" onClick={() => setMenuOpen(false)}>
             想い
           </a>
         )}

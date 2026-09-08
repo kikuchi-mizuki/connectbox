@@ -2,80 +2,45 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../components/FadeIn";
-import MessageSection from "../components/MessageSection";
-import ValueSection from "../components/ValueSection";
 import { businesses } from "../data/businesses";
-import { company, companyMission } from "../data/company";
+import { brandStory, company, companyMission } from "../data/company";
 import { usePageMeta } from "../hooks/usePageMeta";
 
-function GrainDecor() {
+const ease = [0.22, 1, 0.36, 1] as const;
+
+function HeroAtmosphere({ reduce }: { reduce: boolean | null }) {
   return (
-    <div className="top-hero__bg" aria-hidden="true">
-      <img
-        className="top-hero__decor"
-        src="/meishi-decor.png?v=9"
-        alt=""
-        width={1386}
-        height={2232}
-      />
-      <svg
-        className="top-hero__grain"
-        viewBox="0 0 600 900"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M520 -20 Q480 120 380 280 Q280 440 200 580 Q140 680 80 820 Q60 870 30 920"
-          stroke="#c4b48a"
-          strokeWidth="2.2"
-          fill="none"
-        />
-        <path
-          d="M540 -10 Q510 100 430 240 Q350 380 280 520 Q220 620 160 740 Q130 800 100 900"
-          stroke="#c4b48a"
-          strokeWidth="1.7"
-          fill="none"
-          opacity="0.75"
-        />
-        {[
-          [400, 160], [420, 140], [380, 180], [410, 120], [440, 110],
-          [360, 200], [390, 100], [430, 90], [350, 220], [370, 80],
-          [340, 240], [450, 80], [460, 100], [380, 70], [330, 260],
-          [320, 280], [470, 120], [390, 60], [360, 60], [440, 70],
-        ].map(([cx, cy], i) => (
-          <ellipse
-            key={i}
-            cx={cx}
-            cy={cy}
-            rx="6"
-            ry="3.5"
-            fill="#c4b48a"
-            opacity={0.7 + (i % 3) * 0.08}
-            transform={`rotate(${-30 + (i % 5) * 12} ${cx} ${cy})`}
-          />
-        ))}
-      </svg>
-      <svg
-        className="top-hero__curve"
-        viewBox="0 0 800 200"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M-50 180 Q150 60 400 100 Q550 120 700 50 Q780 20 850 30"
-          stroke="#c4b48a"
-          strokeWidth="1.8"
-          fill="none"
-        />
-        <path
-          d="M-50 200 Q200 90 420 130 Q580 150 750 70 Q820 40 880 50"
-          stroke="#c4b48a"
-          strokeWidth="1.4"
-          fill="none"
-          opacity="0.75"
-        />
-      </svg>
-    </div>
+    <motion.div
+      className="top-hero__bg"
+      aria-hidden="true"
+      initial={reduce ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.8, ease }}
+    >
+      <div className="top-hero__wash" />
+      <div className="top-hero__glow top-hero__glow--a" />
+      <div className="top-hero__glow top-hero__glow--b" />
+      <div className="top-hero__veil" />
+    </motion.div>
+  );
+}
+
+function VerticalTitle({ text, reduce }: { text: string; reduce: boolean | null }) {
+  const chars = Array.from(text);
+  return (
+    <h1 className="top-hero__title" aria-label={text}>
+      {chars.map((ch, i) => (
+        <motion.span
+          key={`${ch}-${i}`}
+          className="top-hero__char"
+          initial={reduce ? false : { opacity: 0, filter: "blur(6px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.9, ease, delay: 0.35 + i * 0.07 }}
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </h1>
   );
 }
 
@@ -119,77 +84,114 @@ export default function HomePage() {
   return (
     <main className="top-page">
       <section className="top-hero" id="page-hero" aria-label="メインビジュアル">
-        <GrainDecor />
-        <motion.div
-          className="top-hero__inner"
+        <HeroAtmosphere reduce={reduce} />
+        <div className="top-hero__stage">
+          <motion.span
+            className="top-hero__rule"
+            aria-hidden="true"
+            initial={reduce ? false : { scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
+            transition={{ duration: 1.15, ease, delay: 0.15 }}
+          />
+          <VerticalTitle text={companyMission.tagline} reduce={reduce} />
+          <motion.span
+            className="top-hero__rule"
+            aria-hidden="true"
+            initial={reduce ? false : { scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
+            transition={{ duration: 1.15, ease, delay: 0.25 }}
+          />
+        </div>
+        <motion.a
+          className="top-hero__scroll"
+          href="#brand"
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 0.9, delay: 1.55, ease }}
         >
-          <div className="top-hero__core">
-            <h1 className="top-hero__title">{companyMission.tagline}</h1>
-            <p className="top-hero__lead">
-              {companyMission.heroLead.split("\n").map((line, i) => (
-                <span key={line}>
-                  {i > 0 && <br />}
-                  {line}
-                </span>
-              ))}
-            </p>
-          </div>
-        </motion.div>
-        <a className="top-hero__scroll" href="#value">
+          <span className="top-hero__scroll-line" aria-hidden="true" />
           <span>Scroll</span>
-          <span className="top-hero__scroll-arrow" aria-hidden="true">
-            ↓
-          </span>
-        </a>
+        </motion.a>
       </section>
 
-      <ValueSection />
-
-      <MessageSection />
+      <section className="top-brand" id="brand" aria-labelledby="brand-title">
+        <div className="top-brand__atmosphere" aria-hidden="true">
+          <img
+            className="top-brand__decor"
+            src="/meishi-decor.png?v=9"
+            alt=""
+            width={1386}
+            height={2232}
+          />
+        </div>
+        <div className="top-brand__frame">
+          <h2 className="visually-hidden" id="brand-title">
+            私たちの想い
+          </h2>
+          <div className="top-brand__copy">
+            {brandStory.paragraphs.map((p, i) => (
+              <motion.p
+                key={p}
+                className={
+                  i === 0
+                    ? "top-brand__lead"
+                    : i === brandStory.paragraphs.length - 1
+                      ? "top-brand__closing"
+                      : "top-brand__para"
+                }
+                initial={reduce ? false : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.85, ease, delay: reduce ? 0 : 0.05 }}
+              >
+                {p}
+              </motion.p>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="section top-biz" id="business" aria-labelledby="biz-title">
         <FadeIn className="section__inner">
           <header className="top-section-head top-section-head--stack">
             <p className="section__label">Business</p>
-            <h2 className="section__title" id="biz-title">
+            <h2 className="section__title top-section-title" id="biz-title">
               事業紹介
             </h2>
             <p className="top-section-head__lead">
               人と企業の「困った」と「これから」に向き合う。
               <br />
-              T-connectは、それぞれ異なる領域から、人と人とのつながりに価値を生み出す事業を展開しています。
+              それぞれ異なる領域から、人と人とのつながりに価値を生み出す事業です。
             </p>
           </header>
-          <div className="biz-grid">
-            {businesses.map((b) => (
-              <Link className="biz-card" to={b.path} key={b.slug}>
-                <img src={b.heroImage} alt="" />
-                <div className="biz-card__body">
-                  <p className="biz-card__en">{b.en}</p>
-                  <h3>{b.name}</h3>
-                  <p className="biz-card__desc">{b.tagline}</p>
-                  {b.status === "preparing" && (
-                    <span className="biz-card__badge">準備中</span>
-                  )}
-                  <span className="biz-card__more">詳しく見る</span>
-                </div>
-              </Link>
+          <div className="biz-grid biz-grid--top">
+            {businesses.map((b, i) => (
+              <FadeIn key={b.slug} delay={0.08 * i}>
+                <Link className="biz-card biz-card--top" to={b.path}>
+                  <div className="biz-card__media">
+                    <img src={b.heroImage} alt="" />
+                  </div>
+                  <div className="biz-card__body">
+                    <p className="biz-card__en">{b.en}</p>
+                    <h3>{b.name}</h3>
+                    <p className="biz-card__desc">{b.tagline}</p>
+                    {b.status === "preparing" && (
+                      <span className="biz-card__badge">準備中</span>
+                    )}
+                    <span className="biz-card__more">詳しく見る</span>
+                  </div>
+                </Link>
+              </FadeIn>
             ))}
           </div>
         </FadeIn>
       </section>
 
-      <section
-        className="section section--muted top-company"
-        aria-labelledby="company-title"
-      >
+      <section className="section top-company" aria-labelledby="company-title">
         <FadeIn className="section__inner top-company__inner">
           <header className="top-section-head top-section-head--stack">
             <p className="section__label">Company</p>
-            <h2 className="section__title" id="company-title">
+            <h2 className="section__title top-section-title" id="company-title">
               会社概要
             </h2>
           </header>

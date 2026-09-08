@@ -15,7 +15,7 @@ export const company = {
 
 export const companyMission = {
   tagline: "人と人との縁を紡ぐ企業",
-  heroLead: "人と企業の可能性をつなぎ\n選ばれ続ける未来をつくる",
+  heroLead: "人と企業の可能性をつなぎ、選ばれ続ける未来をつくる。",
   valueTitleLines: ["目先ではなく、", "未来を選べ"] as const,
   valueLead: "T-connectの行動指針です。",
   valuePrinciples: [
@@ -37,11 +37,18 @@ export const companyMission = {
     "私たちは日々、大小さまざまな判断を繰り返しています。その一つひとつが、自分のためだけの選択になっていないか。相手や大切にしている人のためになっているか——問い続けるために、このバリューを掲げています。",
 };
 
+/** TOP用。価値観を溶かしたブランドストーリー（長く想いを語る） */
+export const brandStory = {
+  paragraphs: [
+    "T-connectは、Connect Boxをはじめとする事業を通じて、人と人とのつながりに価値を生み出す会社です。",
+    "私たちが大切にしているのは、「目先ではなく、未来を選べ」という価値観です。日々の判断のひとつひとつが、自分のためだけになっていないか。相手や仲間、大切な人、会社の未来にとって最善か——そう問い続けます。",
+    "相手の未来まで考える。長期的な信頼を選ぶ。選ばれ続ける仕事をする。目先の利益より、その先にある縁を選ぶこと。その積み重ねが、人と人とのつながりを紡いでいくと信じています。",
+    "選ばれ続ける組織でありたい。それが、T-connectの想いです。",
+  ],
+};
+
 export const representativeMessage = {
   title: "代表取締役からのメッセージ",
-  /** 差し替え用。用意できたら `/representative.jpg` などに変更 */
-  photoSrc: null as string | null,
-  photoAlt: "代表取締役 田中 辰弥",
   paragraphs: [
     "T-connectは、Connect Boxをはじめとする4つの事業を通じて、人と人とのつながりに価値を生み出す会社です。",
     "私たちが大切にしているのは、「目先ではなく、未来を選べ」という価値観です。",
