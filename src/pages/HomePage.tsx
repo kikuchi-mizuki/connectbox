@@ -115,15 +115,6 @@ export default function HomePage() {
       </section>
 
       <section className="top-brand" id="brand" aria-labelledby="brand-title">
-        <div className="top-brand__atmosphere" aria-hidden="true">
-          <img
-            className="top-brand__decor"
-            src="/meishi-decor.png?v=9"
-            alt=""
-            width={1386}
-            height={2232}
-          />
-        </div>
         <div className="top-brand__frame">
           <h2 className="visually-hidden" id="brand-title">
             私たちの想い

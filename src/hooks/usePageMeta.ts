@@ -28,7 +28,9 @@ function upsertLink(rel: string, href: string) {
 }
 
 function buildTitle(title: string) {
-  if (title === SITE_NAME || title.includes(SITE_NAME)) return title;
+  if (title === SITE_NAME || title.includes(SITE_NAME) || title.includes("｜")) {
+    return title;
+  }
   return `${title} | ${SITE_NAME}`;
 }
 
@@ -40,6 +42,8 @@ export function usePageMeta({
   noindex = false,
   ogTitle,
   ogDescription,
+  ogImage,
+  ogSiteName,
 }: {
   title: string;
   description: string;
@@ -49,6 +53,8 @@ export function usePageMeta({
   noindex?: boolean;
   ogTitle?: string;
   ogDescription?: string;
+  ogImage?: string;
+  ogSiteName?: string;
 }) {
   useEffect(() => {
     const fullTitle = buildTitle(title);
@@ -71,12 +77,26 @@ export function usePageMeta({
     upsertMeta("property", "og:type", "website");
     upsertMeta("property", "og:url", url);
     upsertMeta("property", "og:locale", "ja_JP");
-    upsertMeta("property", "og:site_name", SITE_NAME);
+    upsertMeta("property", "og:site_name", ogSiteName ?? SITE_NAME);
+    if (ogImage) {
+      upsertMeta("property", "og:image", ogImage);
+      upsertMeta("name", "twitter:image", ogImage);
+    }
 
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", ogT);
     upsertMeta("name", "twitter:description", ogD);
 
     upsertLink("canonical", url);
-  }, [title, description, keywords, path, noindex, ogTitle, ogDescription]);
+  }, [
+    title,
+    description,
+    keywords,
+    path,
+    noindex,
+    ogTitle,
+    ogDescription,
+    ogImage,
+    ogSiteName,
+  ]);
 }

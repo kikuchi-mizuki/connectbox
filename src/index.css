@@ -1520,11 +1520,11 @@ button {
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
-  gap: clamp(1.75rem, 5vw, 3.25rem);
-  min-height: min(62svh, 34rem);
-  width: min(100%, 22rem);
+  gap: clamp(1.5rem, 4vw, 2.75rem);
+  max-height: min(58svh, 26rem);
+  width: min(100%, 18rem);
 }
 
 .top-hero__rule {
@@ -1532,6 +1532,7 @@ button {
   width: 1px;
   align-self: stretch;
   flex: 0 0 1px;
+  max-height: 100%;
   transform-origin: center top;
   background: linear-gradient(
     to bottom,
@@ -1545,14 +1546,15 @@ button {
 .top-hero__title {
   margin: 0;
   font-family: var(--font-brand);
-  font-size: clamp(1.95rem, 5.2vw, 3rem);
+  font-size: clamp(1.4rem, 3.4vw, 2.05rem);
   font-weight: 600;
-  letter-spacing: 0.42em;
-  line-height: 2.05;
+  letter-spacing: 0.16em;
+  line-height: 1.55;
   color: var(--top-ink);
   writing-mode: vertical-rl;
   text-orientation: mixed;
   white-space: nowrap;
+  max-height: min(58svh, 26rem);
 }
 
 .top-hero__char {
@@ -1620,28 +1622,6 @@ button {
   padding-block: clamp(5.5rem, 15vw, 12rem);
   border-top: 1px solid rgba(196, 180, 138, 0.22);
   position: relative;
-  overflow: hidden;
-}
-
-.top-brand__atmosphere {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.top-brand__decor {
-  position: absolute;
-  top: 50%;
-  right: max(-8%, -4rem);
-  transform: translateY(-48%);
-  width: min(42vw, 22rem);
-  height: auto;
-  max-height: 92%;
-  object-fit: contain;
-  opacity: 0.09;
-  filter: saturate(0.85);
-  user-select: none;
 }
 
 .top-brand__frame {
@@ -1967,18 +1947,12 @@ button {
 
 @media (min-width: 768px) {
   .top-hero__title {
-    font-size: 3rem;
+    font-size: 2.05rem;
   }
 
   .top-hero__stage {
-    gap: 3.5rem;
-    width: min(100%, 26rem);
-  }
-
-  .top-brand__decor {
-    width: min(36vw, 26rem);
-    opacity: 0.1;
-    right: max(-4%, 2vw);
+    gap: 2.75rem;
+    width: min(100%, 20rem);
   }
 
   .top-brand__frame {

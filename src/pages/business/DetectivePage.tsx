@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import FadeIn from "../../components/FadeIn";
 import { DETECTIVE_FORM_URL, LINE_URL } from "../../constants";
+import { detectiveSeo } from "../../data/detectiveSeo";
 import { tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
@@ -253,10 +254,14 @@ function FormButton({
 export default function DetectivePage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: `${tentOffice.name}｜不貞調査の無料相談`,
-    description: `${tentOffice.name}。${tentOffice.message}不貞調査の無料相談を受付中。秘密厳守。`,
-    keywords: "探偵事務所TENT,TENT,不貞調査,浮気調査,探偵,無料相談,秘密厳守",
-    path: "/detective",
+    title: detectiveSeo.title,
+    description: detectiveSeo.description,
+    keywords: detectiveSeo.keywords,
+    path: detectiveSeo.path,
+    ogTitle: detectiveSeo.title,
+    ogDescription: detectiveSeo.description,
+    ogImage: detectiveSeo.ogImage,
+    ogSiteName: detectiveSeo.siteName,
   });
 
   return (

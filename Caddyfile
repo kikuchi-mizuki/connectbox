@@ -11,6 +11,10 @@
 	@legacyLpDeck path /lp/back-office/deck /lp/back-office/deck/
 	rewrite @legacyLpDeck /lp/back-office/deck.html
 
+	# LINE等のクローラ向け：JS前のOGPを探偵ページ用に
+	@detective path /detective /detective/
+	rewrite @detective /detective.html
+
 	try_files {path} /index.html
 	file_server
 }
