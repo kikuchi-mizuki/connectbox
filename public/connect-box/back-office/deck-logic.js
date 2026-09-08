@@ -1,7 +1,7 @@
 (function () {
   var STORAGE_KEY = "connectbox-hearing-v4";
   var CONTENT_KEY = "connectbox-backoffice-content-v1";
-  var CONTENT_URL = "/connectbox/back-office/deck-content.json";
+  var CONTENT_URL = "/connect-box/back-office/deck-content.json";
 
   var form = document.getElementById("hearing-form");
   var panel = document.getElementById("hearing-panel");

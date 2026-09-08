@@ -12,7 +12,7 @@ import LpPage from "./pages/LpPage";
 
 function LegacyConnectBoxServiceRedirect() {
   const { slug } = useParams();
-  return <Navigate to={`/connectbox/${slug ?? ""}`} replace />;
+  return <Navigate to={`/connect-box/${slug ?? ""}`} replace />;
 }
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
       <Routes>
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/connectbox" element={<ConnectBoxPage />} />
+          <Route path="/connect-box" element={<ConnectBoxPage />} />
           <Route path="/jewelry" element={<JewelryPage />} />
           <Route path="/incubation" element={<IncubationPage />} />
           <Route path="/company" element={<CompanyPage />} />
@@ -31,12 +31,15 @@ export default function App() {
           <Route path="/detective" element={<DetectivePage />} />
         </Route>
 
-        <Route path="/connectbox/:slug" element={<LpLayout />}>
+        <Route path="/connect-box/:slug" element={<LpLayout />}>
           <Route index element={<LpPage />} />
         </Route>
 
         {/* 旧URL互換 */}
-        <Route path="/business/connectbox" element={<Navigate to="/connectbox" replace />} />
+        <Route path="/connectbox" element={<Navigate to="/connect-box" replace />} />
+        <Route path="/connectbox/:slug" element={<LegacyConnectBoxServiceRedirect />} />
+        <Route path="/business/connectbox" element={<Navigate to="/connect-box" replace />} />
+        <Route path="/business/connect-box" element={<Navigate to="/connect-box" replace />} />
         <Route path="/business/jewelry" element={<Navigate to="/jewelry" replace />} />
         <Route path="/business/incubation" element={<Navigate to="/incubation" replace />} />
         <Route path="/business/detective" element={<Navigate to="/detective" replace />} />

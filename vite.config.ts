@@ -13,14 +13,21 @@ function unlistedBackOfficeDeck(): Plugin {
       return;
     }
     const [path, query] = req.url.split("?");
+    const q = query ? `?${query}` : "";
+    if (
+      path === "/connect-box/back-office/deck" ||
+      path === "/connect-box/back-office/deck/"
+    ) {
+      req.url = "/connect-box/back-office/deck.html" + q;
+    }
     if (
       path === "/connectbox/back-office/deck" ||
       path === "/connectbox/back-office/deck/"
     ) {
-      req.url = "/connectbox/back-office/deck.html" + (query ? `?${query}` : "");
+      req.url = "/connectbox/back-office/deck.html" + q;
     }
     if (path === "/lp/back-office/deck" || path === "/lp/back-office/deck/") {
-      req.url = "/lp/back-office/deck.html" + (query ? `?${query}` : "");
+      req.url = "/lp/back-office/deck.html" + q;
     }
     next();
   };

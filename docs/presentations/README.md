@@ -10,8 +10,8 @@
 
 | 用途 | URL |
 |------|-----|
-| 資料 | http://localhost:5174/connectbox/back-office/deck |
-| 管理 | http://localhost:5174/connectbox/back-office/deck-admin.html |
+| 資料 | http://localhost:5174/connect-box/back-office/deck |
+| 管理 | http://localhost:5174/connect-box/back-office/deck-admin.html |
 
 ## 初期の課題タイプ（5つ）
 
@@ -25,7 +25,7 @@
 
 1. 管理画面で課題／プランを編集
 2. 「ブラウザに保存」→ 同じPCの資料に即反映
-3. 「JSONダウンロード」→ `public/connectbox/back-office/deck-content.json` を差し替えて共有
+3. 「JSONダウンロード」→ `public/connect-box/back-office/deck-content.json` を差し替えて共有
 
 ## 料金プラン（税別・目安）
 

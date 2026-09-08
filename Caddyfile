@@ -2,11 +2,14 @@
 	root * /usr/share/caddy
 	encode gzip
 
-	@deck path /connectbox/back-office/deck /connectbox/back-office/deck/
-	rewrite @deck /connectbox/back-office/deck.html
+	@deck path /connect-box/back-office/deck /connect-box/back-office/deck/
+	rewrite @deck /connect-box/back-office/deck.html
 
-	@legacyDeck path /lp/back-office/deck /lp/back-office/deck/
-	rewrite @legacyDeck /lp/back-office/deck.html
+	@legacyConnectboxDeck path /connectbox/back-office/deck /connectbox/back-office/deck/
+	rewrite @legacyConnectboxDeck /connectbox/back-office/deck.html
+
+	@legacyLpDeck path /lp/back-office/deck /lp/back-office/deck/
+	rewrite @legacyLpDeck /lp/back-office/deck.html
 
 	try_files {path} /index.html
 	file_server

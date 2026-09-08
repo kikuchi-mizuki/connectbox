@@ -12,10 +12,10 @@ export type Business = {
 /** HP・ナビに出す事業（探偵は独立LPのため含めない） */
 export const businesses: Business[] = [
   {
-    slug: "connectbox",
+    slug: "connect-box",
     name: "Connect Box",
     en: "BPO & Consulting",
-    path: "/connectbox",
+    path: "/connect-box",
     tagline: "企業の課題解決を、BPOとコンサルティングで。",
     description:
       "バックオフィス代行・DX推進・Webマーケ・採用支援・経営戦略など、必要な領域から始められる業務支援。",

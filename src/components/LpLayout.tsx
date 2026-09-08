@@ -51,7 +51,7 @@ export default function LpLayout() {
             </span>
           </Link>
           <div className="lp-header__actions">
-            <Link className="lp-header__back" to="/connectbox">
+            <Link className="lp-header__back" to="/connect-box">
               Connect Boxへ
             </Link>
             <CtaButton className="header-cta btn--compact">15分で相談</CtaButton>
