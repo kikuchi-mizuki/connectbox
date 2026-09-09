@@ -6,6 +6,9 @@ export const DETECTIVE_FORM_URL = "https://forms.gle/REPLACE_DETECTIVE_FORM";
 export const SITE_NAME = "T-connect";
 export const COMPANY_NAME = "株式会社T-connect";
 
+/** Google Analytics 4 測定 ID */
+export const GA_MEASUREMENT_ID = "G-DYNQ10WQV3";
+
 /** 正規ドメイン（canonical / OGP 用） @see https://www.t-cnct.com/ */
 export const SITE_URL = "https://www.t-cnct.com";
 

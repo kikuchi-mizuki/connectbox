@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes, useParams } from "react-router-dom";
 import DetectiveLayout from "./components/DetectiveLayout";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import HpLayout from "./components/HpLayout";
 import LpLayout from "./components/LpLayout";
 import CompanyPage from "./pages/CompanyPage";
@@ -18,6 +19,7 @@ function LegacyConnectBoxServiceRedirect() {
 export default function App() {
   return (
     <BrowserRouter>
+      <GoogleAnalytics />
       <Routes>
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />
