@@ -74,6 +74,11 @@ function upsertTitle(html: string, title: string) {
 
 function applyRouteMeta(html: string, shell: RouteShell) {
   let next = html;
+  // 別ブランド向けシェルではコーポレートの Organization JSON-LD を外す
+  next = next.replace(
+    /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
+    "",
+  );
   next = upsertTitle(next, shell.title);
   next = upsertMeta(next, "name", "description", shell.description);
   next = upsertMeta(next, "name", "keywords", shell.keywords);
@@ -208,8 +213,40 @@ function unlistedBackOfficeDeck(): Plugin {
   };
 }
 
+function generateSitemap(): Plugin {
+  const writeSitemap = async () => {
+    const { pathToFileURL } = await import("node:url");
+    const modPath = pathToFileURL(
+      resolve(process.cwd(), "scripts/seo-static.mjs"),
+    ).href;
+    const mod = (await import(modPath)) as {
+      buildSitemapXml: (lastmod?: string) => string;
+    };
+    writeFileSync(
+      resolve(process.cwd(), "public/sitemap.xml"),
+      mod.buildSitemapXml(),
+      "utf8",
+    );
+  };
+
+  return {
+    name: "generate-sitemap",
+    async buildStart() {
+      await writeSitemap();
+    },
+    async configureServer() {
+      await writeSitemap();
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), unlistedBackOfficeDeck(), spaRouteShells()],
+  plugins: [
+    react(),
+    unlistedBackOfficeDeck(),
+    spaRouteShells(),
+    generateSitemap(),
+  ],
   server: {
     host: true,
     port: 5174,

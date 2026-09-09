@@ -1,5 +1,19 @@
 User-agent: *
 Allow: /
+
+# 管理・商談資料（公開インデックス不要）
+Disallow: /connect-box/back-office/deck
+Disallow: /connect-box/back-office/deck.html
+Disallow: /connect-box/back-office/deck-admin
+Disallow: /connect-box/back-office/deck-admin.html
+Disallow: /connectbox/back-office/deck
+Disallow: /connectbox/back-office/deck.html
+Disallow: /connectbox/back-office/deck-admin
+Disallow: /connectbox/back-office/deck-admin.html
 Disallow: /lp/back-office/deck
 Disallow: /lp/back-office/deck.html
+Disallow: /lp/back-office/deck-admin
+Disallow: /lp/back-office/deck-admin.html
 Disallow: /presentations/
+
+Sitemap: https://www.t-cnct.com/sitemap.xml

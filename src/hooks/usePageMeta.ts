@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-import { getSiteUrl, SITE_NAME } from "../constants";
+import { getSiteUrl, SITE_NAME, SITE_URL } from "../constants";
+
+const DEFAULT_OG_IMAGE = `${SITE_URL}/tconnect-logo.png`;
 
 function upsertMeta(
   attr: "name" | "property",
@@ -72,20 +74,20 @@ export function usePageMeta({
       noindex ? "noindex, nofollow" : "index, follow",
     );
 
+    const image = ogImage ?? DEFAULT_OG_IMAGE;
+
     upsertMeta("property", "og:title", ogT);
     upsertMeta("property", "og:description", ogD);
     upsertMeta("property", "og:type", "website");
     upsertMeta("property", "og:url", url);
     upsertMeta("property", "og:locale", "ja_JP");
     upsertMeta("property", "og:site_name", ogSiteName ?? SITE_NAME);
-    if (ogImage) {
-      upsertMeta("property", "og:image", ogImage);
-      upsertMeta("name", "twitter:image", ogImage);
-    }
+    upsertMeta("property", "og:image", image);
 
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", ogT);
     upsertMeta("name", "twitter:description", ogD);
+    upsertMeta("name", "twitter:image", image);
 
     upsertLink("canonical", url);
   }, [
