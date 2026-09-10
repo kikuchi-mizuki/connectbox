@@ -27,7 +27,5 @@ export const PUBLIC_SITE_PATHS = [
   "/connect-box/coaching",
   "/connect-box/strategy",
   "/connect-box/business-upgrade",
-  "/jewelry",
-  "/incubation",
   "/detective",
 ] as const;

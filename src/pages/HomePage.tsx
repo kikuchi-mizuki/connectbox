@@ -148,20 +148,31 @@ export default function HomePage() {
           <div className="biz-grid biz-grid--top">
             {businesses.map((b, i) => (
               <FadeIn key={b.slug} delay={0.08 * i}>
-                <Link className="biz-card biz-card--top" to={b.path}>
-                  <div className="biz-card__media">
-                    <img src={b.heroImage} alt="" />
-                  </div>
-                  <div className="biz-card__body">
-                    <p className="biz-card__en">{b.en}</p>
-                    <h3>{b.name}</h3>
-                    <p className="biz-card__desc">{b.tagline}</p>
-                    {b.status === "preparing" && (
+                {b.status === "active" ? (
+                  <Link className="biz-card biz-card--top" to={b.path}>
+                    <div className="biz-card__media">
+                      <img src={b.heroImage} alt="" />
+                    </div>
+                    <div className="biz-card__body">
+                      <p className="biz-card__en">{b.en}</p>
+                      <h3>{b.name}</h3>
+                      <p className="biz-card__desc">{b.tagline}</p>
+                      <span className="biz-card__more">詳しく見る</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="biz-card biz-card--top biz-card--static">
+                    <div className="biz-card__media">
+                      <img src={b.heroImage} alt="" />
+                    </div>
+                    <div className="biz-card__body">
+                      <p className="biz-card__en">{b.en}</p>
+                      <h3>{b.name}</h3>
+                      <p className="biz-card__desc">{b.tagline}</p>
                       <span className="biz-card__badge">準備中</span>
-                    )}
-                    <span className="biz-card__more">詳しく見る</span>
+                    </div>
                   </div>
-                </Link>
+                )}
               </FadeIn>
             ))}
           </div>

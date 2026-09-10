@@ -7,8 +7,6 @@ import CompanyPage from "./pages/CompanyPage";
 import HomePage from "./pages/HomePage";
 import ConnectBoxPage from "./pages/business/ConnectBoxPage";
 import DetectivePage from "./pages/business/DetectivePage";
-import JewelryPage from "./pages/business/JewelryPage";
-import IncubationPage from "./pages/business/IncubationPage";
 import LpPage from "./pages/LpPage";
 
 function LegacyConnectBoxServiceRedirect() {
@@ -24,8 +22,6 @@ export default function App() {
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/connect-box" element={<ConnectBoxPage />} />
-          <Route path="/jewelry" element={<JewelryPage />} />
-          <Route path="/incubation" element={<IncubationPage />} />
           <Route path="/company" element={<CompanyPage />} />
         </Route>
 
@@ -42,8 +38,10 @@ export default function App() {
         <Route path="/connectbox/:slug" element={<LegacyConnectBoxServiceRedirect />} />
         <Route path="/business/connectbox" element={<Navigate to="/connect-box" replace />} />
         <Route path="/business/connect-box" element={<Navigate to="/connect-box" replace />} />
-        <Route path="/business/jewelry" element={<Navigate to="/jewelry" replace />} />
-        <Route path="/business/incubation" element={<Navigate to="/incubation" replace />} />
+        <Route path="/jewelry" element={<Navigate to="/" replace />} />
+        <Route path="/incubation" element={<Navigate to="/" replace />} />
+        <Route path="/business/jewelry" element={<Navigate to="/" replace />} />
+        <Route path="/business/incubation" element={<Navigate to="/" replace />} />
         <Route path="/business/detective" element={<Navigate to="/detective" replace />} />
         <Route path="/lp/:slug" element={<LegacyConnectBoxServiceRedirect />} />
         <Route path="/services/:slug" element={<LegacyConnectBoxServiceRedirect />} />

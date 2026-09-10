@@ -48,14 +48,13 @@ export default function HpLayout() {
                 事業一覧
               </button>
               <div className="nav-dropdown__panel">
-                {businesses.map((b) => (
-                  <Link key={b.slug} to={b.path}>
-                    {b.name}
-                    {b.status === "preparing" && (
-                      <span className="nav-dropdown__badge">準備中</span>
-                    )}
-                  </Link>
-                ))}
+                {businesses
+                  .filter((b) => b.status === "active")
+                  .map((b) => (
+                    <Link key={b.slug} to={b.path}>
+                      {b.name}
+                    </Link>
+                  ))}
               </div>
             </div>
             <NavLink to="/company">会社</NavLink>
@@ -84,12 +83,13 @@ export default function HpLayout() {
         aria-hidden={!menuOpen}
       >
         <p className="mobile-menu__label">事業一覧</p>
-        {businesses.map((b) => (
-          <Link key={b.slug} to={b.path}>
-            {b.name}
-            {b.status === "preparing" && " （準備中）"}
-          </Link>
-        ))}
+        {businesses
+          .filter((b) => b.status === "active")
+          .map((b) => (
+            <Link key={b.slug} to={b.path}>
+              {b.name}
+            </Link>
+          ))}
         <Link to="/company">会社</Link>
         {isTop && (
           <a href="#brand" onClick={() => setMenuOpen(false)}>
@@ -107,11 +107,13 @@ export default function HpLayout() {
             <p className="site-footer__tagline">{companyMission.tagline}</p>
           </div>
           <nav className="site-footer__nav" aria-label="フッター">
-            {businesses.map((b) => (
-              <Link key={b.slug} to={b.path}>
-                {b.name}
-              </Link>
-            ))}
+            {businesses
+              .filter((b) => b.status === "active")
+              .map((b) => (
+                <Link key={b.slug} to={b.path}>
+                  {b.name}
+                </Link>
+              ))}
             <Link to="/company">会社</Link>
           </nav>
           <span>© {new Date().getFullYear()} T-connect Inc.</span>

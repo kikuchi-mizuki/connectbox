@@ -120,28 +120,6 @@ export const PUBLIC_SITE_PAGES = [
     ogImage: DEFAULT_OG_IMAGE,
   },
   {
-    path: "/jewelry",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "宝飾事業 | T-connect",
-    description:
-      "T-connectの宝飾事業。大阪を拠点に、金・プラチナ・ブランド品の買取を展開。",
-    keywords: "宝飾,金買取,プラチナ買取,ブランド買取,T-connect,大阪",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
-    path: "/incubation",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "起業家育成事業 | T-connect",
-    description:
-      "T-connectの起業家育成事業。次の起業家を育てる支援を行います。",
-    keywords: "起業家育成,インキュベーション,起業支援,T-connect",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
     path: "/detective",
     priority: 0.8,
     changefreq: "weekly",

@@ -32,7 +32,7 @@ export const businesses: Business[] = [
     description: "大阪を拠点に、金・プラチナ・ブランド品買取を展開しています。",
     heroImage:
       "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=2400&q=80",
-    status: "active",
+    status: "preparing",
   },
   {
     slug: "incubation",
@@ -43,7 +43,7 @@ export const businesses: Business[] = [
     description: "起業を目指す方への支援事業です。",
     heroImage:
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2400&q=80",
-    status: "active",
+    status: "preparing",
   },
 ];
 
