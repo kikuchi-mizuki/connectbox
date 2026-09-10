@@ -1,25 +1,32 @@
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { Plugin, PreviewServer, ViteDevServer } from "vite";
+import type { Plugin, PreviewServer } from "vite";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-/** LINE等クローラ向け。src/data/detectiveSeo.ts と同じ内容に保つ */
-const detectiveShell = {
-  fileName: "detective.html",
-  paths: ["/detective", "/detective/"],
-  title: "探偵事務所TENT｜不貞調査の無料相談",
-  description:
-    "探偵事務所TENT。悩みの嵐の中にいるあなたを、大きな屋根で包み込み、守り抜く場所でありたい。不貞調査の無料相談を受付中。秘密厳守。",
-  keywords: "探偵事務所TENT,TENT,不貞調査,浮気調査,探偵,無料相談,秘密厳守",
-  canonical: "https://www.t-cnct.com/detective",
-  ogImage: "https://www.t-cnct.com/detective/scene-1.jpg",
-  siteName: "探偵事務所TENT",
-} as const;
+type RouteShell = {
+  path: string;
+  title: string;
+  description: string;
+  keywords: string;
+  siteName: string;
+  ogImage: string;
+  stripOrganizationJsonLd?: boolean;
+};
 
-type RouteShell = typeof detectiveShell;
-const shells: RouteShell[] = [detectiveShell];
+async function loadSeoStatic() {
+  const modPath = pathToFileURL(
+    resolve(process.cwd(), "scripts/seo-static.mjs"),
+  ).href;
+  return (await import(modPath)) as {
+    PUBLIC_SITE_PAGES: RouteShell[];
+    absoluteSiteUrl: (path: string) => string;
+    shellOutputFile: (path: string) => string;
+    buildSitemapXml: (lastmod?: string) => string;
+  };
+}
 
 function escapeAttr(value: string) {
   return value
@@ -72,19 +79,32 @@ function upsertTitle(html: string, title: string) {
   return html.replace(/<\/head>/i, `    <title>${safe}</title>\n  </head>`);
 }
 
-function applyRouteMeta(html: string, shell: RouteShell) {
+function applyRouteMeta(
+  html: string,
+  shell: RouteShell,
+  canonical: string,
+) {
   let next = html;
-  // 別ブランド向けシェルではコーポレートの Organization JSON-LD を外す
-  next = next.replace(
-    /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
-    "",
-  );
+  if (shell.stripOrganizationJsonLd) {
+    next = next.replace(
+      /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
+      "",
+    );
+  }
   next = upsertTitle(next, shell.title);
   next = upsertMeta(next, "name", "description", shell.description);
   next = upsertMeta(next, "name", "keywords", shell.keywords);
+  // 公開ページは明示的に index 許可（noindex が残らないように上書き）
+  next = upsertMeta(
+    next,
+    "name",
+    "robots",
+    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  );
+  next = upsertMeta(next, "name", "googlebot", "index, follow");
   next = upsertMeta(next, "property", "og:title", shell.title);
   next = upsertMeta(next, "property", "og:description", shell.description);
-  next = upsertMeta(next, "property", "og:url", shell.canonical);
+  next = upsertMeta(next, "property", "og:url", canonical);
   next = upsertMeta(next, "property", "og:image", shell.ogImage);
   next = upsertMeta(next, "property", "og:site_name", shell.siteName);
   next = upsertMeta(next, "property", "og:type", "website");
@@ -93,80 +113,104 @@ function applyRouteMeta(html: string, shell: RouteShell) {
   next = upsertMeta(next, "name", "twitter:title", shell.title);
   next = upsertMeta(next, "name", "twitter:description", shell.description);
   next = upsertMeta(next, "name", "twitter:image", shell.ogImage);
-  next = upsertLink(next, "canonical", shell.canonical);
+  next = upsertLink(next, "canonical", canonical);
   return next;
 }
 
-function rewriteShellPaths(
-  req: IncomingMessage,
-  _res: ServerResponse,
-  next: (err?: unknown) => void,
-) {
-  if (!req.url) {
-    next();
-    return;
-  }
-  const [path, query] = req.url.split("?");
-  const q = query ? `?${query}` : "";
-  for (const shell of shells) {
-    if ((shell.paths as readonly string[]).includes(path)) {
-      req.url = `/${shell.fileName}${q}`;
-      break;
-    }
-  }
-  next();
-}
-
-async function serveDevShell(
-  server: ViteDevServer,
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: (err?: unknown) => void,
-) {
-  if (!req.url) {
-    next();
-    return;
-  }
-  const [path] = req.url.split("?");
-  const shell = shells.find((s) =>
-    (s.paths as readonly string[]).includes(path),
+function matchShell(pages: RouteShell[], path: string) {
+  return pages.find(
+    (page) => page.path !== "/" && (page.path === path || `${page.path}/` === path),
   );
-  if (!shell) {
-    next();
-    return;
-  }
-  try {
-    const indexPath = resolve(server.config.root, "index.html");
-    const raw = readFileSync(indexPath, "utf8");
-    const transformed = await server.transformIndexHtml(path, raw);
-    const html = applyRouteMeta(transformed, shell);
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.end(html);
-  } catch (error) {
-    next(error as Error);
-  }
 }
 
 function spaRouteShells(): Plugin {
+  let pages: RouteShell[] = [];
+  let absoluteSiteUrl = (path: string) => path;
+  let shellOutputFile = (path: string) => `${path}.html`;
+
   return {
     name: "spa-route-shells",
+    async buildStart() {
+      const seo = await loadSeoStatic();
+      pages = seo.PUBLIC_SITE_PAGES;
+      absoluteSiteUrl = seo.absoluteSiteUrl;
+      shellOutputFile = seo.shellOutputFile;
+    },
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        void serveDevShell(server, req, res, next);
+        void (async () => {
+          if (!pages.length) {
+            const seo = await loadSeoStatic();
+            pages = seo.PUBLIC_SITE_PAGES;
+            absoluteSiteUrl = seo.absoluteSiteUrl;
+            shellOutputFile = seo.shellOutputFile;
+          }
+          if (!req.url) {
+            next();
+            return;
+          }
+          const [path] = req.url.split("?");
+          const shell = matchShell(pages, path);
+          if (!shell) {
+            next();
+            return;
+          }
+          try {
+            const indexPath = resolve(server.config.root, "index.html");
+            const raw = readFileSync(indexPath, "utf8");
+            const transformed = await server.transformIndexHtml(path, raw);
+            const html = applyRouteMeta(
+              transformed,
+              shell,
+              absoluteSiteUrl(shell.path),
+            );
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.end(html);
+          } catch (error) {
+            next(error as Error);
+          }
+        })();
       });
     },
     configurePreviewServer(server: PreviewServer) {
-      server.middlewares.use(rewriteShellPaths);
+      server.middlewares.use(
+        (req: IncomingMessage, _res: ServerResponse, next: (err?: unknown) => void) => {
+          if (!req.url) {
+            next();
+            return;
+          }
+          const [path, query] = req.url.split("?");
+          const shell = matchShell(pages, path);
+          if (shell) {
+            const q = query ? `?${query}` : "";
+            req.url = `/${shellOutputFile(shell.path)}${q}`;
+          }
+          next();
+        },
+      );
     },
-    closeBundle() {
+    async closeBundle() {
+      const seo = await loadSeoStatic();
+      pages = seo.PUBLIC_SITE_PAGES;
+      absoluteSiteUrl = seo.absoluteSiteUrl;
+      shellOutputFile = seo.shellOutputFile;
+
       const outDir = resolve(process.cwd(), "dist");
       const indexPath = resolve(outDir, "index.html");
       if (!existsSync(indexPath)) return;
       const indexHtml = readFileSync(indexPath, "utf8");
-      for (const shell of shells) {
-        const html = applyRouteMeta(indexHtml, shell);
-        writeFileSync(resolve(outDir, shell.fileName), html, "utf8");
+
+      for (const shell of pages) {
+        if (shell.path === "/") continue;
+        const html = applyRouteMeta(
+          indexHtml,
+          shell,
+          absoluteSiteUrl(shell.path),
+        );
+        const outFile = resolve(outDir, shellOutputFile(shell.path));
+        mkdirSync(dirname(outFile), { recursive: true });
+        writeFileSync(outFile, html, "utf8");
       }
     },
   };
@@ -215,16 +259,10 @@ function unlistedBackOfficeDeck(): Plugin {
 
 function generateSitemap(): Plugin {
   const writeSitemap = async () => {
-    const { pathToFileURL } = await import("node:url");
-    const modPath = pathToFileURL(
-      resolve(process.cwd(), "scripts/seo-static.mjs"),
-    ).href;
-    const mod = (await import(modPath)) as {
-      buildSitemapXml: (lastmod?: string) => string;
-    };
+    const seo = await loadSeoStatic();
     writeFileSync(
       resolve(process.cwd(), "public/sitemap.xml"),
-      mod.buildSitemapXml(),
+      seo.buildSitemapXml(),
       "utf8",
     );
   };

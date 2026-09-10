@@ -2,6 +2,10 @@
 	root * /usr/share/caddy
 	encode gzip
 
+	# 管理・商談資料のみ noindex（公開ページには付けない）
+	@noindex path_regexp (?i)^/(connect-box/back-office/deck|connectbox/back-office/deck|lp/back-office/deck|presentations)
+	header @noindex X-Robots-Tag "noindex, nofollow, noarchive"
+
 	@deck path /connect-box/back-office/deck /connect-box/back-office/deck/
 	rewrite @deck /connect-box/back-office/deck.html
 
@@ -11,10 +15,7 @@
 	@legacyLpDeck path /lp/back-office/deck /lp/back-office/deck/
 	rewrite @legacyLpDeck /lp/back-office/deck.html
 
-	# LINE等のクローラ向け：JS前のOGPを探偵ページ用に
-	@detective path /detective /detective/
-	rewrite @detective /detective.html
-
-	try_files {path} /index.html
+	# 各公開ルートの静的シェル（*.html）を優先し、なければ SPA の index.html
+	try_files {path}.html {path} /index.html
 	file_server
 }

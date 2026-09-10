@@ -68,9 +68,13 @@ export function usePageMeta({
     document.title = fullTitle;
     upsertMeta("name", "description", description);
     if (keywords) upsertMeta("name", "keywords", keywords);
+    const robotsContent = noindex
+      ? "noindex, nofollow"
+      : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+    upsertMeta("name", "robots", robotsContent);
     upsertMeta(
       "name",
-      "robots",
+      "googlebot",
       noindex ? "noindex, nofollow" : "index, follow",
     );
 

@@ -1,3 +1,10 @@
+# 公開ページのクロールを許可
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
 User-agent: *
 Allow: /
 
