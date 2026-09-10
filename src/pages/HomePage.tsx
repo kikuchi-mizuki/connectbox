@@ -169,7 +169,6 @@ export default function HomePage() {
                       <p className="biz-card__en">{b.en}</p>
                       <h3>{b.name}</h3>
                       <p className="biz-card__desc">{b.tagline}</p>
-                      <span className="biz-card__badge">準備中</span>
                     </div>
                   </div>
                 )}
