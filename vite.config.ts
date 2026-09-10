@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -17,9 +17,9 @@ type RouteShell = {
 };
 
 async function loadSeoStatic() {
-  const modPath = pathToFileURL(
-    resolve(process.cwd(), "scripts/seo-static.mjs"),
-  ).href;
+  const filePath = resolve(process.cwd(), "scripts/seo-static.mjs");
+  const bust = statSync(filePath).mtimeMs;
+  const modPath = `${pathToFileURL(filePath).href}?t=${bust}`;
   return (await import(modPath)) as {
     PUBLIC_SITE_PAGES: RouteShell[];
     absoluteSiteUrl: (path: string) => string;
@@ -29,7 +29,7 @@ async function loadSeoStatic() {
 }
 
 function escapeAttr(value: string) {
-  return value
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll('"', "&quot;")
     .replaceAll("<", "&lt;")
@@ -84,6 +84,12 @@ function applyRouteMeta(
   shell: RouteShell,
   canonical: string,
 ) {
+  const title = shell.title ?? "";
+  const description = shell.description ?? "";
+  const keywords = shell.keywords ?? "";
+  const siteName = shell.siteName ?? "T-connect";
+  const ogImage = shell.ogImage ?? "";
+
   let next = html;
   if (shell.stripOrganizationJsonLd) {
     next = next.replace(
@@ -91,9 +97,9 @@ function applyRouteMeta(
       "",
     );
   }
-  next = upsertTitle(next, shell.title);
-  next = upsertMeta(next, "name", "description", shell.description);
-  next = upsertMeta(next, "name", "keywords", shell.keywords);
+  next = upsertTitle(next, title);
+  next = upsertMeta(next, "name", "description", description);
+  next = upsertMeta(next, "name", "keywords", keywords);
   // 公開ページは明示的に index 許可（noindex が残らないように上書き）
   next = upsertMeta(
     next,
@@ -102,17 +108,17 @@ function applyRouteMeta(
     "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   );
   next = upsertMeta(next, "name", "googlebot", "index, follow");
-  next = upsertMeta(next, "property", "og:title", shell.title);
-  next = upsertMeta(next, "property", "og:description", shell.description);
+  next = upsertMeta(next, "property", "og:title", title);
+  next = upsertMeta(next, "property", "og:description", description);
   next = upsertMeta(next, "property", "og:url", canonical);
-  next = upsertMeta(next, "property", "og:image", shell.ogImage);
-  next = upsertMeta(next, "property", "og:site_name", shell.siteName);
+  next = upsertMeta(next, "property", "og:image", ogImage);
+  next = upsertMeta(next, "property", "og:site_name", siteName);
   next = upsertMeta(next, "property", "og:type", "website");
   next = upsertMeta(next, "property", "og:locale", "ja_JP");
   next = upsertMeta(next, "name", "twitter:card", "summary_large_image");
-  next = upsertMeta(next, "name", "twitter:title", shell.title);
-  next = upsertMeta(next, "name", "twitter:description", shell.description);
-  next = upsertMeta(next, "name", "twitter:image", shell.ogImage);
+  next = upsertMeta(next, "name", "twitter:title", title);
+  next = upsertMeta(next, "name", "twitter:description", description);
+  next = upsertMeta(next, "name", "twitter:image", ogImage);
   next = upsertLink(next, "canonical", canonical);
   return next;
 }
@@ -127,31 +133,35 @@ function spaRouteShells(): Plugin {
   let pages: RouteShell[] = [];
   let absoluteSiteUrl = (path: string) => path;
   let shellOutputFile = (path: string) => `${path}.html`;
+  let seoLoadedAt = 0;
+
+  const refreshSeo = async () => {
+    const filePath = resolve(process.cwd(), "scripts/seo-static.mjs");
+    const mtime = statSync(filePath).mtimeMs;
+    if (pages.length && mtime === seoLoadedAt) return;
+    const seo = await loadSeoStatic();
+    pages = seo.PUBLIC_SITE_PAGES;
+    absoluteSiteUrl = seo.absoluteSiteUrl;
+    shellOutputFile = seo.shellOutputFile;
+    seoLoadedAt = mtime;
+  };
 
   return {
     name: "spa-route-shells",
     async buildStart() {
-      const seo = await loadSeoStatic();
-      pages = seo.PUBLIC_SITE_PAGES;
-      absoluteSiteUrl = seo.absoluteSiteUrl;
-      shellOutputFile = seo.shellOutputFile;
+      await refreshSeo();
     },
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         void (async () => {
-          if (!pages.length) {
-            const seo = await loadSeoStatic();
-            pages = seo.PUBLIC_SITE_PAGES;
-            absoluteSiteUrl = seo.absoluteSiteUrl;
-            shellOutputFile = seo.shellOutputFile;
-          }
+          await refreshSeo();
           if (!req.url) {
             next();
             return;
           }
           const [path] = req.url.split("?");
           const shell = matchShell(pages, path);
-          if (!shell) {
+          if (!shell?.title) {
             next();
             return;
           }
@@ -191,10 +201,7 @@ function spaRouteShells(): Plugin {
       );
     },
     async closeBundle() {
-      const seo = await loadSeoStatic();
-      pages = seo.PUBLIC_SITE_PAGES;
-      absoluteSiteUrl = seo.absoluteSiteUrl;
-      shellOutputFile = seo.shellOutputFile;
+      await refreshSeo();
 
       const outDir = resolve(process.cwd(), "dist");
       const indexPath = resolve(outDir, "index.html");
@@ -202,7 +209,7 @@ function spaRouteShells(): Plugin {
       const indexHtml = readFileSync(indexPath, "utf8");
 
       for (const shell of pages) {
-        if (shell.path === "/") continue;
+        if (shell.path === "/" || !shell.title) continue;
         const html = applyRouteMeta(
           indexHtml,
           shell,

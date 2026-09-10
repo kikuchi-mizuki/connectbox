@@ -123,11 +123,12 @@ export const PUBLIC_SITE_PAGES = [
     path: "/detective",
     priority: 0.8,
     changefreq: "weekly",
-    title: "探偵事務所TENT｜不貞調査の無料相談",
+    title: "ミノガサン探偵事務所｜浮気・不倫・素行調査の無料相談",
     description:
-      "探偵事務所TENT。悩みの嵐の中にいるあなたを、大きな屋根で包み込み、守り抜く場所でありたい。不貞調査の無料相談を受付中。秘密厳守。",
-    keywords: "探偵事務所TENT,TENT,不貞調査,浮気調査,探偵,無料相談,秘密厳守",
-    siteName: "探偵事務所TENT",
+      "浮気・不倫を見逃さん。ミノガサン探偵事務所。不倫調査・身辺調査・素行調査の無料相談を受付中。秘密厳守。いきなり契約ではありません。",
+    keywords:
+      "ミノガサン探偵事務所,見逃さん,不倫調査,浮気調査,身辺調査,素行調査,探偵,無料相談,秘密厳守",
+    siteName: "ミノガサン探偵事務所",
     ogImage: `${SITE_URL}/detective/scene-1.jpg`,
     stripOrganizationJsonLd: true,
   },

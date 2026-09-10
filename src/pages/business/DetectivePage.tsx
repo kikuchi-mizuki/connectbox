@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import FadeIn from "../../components/FadeIn";
-import { DETECTIVE_FORM_URL, LINE_URL } from "../../constants";
+import { DETECTIVE_FORM_URL, DETECTIVE_LINE_URL } from "../../constants";
 import { detectiveSeo } from "../../data/detectiveSeo";
-import { tentOffice } from "../../data/tent";
+import { detectiveInvestigations, tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 const pains = [
@@ -37,24 +37,6 @@ const reasons = [
     title: "法令を守った調査のみ行います",
     body: "探偵業法をはじめ、法令の範囲内で調査します。無理な勧誘はいたしません。",
     icon: "scale" as const,
-  },
-];
-
-const services = [
-  {
-    title: "尾行・行動確認",
-    body: "「いつ・どこで・誰と」を事実として把握し、疑惑の有無をはっきりさせます。",
-    image: "/detective/thumb-tail.jpg",
-  },
-  {
-    title: "証拠撮影",
-    body: "判断や話し合いに使えるよう、必要な場面を適切に記録します。",
-    image: "/detective/thumb-camera.jpg",
-  },
-  {
-    title: "調査報告書",
-    body: "日時・場所・事実関係を整理した報告書をお渡しします。",
-    image: "/detective/thumb-report.jpg",
   },
 ];
 
@@ -222,7 +204,7 @@ function LineButton({
   return (
     <a
       className={`det-btn det-btn--line ${className}`.trim()}
-      href={LINE_URL}
+      href={DETECTIVE_LINE_URL}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -282,10 +264,11 @@ export default function DetectivePage() {
               <br />
               一人で抱え込まないでください。
             </h1>
+            <p className="det-hero__tagline">{tentOffice.tagline}</p>
             <p className="det-hero__promise">{tentOffice.message}</p>
             <p className="det-hero__lead">
               「気のせい」で済ませたい気持ちと、「確かめたい」気持ちが、同時にあるかもしれません。
-              不貞調査の無料相談では、状況の整理からお手伝いします。いきなり契約ではありません。
+              不倫・身辺・素行など、無料相談では状況の整理からお手伝いします。いきなり契約ではありません。
             </p>
             <div className="det-hero__cta">
               <LineButton className="det-btn--lg" />
@@ -389,18 +372,19 @@ export default function DetectivePage() {
       <section className="det-section det-section--paper" aria-labelledby="service-title">
         <FadeIn className="det-section__inner">
           <p className="det-section__label">Investigation</p>
-          <h2 id="service-title">不貞調査でできること</h2>
+          <h2 id="service-title">見逃さない、3つの調査</h2>
           <p className="det-section__lead">
-            主軸は不貞調査です。「知りたいこと」に合わせて、調査の範囲をご提案します。
+            「知りたいこと」に合わせて、調査の範囲をご提案します。迷っている段階でも大丈夫です。
           </p>
           <div className="det-service-grid">
-            {services.map((s) => (
+            {detectiveInvestigations.map((s) => (
               <article key={s.title} className="det-service-card">
                 <div className="det-service-card__media">
                   <img src={s.image} alt="" />
                 </div>
                 <div className="det-service-card__body">
                   <h3>{s.title}</h3>
+                  <p className="det-service-card__slogan">{s.slogan}</p>
                   <p>{s.body}</p>
                 </div>
               </article>
@@ -484,8 +468,8 @@ export default function DetectivePage() {
           </div>
           <p className="det-final__hint">
             LINE：{" "}
-            <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-              lin.ee/RiVp6pb
+            <a href={DETECTIVE_LINE_URL} target="_blank" rel="noopener noreferrer">
+              lin.ee/zJ0hTwc
             </a>
           </p>
         </FadeIn>

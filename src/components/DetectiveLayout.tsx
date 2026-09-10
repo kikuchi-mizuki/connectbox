@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { DETECTIVE_FORM_URL, LINE_URL } from "../constants";
+import { DETECTIVE_FORM_URL, DETECTIVE_LINE_URL } from "../constants";
 import { tentOffice } from "../data/tent";
 import "../detective.css";
 
@@ -65,7 +65,7 @@ export default function DetectiveLayout() {
             <strong>{tentOffice.name}</strong>
           </a>
           <div className="det-header__actions">
-            <a className="det-btn det-btn--line" href={LINE_URL} target="_blank" rel="noopener noreferrer">
+            <a className="det-btn det-btn--line" href={DETECTIVE_LINE_URL} target="_blank" rel="noopener noreferrer">
               <LineIcon />
               LINE相談
             </a>
@@ -91,7 +91,7 @@ export default function DetectiveLayout() {
           {tentOffice.name}｜秘密厳守｜無料相談
         </p>
         <div className="det-sticky__btns">
-          <a className="det-btn det-btn--line" href={LINE_URL} target="_blank" rel="noopener noreferrer">
+          <a className="det-btn det-btn--line" href={DETECTIVE_LINE_URL} target="_blank" rel="noopener noreferrer">
             <LineIcon />
             LINEで相談
           </a>
