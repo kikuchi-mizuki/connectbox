@@ -102,7 +102,7 @@ export default function ConnectBoxPage() {
             まずはここから
           </h2>
           <p className="section__lead">
-            バックオフィスの代行から始める企業様が多いです。出張管理の自動化もご相談いただけます。
+            バックオフィスの代行から始める企業様が多いです。旅費管理の自動化もご相談いただけます。
           </p>
           <div className="catalog-grid catalog-grid--main">
             {lpServices.map((s) => (

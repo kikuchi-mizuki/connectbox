@@ -46,16 +46,16 @@ const flow = [
 
 const faqs = [
   {
-    q: "LogTrackは、何のサービスですか？",
-    a: "出張や移動の記録をアプリで残し、日当の計算と出張報告書の作成までつなげるクラウドです。手入力の精算を、移動の事実から自動に近づけます。",
+    q: "旅費Oneは、何のサービスですか？",
+    a: "旅費管理をひとつにするクラウドです。出張や移動の記録をアプリで残し、日当の計算と出張報告書の作成までつなげます。手入力の精算を、移動の事実から自動に近づけます。",
   },
   {
     q: "日当を出すと、なぜ手取りに効くのですか？",
-    a: "一定の要件を満たす日当は、税法上非課税とされる場合があります。役員報酬を上げるより、手取りに残りやすいことがあります。ただし要件と可否は顧問税理士の判断が必要です。LogTrackは、その判断の前提になる「いつ・どこへ動いたか」を残します。",
+    a: "一定の要件を満たす日当は、税法上非課税とされる場合があります。役員報酬を上げるより、手取りに残りやすいことがあります。ただし要件と可否は顧問税理士の判断が必要です。旅費Oneは、その判断の前提になる「いつ・どこへ動いたか」を残します。",
   },
   {
     q: "税務上、必ず認められるのですか？",
-    a: "いいえ。LogTrackは税務の保証をするものではありません。移動の事実をデータとして残す仕組みです。導入の可否や日当の設計は、税理士とあわせてご確認ください。",
+    a: "いいえ。旅費Oneは税務の保証をするものではありません。移動の事実をデータとして残す仕組みです。導入の可否や日当の設計は、税理士とあわせてご確認ください。",
   },
   {
     q: "私用の移動も記録されますか？",
@@ -70,11 +70,12 @@ const faqs = [
 export default function LogTrackLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "LogTrack｜出張管理｜Connect Box",
+    title: "旅費One｜旅費管理｜Connect Box",
     description:
-      "Connect BoxのLogTrack。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
-    keywords: "LogTrack,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
-    path: "/connect-box/log-track",
+      "Connect Boxの旅費One。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
+    keywords:
+      "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
+    path: "/connect-box/ryohi-one",
   });
 
   return (
@@ -93,11 +94,11 @@ export default function LogTrackLp() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65 }}
           >
-            <p className="lt-logo">LogTrack</p>
+            <p className="lt-logo">旅費One</p>
             <h1>
-              出張の移動を自動で残し、
+              旅費管理を、
               <br />
-              日当と報告書までつなげる。
+              ひとつにする。
             </h1>
             <p className="lt-hero__sub">
               出張・外勤の多い企業向け。
@@ -126,7 +127,7 @@ export default function LogTrackLp() {
             <div className="lt-ba__head">
               <span className="lt-ba__label lt-ba__label--before">いま</span>
               <span />
-              <span className="lt-ba__label lt-ba__label--after">LogTrack導入後</span>
+              <span className="lt-ba__label lt-ba__label--after">旅費One導入後</span>
             </div>
             {beforeAfter.map((row) => (
               <div className="lt-ba__row" key={row.before}>
@@ -189,7 +190,7 @@ export default function LogTrackLp() {
             出張日・訪問先・移動履歴などを記録として残すことで、出張実態を確認しやすい運用へ。
           </p>
           <p>
-            一定の要件を満たす日当は、非課税とされる場合があります。LogTrackは、その判断の前提になる「いつ・どこへ動いたか」をデータとして残します。
+            一定の要件を満たす日当は、非課税とされる場合があります。旅費Oneは、その判断の前提になる「いつ・どこへ動いたか」をデータとして残します。
           </p>
           <p className="lt-note">
             税務の保証ではありません。可否は顧問税理士の判断です。

@@ -53,14 +53,14 @@ export const PUBLIC_SITE_PAGES = [
     ogImage: DEFAULT_OG_IMAGE,
   },
   {
-    path: "/connect-box/log-track",
+    path: "/connect-box/ryohi-one",
     priority: 0.8,
     changefreq: "monthly",
-    title: "LogTrack｜出張管理｜Connect Box",
+    title: "旅費One｜旅費管理｜Connect Box",
     description:
-      "Connect BoxのLogTrack。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
+      "Connect Boxの旅費One。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
     keywords:
-      "LogTrack,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
+      "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
   },

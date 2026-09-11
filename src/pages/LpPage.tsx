@@ -15,8 +15,10 @@ export default function LpPage() {
       return <MarketingLp />;
     case "back-office":
       return <BackOfficeLp />;
-    case "log-track":
+    case "ryohi-one":
       return <LogTrackLp />;
+    case "log-track":
+      return <Navigate to="/connect-box/ryohi-one" replace />;
     case "hr":
       return <HrLp />;
     case "coaching":

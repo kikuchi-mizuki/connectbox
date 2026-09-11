@@ -21,7 +21,7 @@ export const PUBLIC_SITE_PATHS = [
   "/company",
   "/connect-box",
   "/connect-box/back-office",
-  "/connect-box/log-track",
+  "/connect-box/ryohi-one",
   "/connect-box/web-marketing",
   "/connect-box/hr",
   "/connect-box/coaching",

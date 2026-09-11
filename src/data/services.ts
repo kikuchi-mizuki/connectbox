@@ -77,13 +77,13 @@ const backOffice: Service = {
 };
 
 const logTrack: Service = {
-  slug: "log-track",
-  name: "LogTrack",
-  en: "LogTrack",
-  path: "/connect-box/log-track",
+  slug: "ryohi-one",
+  name: "旅費One",
+  en: "Travel One",
+  path: "/connect-box/ryohi-one",
   hasLp: true,
-  tagline: "出張の記録から、日当と報告書まで。",
-  lead: "出張の移動を自動で残し、日当の計算と出張報告書までつなげます。",
+  tagline: "旅費管理を、ひとつに。",
+  lead: "出張の移動記録・日当・報告書まで。バラバラだった旅費まわりをひとつにまとめます。",
   heroImage:
     "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=2400&q=80",
   pains: [
@@ -130,7 +130,7 @@ const logTrack: Service = {
     },
   ],
   description:
-    "Connect BoxのLogTrack。出張の移動を自動記録し、日当と出張報告書までつなげる。",
+    "Connect Boxの旅費One。旅費管理をひとつに。出張の移動を自動記録し、日当と出張報告書までつなげる。",
 };
 
 export const services: Service[] = [

@@ -1050,7 +1050,8 @@
   }
 }
 
-/* —— LogTrack —— */
+/* —— 旅費One —— */
+.lp--ryohi-one,
 .lp--log-track {
   --brand: #2563eb;
   --brand-deep: #1d4ed8;
