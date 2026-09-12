@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import CtaButton from "../../components/CtaButton";
 import FadeIn from "../../components/FadeIn";
-import { faqs, lpServices, services, steps } from "../../data/services";
+import { services } from "../../data/services";
 import { LINE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
-
-const otherServices = services.filter((s) => !s.hasLp);
 
 const pains = [
   "社長が事務作業までやっている",
@@ -23,12 +21,12 @@ export default function ConnectBoxPage() {
     description:
       "Connect Box（コネクトボックス）のBPO・コンサルティング。人を増やす前に、バックオフィス業務を外に出す。経理・総務・人事・営業事務など、必要な分だけ外部化。",
     keywords:
-      "Connect Box,コネクトボックス,BPO,バックオフィス代行,経理代行,総務代行,業務委託,T-connect",
+      "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,経理代行,総務代行,業務委託,T-connect",
     path: "/connect-box",
   });
 
   return (
-    <main>
+    <main className="cb-page">
       <section className="hero" id="page-hero" aria-label="メインビジュアル">
         <div className="hero__media" aria-hidden="true">
           <img
@@ -52,9 +50,6 @@ export default function ConnectBoxPage() {
             <p className="hero__lead">
               経理・総務・人事・営業事務などのバックオフィス業務を代行し、属人化や繁忙期の揺れにも耐えられる体制をつくります。いきなり契約ではありません。
             </p>
-            <div className="cta-row">
-              <CtaButton className="btn--large btn--pulse" />
-            </div>
           </motion.div>
         </div>
       </section>
@@ -95,90 +90,57 @@ export default function ConnectBoxPage() {
         </FadeIn>
       </section>
 
-      <section className="section" id="services" aria-labelledby="services-title">
+      <section className="section top-biz" id="services" aria-labelledby="services-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Services</p>
-          <h2 className="section__title" id="services-title">
-            まずはここから
-          </h2>
-          <p className="section__lead">
-            バックオフィスの代行から始める企業様が多いです。旅費管理の自動化もご相談いただけます。
-          </p>
-          <div className="catalog-grid catalog-grid--main">
-            {lpServices.map((s) => (
-              <Link
-                className="catalog-card catalog-card--lp"
-                to={s.path}
-                key={s.slug}
-              >
-                <img src={s.heroImage} alt="" />
-                <p className="catalog-card__en">{s.en}</p>
-                <h3>{s.name}</h3>
-                <p>{s.tagline}</p>
-                <span className="catalog-card__more">案内を見る</span>
-              </Link>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
+          <header className="top-section-head top-section-head--stack">
+            <p className="section__label">Services</p>
+            <h2 className="section__title top-section-title" id="services-title">
+              サービス紹介
+            </h2>
+            <p className="top-section-head__lead">
+              人と企業の「困った」に向き合う支援メニューです。
+              <br />
+              まずは関心のある領域からご覧ください。
+            </p>
+          </header>
+          <div className="biz-grid biz-grid--top">
+            {services.map((s, i) => {
+              const comingSoon = s.status === "coming_soon";
+              const cardBody = (
+                <>
+                  <div className="biz-card__media">
+                    <img src={s.heroImage} alt="" />
+                  </div>
+                  <div className="biz-card__body">
+                    <p className="biz-card__en">{s.en}</p>
+                    <h3>{s.name}</h3>
+                    <p className="biz-card__desc">{s.tagline}</p>
+                    {comingSoon ? (
+                      <span className="biz-card__badge">リリース前</span>
+                    ) : null}
+                    {s.hasLp ? (
+                      <span className="biz-card__more">
+                        {comingSoon ? "事前案内を見る" : "詳しく見る"}
+                      </span>
+                    ) : null}
+                  </div>
+                </>
+              );
 
-      <section className="section section--muted" id="other-services" aria-labelledby="other-services-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">Other Services</p>
-          <h2 className="section__title" id="other-services-title">
-            その他の支援
-          </h2>
-          <p className="section__lead">
-            必要になったタイミングで足せます。バックオフィスと合わせてご相談いただくこともできます。
-          </p>
-          <div className="catalog-grid catalog-grid--sub">
-            {otherServices.map((s) => (
-              <article className="catalog-card catalog-card--static" key={s.slug}>
-                <p className="catalog-card__en">{s.en}</p>
-                <h3>{s.name}</h3>
-                <p>{s.tagline}</p>
-              </article>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      <section className="section approach-note" aria-labelledby="flow-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">Process</p>
-          <h2 className="section__title" id="flow-title">
-            ご相談から開始までの流れ
-          </h2>
-          <p className="section__lead">
-            いきなり契約ではありません。まずはLINEでの現状共有から。オンラインは15分程度です。
-          </p>
-          <ol className="flow">
-            {steps.map((s, i) => (
-              <li className="flow-step" key={s.title}>
-                <span className="flow-step__dot">{i + 1}</span>
-                <div>
-                  <h3>{s.title}</h3>
-                  <p>{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </FadeIn>
-      </section>
-
-      <section className="section section--muted" aria-labelledby="faq-title">
-        <FadeIn className="section__inner">
-          <p className="section__label">FAQ</p>
-          <h2 className="section__title" id="faq-title">
-            よくあるご質問
-          </h2>
-          <div className="faq">
-            {faqs.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
+              return (
+                <FadeIn key={s.slug} delay={0.06 * i}>
+                  {s.hasLp ? (
+                    <Link className="biz-card biz-card--top" to={s.path}>
+                      {cardBody}
+                    </Link>
+                  ) : (
+                    <div className="biz-card biz-card--top biz-card--static">
+                      {cardBody}
+                    </div>
+                  )}
+                </FadeIn>
+              );
+            })}
           </div>
         </FadeIn>
       </section>

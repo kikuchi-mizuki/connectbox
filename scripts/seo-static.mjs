@@ -36,7 +36,7 @@ export const PUBLIC_SITE_PAGES = [
     description:
       "Connect Box（コネクトボックス）のBPO・コンサルティング。人を増やす前に、バックオフィス業務を外に出す。経理・総務・人事・営業事務など、必要な分だけ外部化。",
     keywords:
-      "Connect Box,コネクトボックス,BPO,バックオフィス代行,経理代行,総務代行,業務委託,T-connect",
+      "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,経理代行,総務代行,業務委託,T-connect",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
   },
@@ -56,11 +56,11 @@ export const PUBLIC_SITE_PAGES = [
     path: "/connect-box/ryohi-one",
     priority: 0.8,
     changefreq: "monthly",
-    title: "旅費One｜旅費管理｜Connect Box",
+    title: "旅費One｜旅費管理（リリース前）｜Connect Box",
     description:
-      "Connect Boxの旅費One。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
+      "Connect Boxの旅費One（リリース前）。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。事前のご相談を受付中。",
     keywords:
-      "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
+      "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス,リリース前",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
   },

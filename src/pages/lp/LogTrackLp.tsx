@@ -4,7 +4,7 @@ import FadeIn from "../../components/FadeIn";
 import { LINE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
-const chips = ["自動で記録", "日当が見える", "報告書まで"];
+const chips = ["リリース前", "自動で記録", "日当が見える", "報告書まで"];
 
 const beforeAfter = [
   { before: "移動を手入力", after: "GPSで自動記録" },
@@ -46,6 +46,10 @@ const flow = [
 
 const faqs = [
   {
+    q: "いま申し込めますか？",
+    a: "旅費Oneは現在リリース準備中です。公開前のご相談・ご要望はLINEで受け付けています。リリース時期が近づきましたらご案内します。",
+  },
+  {
     q: "旅費Oneは、何のサービスですか？",
     a: "旅費管理をひとつにするクラウドです。出張や移動の記録をアプリで残し、日当の計算と出張報告書の作成までつなげます。手入力の精算を、移動の事実から自動に近づけます。",
   },
@@ -61,20 +65,16 @@ const faqs = [
     q: "私用の移動も記録されますか？",
     a: "移動ログは取得されます。Web画面で履歴を確認し、対象外の移動は除外できます。",
   },
-  {
-    q: "いきなり契約する必要がありますか？",
-    a: "いいえ。まずはLINEで、出張の多さやいまの精算方法をお聞かせください。",
-  },
 ];
 
 export default function LogTrackLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "旅費One｜旅費管理｜Connect Box",
+    title: "旅費One｜旅費管理（リリース前）｜Connect Box",
     description:
-      "Connect Boxの旅費One。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。",
+      "Connect Boxの旅費One（リリース前）。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。事前のご相談を受付中。",
     keywords:
-      "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス",
+      "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス,リリース前",
     path: "/connect-box/ryohi-one",
   });
 
@@ -95,6 +95,7 @@ export default function LogTrackLp() {
             transition={{ duration: 0.65 }}
           >
             <p className="lt-logo">旅費One</p>
+            <p className="lt-status">リリース前｜事前相談受付中</p>
             <h1>
               旅費管理を、
               <br />
@@ -104,6 +105,8 @@ export default function LogTrackLp() {
               出張・外勤の多い企業向け。
               <br />
               GPSで移動履歴を自動記録し、日当計算・出張報告まで効率化します。
+              <br />
+              現在はリリース準備中です。公開前のご相談も歓迎します。
             </p>
             <ul className="lt-chips">
               {chips.map((c) => (
@@ -111,7 +114,7 @@ export default function LogTrackLp() {
               ))}
             </ul>
             <div className="lt-hero__cta">
-              <CtaButton className="btn--large">導入の相談をする</CtaButton>
+              <CtaButton className="btn--large">事前相談をする</CtaButton>
             </div>
           </motion.div>
         </div>
@@ -244,14 +247,15 @@ export default function LogTrackLp() {
         </div>
         <FadeIn className="lt-download__inner">
           <h2>
-            出張の精算が、
+            リリース前のご相談も、
             <br />
-            いまどうなっているかから
+            歓迎しています
           </h2>
           <p>
             移動の多さ、日当の有無、報告書の作り方をLINEでお聞かせください。
+            公開に向けたご要望も伺えます。
           </p>
-          <CtaButton className="btn--large btn--pulse" />
+          <CtaButton className="btn--large btn--pulse">事前相談をする</CtaButton>
           <p className="mail-hint">
             LINE：{" "}
             <a href={LINE_URL} target="_blank" rel="noopener noreferrer">

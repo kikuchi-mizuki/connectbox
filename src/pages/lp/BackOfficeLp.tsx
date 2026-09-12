@@ -235,18 +235,14 @@ export default function BackOfficeLp() {
         <FadeIn className="section__inner">
           <p className="section__label">Team</p>
           <h2 className="section__title" id="team-title">
-            3,000名以上の実務経験者から、
+            実務経験のある人材から、
             <br />
-            御社に合う人材をアサイン
+            御社に合うメンバーをアサイン
           </h2>
           <p className="section__lead">
             大手企業での勤務経験を持つ人材や、子育てと両立しながら働く経験者が在籍。請求・経費・営業事務などの実務経験を持つアシスタントが、対象業務に合わせて対応します。
           </p>
           <ul className="stat-row">
-            <li>
-              <strong>3,000+</strong>
-              <span>登録人材</span>
-            </li>
             <li>
               <strong>実務経験</strong>
               <span>経理・総務・営業事務など</span>
@@ -254,6 +250,10 @@ export default function BackOfficeLp() {
             <li>
               <strong>柔軟対応</strong>
               <span>業務量に合わせてアサイン</span>
+            </li>
+            <li>
+              <strong>伴走支援</strong>
+              <span>状況に合わせて進め方を調整</span>
             </li>
           </ul>
         </FadeIn>

@@ -5,6 +5,8 @@ export type Service = {
   path: string;
   /** HPカタログから案内LPへリンクする */
   hasLp: boolean;
+  /** 公開状態。coming_soon はリリース前の案内 */
+  status?: "active" | "coming_soon";
   tagline: string;
   lead: string;
   heroImage: string;
@@ -82,8 +84,9 @@ const logTrack: Service = {
   en: "Travel One",
   path: "/connect-box/ryohi-one",
   hasLp: true,
+  status: "coming_soon",
   tagline: "旅費管理を、ひとつに。",
-  lead: "出張の移動記録・日当・報告書まで。バラバラだった旅費まわりをひとつにまとめます。",
+  lead: "出張の移動記録・日当・報告書まで。バラバラだった旅費まわりをひとつにまとめます。現在リリース準備中です。",
   heroImage:
     "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=2400&q=80",
   pains: [
@@ -130,7 +133,7 @@ const logTrack: Service = {
     },
   ],
   description:
-    "Connect Boxの旅費One。旅費管理をひとつに。出張の移動を自動記録し、日当と出張報告書までつなげる。",
+    "Connect Boxの旅費One（リリース前）。旅費管理をひとつに。出張の移動を自動記録し、日当と出張報告書までつなげる。",
 };
 
 export const services: Service[] = [
@@ -273,7 +276,7 @@ export const faqs = [
   },
   {
     q: "担当するのは、どんな人ですか？",
-    a: "3,000名以上の子育て世帯ワーカーが在籍しています。大手企業での勤務経験など、領域に合わせた実務経験を持つアシスタントから、必要な人材をアサインします。",
+    a: "大手企業での勤務経験など、領域に合わせた実務経験を持つアシスタントから、必要な人材をアサインします。",
   },
   {
     q: "料金は掲載されていますか？",
