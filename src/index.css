@@ -2578,6 +2578,43 @@ button {
   word-break: keep-all;
 }
 
+.cb-case--cta {
+  padding: 0;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.cb-case__cta {
+  display: grid;
+  gap: 0.35rem;
+  place-content: center;
+  justify-items: center;
+  min-height: 12rem;
+  height: 100%;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.cb-case__cta-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cb-case__cta strong {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.cb-case__cta-hint {
+  margin-top: 0.35rem;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
 .cb-value__price {
   margin-top: 1.5rem;
   padding-top: 1.25rem;

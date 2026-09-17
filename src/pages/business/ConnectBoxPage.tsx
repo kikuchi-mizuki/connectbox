@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
@@ -21,8 +22,17 @@ const contactHrefs = {
   email: `mailto:${CONNECT_BOX_EMAIL}`,
 } as const;
 
+function scrollToContact(smooth: boolean) {
+  document.getElementById("final-cta")?.scrollIntoView({
+    behavior: smooth ? "smooth" : "auto",
+    block: "start",
+  });
+}
+
 export default function ConnectBoxPage() {
   const reduce = useReducedMotion();
+  const caseGridRef = useRef<HTMLOListElement>(null);
+  const caseCtaRef = useRef<HTMLLIElement>(null);
 
   usePageMeta({
     title: "Connect Box｜企業と人の課題解決をひとつの窓口で",
@@ -32,6 +42,44 @@ export default function ConnectBoxPage() {
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     path: "/connect-box",
   });
+
+  useEffect(() => {
+    const grid = caseGridRef.current;
+    const cta = caseCtaRef.current;
+    if (!grid || !cta) return;
+
+    let locked = false;
+    const go = () => {
+      if (locked) return;
+      locked = true;
+      scrollToContact(!reduce);
+      window.setTimeout(() => {
+        locked = false;
+      }, 1200);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting && entry.intersectionRatio >= 0.7) go();
+      },
+      { root: grid, threshold: [0.7, 0.9] },
+    );
+    io.observe(cta);
+
+    const onWheel = (e: WheelEvent) => {
+      const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 6;
+      if (atEnd && e.deltaY > 10) {
+        e.preventDefault();
+        go();
+      }
+    };
+    grid.addEventListener("wheel", onWheel, { passive: false });
+
+    return () => {
+      io.disconnect();
+      grid.removeEventListener("wheel", onWheel);
+    };
+  }, [reduce]);
 
   return (
     <main>
@@ -150,7 +198,7 @@ export default function ConnectBoxPage() {
             ここ一つでまとめて相談できます。
           </p>
           <div className="cb-case-rail" aria-label="導入ケース">
-            <ol className="cb-case-grid">
+            <ol className="cb-case-grid" ref={caseGridRef}>
               {connectBoxCases.map((c) => (
                 <li className="cb-case" key={c.n}>
                   <span className="cb-case__n">{c.n}</span>
@@ -175,6 +223,22 @@ export default function ConnectBoxPage() {
                   </div>
                 </li>
               ))}
+              <li className="cb-case cb-case--cta" ref={caseCtaRef}>
+                <a
+                  className="cb-case__cta"
+                  href="#final-cta"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToContact(!reduce);
+                  }}
+                >
+                  <span className="cb-case__cta-label">次は</span>
+                  <strong>相談する</strong>
+                  <span className="cb-case__cta-hint" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
             </ol>
           </div>
           <div className="cb-value__price">
