@@ -156,7 +156,13 @@ export default function ConnectBoxPage() {
               <li className="cb-benefit cb-benefit--on-ink" key={b.n}>
                 <span className="cb-benefit__n">{b.n}</span>
                 <h3>{b.title}</h3>
-                <p>{b.body}</p>
+                <p>
+                  {b.body.split("\n").map((line) => (
+                    <span className="cb-benefit__line" key={line}>
+                      {line}
+                    </span>
+                  ))}
+                </p>
               </li>
             ))}
           </ol>

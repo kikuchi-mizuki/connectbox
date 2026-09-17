@@ -2480,6 +2480,12 @@ button {
 
 @media (min-width: 800px) {
   .cb-benefit-grid--compact {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .cb-benefit-grid--compact {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -2529,7 +2535,13 @@ button {
   font-size: 0.84rem;
   color: var(--ink-soft);
   line-height: 1.65;
-  white-space: pre-line;
+}
+
+.cb-benefit__line {
+  display: block;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  line-break: strict;
 }
 
 .cb-benefit--on-ink p {
