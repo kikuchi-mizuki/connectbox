@@ -2310,25 +2310,16 @@ button {
 }
 
 .cb-hero__title {
-  margin: 0 0 0.85rem;
-  max-width: 16em;
-  font-size: clamp(1.2rem, 3.6vw, 1.7rem);
+  margin: 0;
+  max-width: 14em;
+  font-size: clamp(1.55rem, 5.2vw, 2.35rem);
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
   color: #fff;
   word-break: keep-all;
   overflow-wrap: anywhere;
-  text-shadow: 0 1px 18px rgba(21, 34, 56, 0.22);
-}
-
-.cb-hero__lead {
-  margin: 0;
-  max-width: 28em;
-  font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.9);
-  word-break: keep-all;
-  overflow-wrap: anywhere;
+  text-shadow: 0 2px 24px rgba(21, 34, 56, 0.28);
 }
 
 .cb-cta-brand {
@@ -2354,6 +2345,10 @@ button {
 
   .cb-logo img {
     width: min(100%, 15rem);
+  }
+
+  .cb-hero__title {
+    font-size: clamp(1.45rem, 6.2vw, 1.95rem);
   }
 }
 

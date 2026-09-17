@@ -37,7 +37,7 @@ export default function ConnectBoxPage() {
   usePageMeta({
     title: "Connect Box｜企業と人の課題解決をひとつの窓口で",
     description:
-      "Connect Box（コネクトボックス）。人が、人の時間に戻る時代。いらない作業は手放す。そこから、時間が生まれる。",
+      "Connect Box（コネクトボックス）。いらない作業は手放す。そこから、時間が生まれる。企業と人の課題解決をひとつの窓口で。",
     keywords:
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     path: "/connect-box",
@@ -137,20 +137,10 @@ export default function ConnectBoxPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              人が、人の時間に
-              <br />
-              戻る時代。
-            </motion.h1>
-            <motion.p
-              className="cb-hero__lead"
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            >
               いらない作業は手放す。
               <br />
               そこから、時間が生まれる。
-            </motion.p>
+            </motion.h1>
           </div>
         </div>
       </section>
