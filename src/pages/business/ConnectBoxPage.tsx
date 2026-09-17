@@ -27,7 +27,7 @@ export default function ConnectBoxPage() {
   usePageMeta({
     title: "Connect Box｜企業と人の課題解決をひとつの窓口で",
     description:
-      "Connect Box（コネクトボックス）。人が、人の時間に戻る時代。いらない作業は手放す。手放すから、時間が生まれる。",
+      "Connect Box（コネクトボックス）。人が、人の時間に戻る時代。いらない作業は手放す。そこから、時間が生まれる。",
     keywords:
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     path: "/connect-box",
@@ -72,7 +72,7 @@ export default function ConnectBoxPage() {
             >
               いらない作業は手放す。
               <br />
-              手放すから、時間が生まれる。
+              そこから、時間が生まれる。
             </motion.p>
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 12 }}
