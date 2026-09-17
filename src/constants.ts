@@ -21,3 +21,9 @@ export function getSiteUrl() {
 
 export const CONNECT_BOX_NAME = "Connect Box";
 export const CONNECT_BOX_NAME_JA = "コネクトボックス";
+
+/** Connect Box 問い合わせ */
+export const CONNECT_BOX_LINE_URL = "https://lin.ee/w0pvsAp";
+export const CONNECT_BOX_MEETING_URL =
+  "https://timerex.net/s/t-tanaka_f957_ccee/2b993f18";
+export const CONNECT_BOX_EMAIL = "m-tanaka@t-cnct.com";

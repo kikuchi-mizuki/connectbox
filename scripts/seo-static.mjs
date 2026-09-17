@@ -32,11 +32,11 @@ export const PUBLIC_SITE_PAGES = [
     path: "/connect-box",
     priority: 0.9,
     changefreq: "weekly",
-    title: "Connect Box｜BPO・バックオフィス代行",
+    title: "Connect Box｜企業と人の課題を、ひとつの窓口で",
     description:
-      "Connect Box（コネクトボックス）のBPO・コンサルティング。人を増やす前に、バックオフィス業務を外に出す。経理・総務・人事・営業事務など、必要な分だけ外部化。",
+      "Connect Box（コネクトボックス）。人を増やす前に、業務を外に出す。企業と人のあらゆる課題を、ひとつの窓口で。バックオフィス代行から採用・戦略・制作まで、必要な分だけ支援します。",
     keywords:
-      "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,経理代行,総務代行,業務委託,T-connect",
+      "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
   },
