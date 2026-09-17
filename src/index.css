@@ -2236,6 +2236,146 @@ button {
 }
 
 /* —— Connect Box（短いHP構成） —— */
+.cb-hero {
+  --cb-navy: #384888;
+  --cb-orange: #e09038;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.cb-hero__panels {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cb-hero__panel--grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    #2a3568 0%,
+    var(--cb-navy) 38%,
+    #c87830 78%,
+    var(--cb-orange) 100%
+  );
+  background-size: 120% 120%;
+  animation: cb-grad-shift 18s ease-in-out infinite alternate;
+}
+
+@keyframes cb-grad-shift {
+  from {
+    background-position: 0% 40%;
+  }
+  to {
+    background-position: 100% 60%;
+  }
+}
+
+.cb-hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(5.75rem, 12vw, 7.5rem) var(--space) clamp(2.75rem, 6vw, 4rem);
+}
+
+.cb-hero__copy {
+  max-width: 34rem;
+}
+
+.cb-logo {
+  display: block;
+  margin: 0 0 1.15rem;
+  line-height: 0;
+}
+
+.cb-logo img {
+  display: block;
+  width: min(100%, 17.5rem);
+  height: auto;
+}
+
+.cb-logo--sm {
+  margin: 0;
+}
+
+.cb-logo--sm img {
+  width: min(100%, 12.5rem);
+  margin-inline: auto;
+}
+
+.cb-hero__title {
+  margin: 0 0 0.85rem;
+  max-width: 14em;
+  font-size: clamp(1.2rem, 3.6vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.45;
+  color: #fff;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-shadow: 0 1px 18px rgba(21, 34, 56, 0.22);
+}
+
+.cb-hero__lead {
+  margin: 0 0 1.5rem;
+  max-width: 26em;
+  font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.cb-hero__cta {
+  background: #fff;
+  color: var(--cb-navy);
+  box-shadow: 0 10px 24px rgba(21, 34, 56, 0.22);
+}
+
+.cb-hero__cta:hover {
+  background: #f3f5fb;
+  color: #2f3d72;
+}
+
+.cb-cta-brand {
+  display: grid;
+  gap: 0.65rem;
+  justify-items: center;
+  margin: 0 0 0.75rem;
+}
+
+@media (max-width: 899px) {
+  .cb-hero {
+    min-height: min(100svh, 52rem);
+  }
+
+  .cb-hero__inner {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: clamp(2rem, 8vw, 3rem);
+  }
+
+  .cb-hero__copy {
+    width: 100%;
+    max-width: none;
+  }
+
+  .cb-logo img {
+    width: min(100%, 15rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-hero__panel--grad {
+    animation: none;
+  }
+}
+
 .cb-service-grid {
   list-style: none;
   margin: 1.5rem 0 0;
@@ -2428,7 +2568,7 @@ button {
 
 @media (min-width: 720px) {
   .cb-contact-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
 import {
-  CONNECT_BOX_EMAIL,
   CONNECT_BOX_LINE_URL,
   CONNECT_BOX_MEETING_URL,
 } from "../../constants";
@@ -18,7 +17,6 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 const contactHrefs = {
   line: CONNECT_BOX_LINE_URL,
   meeting: CONNECT_BOX_MEETING_URL,
-  email: `mailto:${CONNECT_BOX_EMAIL}`,
 } as const;
 
 export default function ConnectBoxPage() {
@@ -35,41 +33,69 @@ export default function ConnectBoxPage() {
 
   return (
     <main>
-      <section className="hero hero--page" id="page-hero" aria-label="メインビジュアル">
-        <div className="hero__media" aria-hidden="true">
-          <img
-            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80"
-            alt=""
-          />
-          <div className="hero__shade" />
+      <section className="cb-hero" id="page-hero" aria-label="メインビジュアル">
+        <div className="cb-hero__panels" aria-hidden="true">
+          <div className="cb-hero__panel cb-hero__panel--grad" />
         </div>
-        <div className="hero__content">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="hero__brand">Connect Box</p>
-            <h1 className="hero__title">
+        <div className="cb-hero__inner">
+          <div className="cb-hero__copy">
+            <motion.p
+              className="cb-logo"
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <img
+                src={connectBoxBrand.logoWhiteSrc}
+                alt={connectBoxBrand.nameWithDot}
+                width={448}
+                height={96}
+              />
+            </motion.p>
+            <motion.h1
+              className="cb-hero__title"
+              initial={reduce ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
               人を増やす前に、
               <br />
               業務を外に出しませんか？
-            </h1>
-            <p className="hero__lead">{connectBoxBrand.concept}。</p>
-          </motion.div>
+            </motion.h1>
+            <motion.p
+              className="cb-hero__lead"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+            >
+              企業と人のあらゆる課題を、
+              <br />
+              ひとつの窓口で。
+            </motion.p>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <a className="btn cb-hero__cta" href="#final-cta">
+                相談する
+              </a>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       <section className="section" id="services" aria-labelledby="services-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Services</p>
           <h2 className="section__title" id="services-title">
             支援サービス一覧
           </h2>
           <p className="section__lead">
-            {connectBoxBrand.servicesLead}。
+            外部経営チームをあなたの企業へ。
             <br />
-            {connectBoxBrand.servicesNote}
+            業務の一部分だけでも外注・依頼可能。
+            <br />
+            課題に合わせて組み合わせできます。
           </p>
           <ul className="cb-service-grid">
             {connectBoxCatalog.map((item) => {
@@ -111,14 +137,15 @@ export default function ConnectBoxPage() {
 
       <section className="section section--ink cb-value" aria-labelledby="value-title">
         <FadeIn className="section__inner">
-          <p className="section__label">Value</p>
           <h2 className="section__title" id="value-title">
             必要な業務だけ、
             <br />
             必要な期間だけ。
           </h2>
           <p className="section__lead">
-            複数の業者に頼んでいた業務も、経営課題ごとまとめて引き受けます。
+            複数の業者に頼んでいた業務も、
+            <br />
+            経営課題ごとまとめて引き受けます。
           </p>
           <ol className="cb-benefit-grid cb-benefit-grid--compact">
             {connectBoxBenefits.map((b) => (
@@ -139,30 +166,37 @@ export default function ConnectBoxPage() {
       <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
         <FadeIn className="final-cta__inner final-cta__inner--wide">
           <h2 id="cta-title">
-            まずは、
+            まずは、御社の課題を
             <br />
-            御社の課題をお聞かせください
+            お聞かせください
           </h2>
-          <p>
-            Connect Box　{connectBoxBrand.conceptShort}
-            <br />
-            ご都合のよい方法でご連絡ください。
+          <p className="cb-cta-brand">
+            <span className="cb-logo cb-logo--sm">
+              <img
+                src={connectBoxBrand.logoSrc}
+                alt={connectBoxBrand.nameWithDot}
+                width={448}
+                height={96}
+              />
+            </span>
+            <span>
+              企業のあらゆる課題を、
+              <br />
+              一つの窓口で。
+            </span>
           </p>
+          <p>ご都合のよい方法でご連絡ください。</p>
           <div className="cb-contact-grid">
             {connectBoxContacts.map((c) => (
               <a
                 key={c.id}
                 className={`cb-contact-card cb-contact-card--${c.id}`}
                 href={contactHrefs[c.hrefKey]}
-                {...(c.hrefKey === "email"
-                  ? {}
-                  : { target: "_blank", rel: "noopener noreferrer" })}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <span className="cb-contact-card__title">{c.title}</span>
                 <span className="cb-contact-card__sub">{c.sub}</span>
-                {c.id === "email" ? (
-                  <span className="cb-contact-card__meta">{CONNECT_BOX_EMAIL}</span>
-                ) : null}
               </a>
             ))}
           </div>
