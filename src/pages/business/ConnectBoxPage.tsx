@@ -49,33 +49,62 @@ export default function ConnectBoxPage() {
     if (!grid || !cta) return;
 
     let locked = false;
+    let dwellTimer: number | undefined;
+    let wheelAcc = 0;
+
+    const clearDwell = () => {
+      if (dwellTimer !== undefined) {
+        window.clearTimeout(dwellTimer);
+        dwellTimer = undefined;
+      }
+    };
+
     const go = () => {
       if (locked) return;
       locked = true;
+      clearDwell();
+      wheelAcc = 0;
       scrollToContact(!reduce);
       window.setTimeout(() => {
         locked = false;
-      }, 1200);
+      }, 2200);
+    };
+
+    const scheduleGo = () => {
+      if (locked || dwellTimer !== undefined) return;
+      dwellTimer = window.setTimeout(() => {
+        dwellTimer = undefined;
+        go();
+      }, 1100);
     };
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting && entry.intersectionRatio >= 0.7) go();
+        if (entry?.isIntersecting && entry.intersectionRatio >= 0.9) {
+          scheduleGo();
+        } else {
+          clearDwell();
+          wheelAcc = 0;
+        }
       },
-      { root: grid, threshold: [0.7, 0.9] },
+      { root: grid, threshold: [0.5, 0.75, 0.9, 1] },
     );
     io.observe(cta);
 
     const onWheel = (e: WheelEvent) => {
       const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 6;
-      if (atEnd && e.deltaY > 10) {
-        e.preventDefault();
-        go();
+      if (!atEnd || e.deltaY <= 0) {
+        wheelAcc = 0;
+        return;
       }
+      e.preventDefault();
+      wheelAcc += e.deltaY;
+      if (wheelAcc > 180) scheduleGo();
     };
     grid.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
+      clearDwell();
       io.disconnect();
       grid.removeEventListener("wheel", onWheel);
     };
