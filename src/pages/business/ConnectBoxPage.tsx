@@ -140,14 +140,16 @@ export default function ConnectBoxPage() {
       <section className="section section--ink cb-value" aria-labelledby="value-title">
         <FadeIn className="section__inner">
           <h2 className="section__title" id="value-title">
-            必要な業務だけ、
+            必要な業務を
             <br />
             必要な期間だけ。
           </h2>
           <p className="section__lead">
-            複数の業者に頼んでいた業務も、
+            経理・採用・Webなど、
             <br />
-            経営課題ごとまとめて引き受けます。
+            バラバラに頼んでいた仕事も、
+            <br />
+            ここ一つでまとめて相談できます。
           </p>
           <ol className="cb-benefit-grid cb-benefit-grid--compact">
             {connectBoxBenefits.map((b) => (
