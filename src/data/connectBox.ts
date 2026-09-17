@@ -3,8 +3,8 @@
 export const connectBoxBrand = {
   name: "Connect Box",
   nameWithDot: "Connect Box.",
-  logoSrc: "/connect-box/logo.png",
-  logoWhiteSrc: "/connect-box/logo-white.png",
+  logoSrc: "/connect-box/logo.png?v=2",
+  logoWhiteSrc: "/connect-box/logo-white.png?v=2",
   concept: "企業と人のあらゆる課題を、ひとつの窓口で",
   conceptShort: "企業のあらゆる課題を、一つの窓口で。",
   servicesLead: "外部経営チームをあなたの企業へ",
@@ -77,5 +77,11 @@ export const connectBoxContacts = [
     title: "オンライン相談",
     sub: "カレンダーから日程調整",
     hrefKey: "meeting" as const,
+  },
+  {
+    id: "email",
+    title: "メール",
+    sub: "メールでご相談",
+    hrefKey: "email" as const,
   },
 ] as const;

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
 import {
+  CONNECT_BOX_EMAIL,
   CONNECT_BOX_LINE_URL,
   CONNECT_BOX_MEETING_URL,
 } from "../../constants";
@@ -17,6 +18,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 const contactHrefs = {
   line: CONNECT_BOX_LINE_URL,
   meeting: CONNECT_BOX_MEETING_URL,
+  email: `mailto:${CONNECT_BOX_EMAIL}`,
 } as const;
 
 export default function ConnectBoxPage() {
@@ -192,8 +194,9 @@ export default function ConnectBoxPage() {
                 key={c.id}
                 className={`cb-contact-card cb-contact-card--${c.id}`}
                 href={contactHrefs[c.hrefKey]}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(c.hrefKey === "email"
+                  ? {}
+                  : { target: "_blank", rel: "noopener noreferrer" })}
               >
                 <span className="cb-contact-card__title">{c.title}</span>
                 <span className="cb-contact-card__sub">{c.sub}</span>
