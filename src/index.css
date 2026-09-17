@@ -2235,23 +2235,13 @@ button {
   }
 }
 
-/* —— Connect Box: CASE / Price / Services / Contact（既存トークンのみ） —— */
-.catalog-card__badge-inline {
-  display: inline-block;
-  margin: 0 0 0 0.5rem;
-  vertical-align: middle;
-}
-
-.catalog-card h3 .biz-card__badge {
-  margin-inline: 0;
-}
-
+/* —— Connect Box（短いHP構成） —— */
 .cb-service-grid {
   list-style: none;
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
   padding: 0;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.55rem;
   grid-template-columns: 1fr;
 }
 
@@ -2264,18 +2254,18 @@ button {
 @media (min-width: 1024px) {
   .cb-service-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.85rem;
+    gap: 0.65rem;
   }
 }
 
 .cb-service-item {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 0.75rem;
-  align-items: start;
-  min-height: 4.75rem;
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 3.6rem;
   height: 100%;
-  padding: 1rem 1.05rem;
+  padding: 0.8rem 0.9rem;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -2297,210 +2287,142 @@ button {
 
 .cb-service-item__n {
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--brand);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .cb-service-item__body {
   display: grid;
-  gap: 0.3rem;
+  gap: 0.15rem;
   min-width: 0;
 }
 
 .cb-service-item__body strong {
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--ink);
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .cb-service-item__note {
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   color: var(--ink-soft);
-  line-height: 1.55;
+  line-height: 1.45;
 }
 
 .cb-service-item__body .biz-card__badge {
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
 }
 
 .cb-service-item__more {
-  align-self: center;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--brand-deep);
   white-space: nowrap;
 }
 
-.cb-case-grid {
-  margin-top: 2rem;
-  display: grid;
-  gap: 1rem;
-}
-
-@media (min-width: 800px) {
-  .cb-case-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.cb-case {
-  display: grid;
-  gap: 0.9rem;
-  align-content: start;
-  min-height: 100%;
-  padding: 1.25rem 1.2rem 1.35rem;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-}
-
-.cb-case__id {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--brand);
-}
-
-.cb-case__title {
-  margin: 0;
-  font-size: 1.08rem;
-  font-weight: 700;
-  line-height: 1.45;
-  color: var(--ink);
-}
-
-.cb-case__block {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.cb-case__label {
-  margin: 0;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--accent);
-}
-
-.cb-case__list {
-  margin: 0;
-  padding-left: 1.15rem;
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-  line-height: 1.7;
-}
-
-.cb-case__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.cb-case__tag {
-  display: inline-flex;
-  padding: 0.3rem 0.65rem;
-  border-radius: 99px;
-  background: var(--brand);
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.cb-case__tag--accent {
-  background: var(--accent);
-}
-
-.cb-price {
-  text-align: center;
-}
-
-.cb-price__inner {
-  max-width: 36rem;
-}
-
-.cb-price .section__title {
-  margin-bottom: 0.5rem;
+.cb-value .section__title {
+  margin-bottom: 0.65rem;
 }
 
 .cb-benefit-grid {
   list-style: none;
-  margin: 2rem 0 0;
+  margin: 1.5rem 0 0;
   padding: 0;
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-@media (min-width: 720px) {
-  .cb-benefit-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.cb-benefit-grid--compact {
+  margin-top: 1.35rem;
 }
 
-@media (min-width: 1024px) {
-  .cb-benefit-grid {
+@media (min-width: 800px) {
+  .cb-benefit-grid--compact {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .cb-benefit {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.35rem;
   align-content: start;
   min-height: 100%;
-  padding: 1.2rem 1.15rem 1.3rem;
+  padding: 1rem 1rem 1.1rem;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 8px;
 }
 
+.cb-benefit--on-ink {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
 .cb-benefit__n {
   font-family: var(--font-display);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--brand);
 }
 
+.cb-benefit--on-ink .cb-benefit__n {
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .cb-benefit h3 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.4;
   color: var(--ink);
 }
 
-.cb-benefit p {
-  margin: 0;
-  font-size: 0.88rem;
-  color: var(--ink-soft);
-  line-height: 1.75;
+.cb-benefit--on-ink h3 {
+  color: #fff;
 }
 
-.cb-closing {
-  margin: 2rem 0 0;
-  padding: 1.15rem 1.25rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 0.98rem;
-  font-weight: 700;
-  line-height: 1.75;
+.cb-benefit p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.cb-benefit--on-ink p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.cb-value__price {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
   text-align: center;
 }
 
+.cb-value__amount {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3.5vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.cb-value__note {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .cb-contact-grid {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
   display: grid;
-  gap: 0.85rem;
+  gap: 0.75rem;
   text-align: left;
 }
 
@@ -2516,9 +2438,9 @@ button {
 
 .cb-contact-card {
   display: grid;
-  gap: 0.3rem;
-  min-height: 6.5rem;
-  padding: 1.2rem 1.15rem;
+  gap: 0.25rem;
+  min-height: 5.5rem;
+  padding: 1.05rem 1.05rem;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
@@ -2527,8 +2449,7 @@ button {
   box-shadow: 0 8px 20px rgba(21, 34, 56, 0.04);
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    box-shadow 0.2s ease;
 }
 
 .cb-contact-card:hover {
@@ -2564,19 +2485,19 @@ button {
 }
 
 .cb-contact-card__title {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 800;
   color: var(--ink);
 }
 
 .cb-contact-card__sub {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--ink-soft);
 }
 
 .cb-contact-card__meta {
-  margin-top: 0.25rem;
-  font-size: 0.82rem;
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--ink);
   word-break: break-all;
