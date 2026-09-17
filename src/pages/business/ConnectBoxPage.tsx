@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
+import ConnectBoxLeadForm from "../../components/ConnectBoxLeadForm";
 import {
   CONNECT_BOX_EMAIL,
   CONNECT_BOX_LINE_URL,
@@ -20,6 +21,7 @@ const contactHrefs = {
   line: CONNECT_BOX_LINE_URL,
   meeting: CONNECT_BOX_MEETING_URL,
   email: `mailto:${CONNECT_BOX_EMAIL}`,
+  download: "#download",
 } as const;
 
 function scrollToContact(smooth: boolean) {
@@ -258,6 +260,24 @@ export default function ConnectBoxPage() {
         </FadeIn>
       </section>
 
+      <section
+        className="section section--muted"
+        id="download"
+        aria-labelledby="download-title"
+      >
+        <FadeIn className="section__inner cb-download">
+          <h2 className="section__title" id="download-title">
+            サービス資料をダウンロード
+          </h2>
+          <p className="section__lead">
+            会社名・ご連絡先をご入力ください。
+            <br />
+            送信後すぐにPDFをダウンロードできます。
+          </p>
+          <ConnectBoxLeadForm />
+        </FadeIn>
+      </section>
+
       <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
         <FadeIn className="final-cta__inner final-cta__inner--wide">
           <h2 id="cta-title">
@@ -287,9 +307,20 @@ export default function ConnectBoxPage() {
                 key={c.id}
                 className={`cb-contact-card cb-contact-card--${c.id}`}
                 href={contactHrefs[c.hrefKey]}
-                {...(c.hrefKey === "email"
+                {...(c.hrefKey === "email" || c.hrefKey === "download"
                   ? {}
                   : { target: "_blank", rel: "noopener noreferrer" })}
+                onClick={
+                  c.hrefKey === "download"
+                    ? (e) => {
+                        e.preventDefault();
+                        document.getElementById("download")?.scrollIntoView({
+                          behavior: reduce ? "auto" : "smooth",
+                          block: "start",
+                        });
+                      }
+                    : undefined
+                }
               >
                 <span className="cb-contact-card__title">{c.title}</span>
                 <span className="cb-contact-card__sub">{c.sub}</span>

@@ -87,6 +87,12 @@ export const connectBoxContacts = [
     hrefKey: "meeting" as const,
   },
   {
+    id: "download",
+    title: "資料ダウンロード",
+    sub: "サービス資料（PDF）",
+    hrefKey: "download" as const,
+  },
+  {
     id: "email",
     title: "メール",
     sub: "メールでご相談",

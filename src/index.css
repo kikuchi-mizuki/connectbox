@@ -331,6 +331,16 @@ button {
   background: var(--line-green-hover);
 }
 
+.btn--primary {
+  background: #384888;
+  color: var(--white);
+  box-shadow: 0 10px 24px rgba(56, 72, 136, 0.28);
+}
+
+.btn--primary:hover {
+  background: #2f3d74;
+}
+
 .btn--secondary {
   background: transparent;
   color: var(--white);
@@ -2639,7 +2649,13 @@ button {
 
 @media (min-width: 720px) {
   .cb-contact-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .cb-contact-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -2686,6 +2702,15 @@ button {
   color: var(--brand-deep);
 }
 
+.cb-contact-card--download {
+  border-color: rgba(224, 144, 56, 0.4);
+  background: #fff8f0;
+}
+
+.cb-contact-card--download .cb-contact-card__title {
+  color: #b45309;
+}
+
 .cb-contact-card--email {
   border-color: rgba(232, 148, 26, 0.35);
   background: #fffaf3;
@@ -2712,4 +2737,99 @@ button {
   font-weight: 600;
   color: var(--ink);
   word-break: break-all;
+}
+
+/* —— Connect Box 資料DL（リード獲得） —— */
+.cb-download {
+  max-width: 40rem;
+}
+
+.cb-lead-form {
+  margin-top: 1.75rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.cb-lead-form__grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .cb-lead-form__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cb-lead-form__field {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.cb-lead-form__field abbr {
+  text-decoration: none;
+  color: #e09038;
+}
+
+.cb-lead-form__field input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--white);
+  font: inherit;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.cb-lead-form__field input:focus {
+  outline: 2px solid rgba(56, 72, 136, 0.35);
+  outline-offset: 1px;
+  border-color: #384888;
+}
+
+.cb-lead-form__note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.cb-lead-form__error {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #b42318;
+}
+
+.cb-lead-form .btn {
+  justify-self: start;
+}
+
+.cb-lead-form .btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.cb-lead-form--done {
+  padding: 1.5rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.cb-lead-form__done-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.cb-lead-form__done-body {
+  margin: 0 0 1.15rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
 }

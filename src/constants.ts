@@ -27,3 +27,7 @@ export const CONNECT_BOX_LINE_URL = "https://lin.ee/w0pvsAp";
 export const CONNECT_BOX_MEETING_URL =
   "https://timerex.net/s/t-tanaka_f957_ccee/2b993f18";
 export const CONNECT_BOX_EMAIL = "m-tanaka@t-cnct.com";
+
+/** サービス資料（リード獲得後にダウンロード） */
+export const CONNECT_BOX_MATERIAL_URL = "/connect-box/materials/connect-box.pdf";
+export const CONNECT_BOX_MATERIAL_FILENAME = "Connect_Box_サービス資料.pdf";
