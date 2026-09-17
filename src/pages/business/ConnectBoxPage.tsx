@@ -7,8 +7,8 @@ import {
   CONNECT_BOX_MEETING_URL,
 } from "../../constants";
 import {
-  connectBoxBenefits,
   connectBoxBrand,
+  connectBoxCases,
   connectBoxCatalog,
   connectBoxContacts,
   connectBoxPrice,
@@ -149,21 +149,34 @@ export default function ConnectBoxPage() {
             <br />
             ここ一つでまとめて相談できます。
           </p>
-          <ol className="cb-benefit-grid cb-benefit-grid--compact">
-            {connectBoxBenefits.map((b) => (
-              <li className="cb-benefit cb-benefit--on-ink" key={b.n}>
-                <span className="cb-benefit__n">{b.n}</span>
-                <h3>{b.title}</h3>
-                <p>
-                  {b.body.split("\n").map((line) => (
-                    <span className="cb-benefit__line" key={line}>
-                      {line}
-                    </span>
-                  ))}
-                </p>
-              </li>
-            ))}
-          </ol>
+          <div className="cb-case-rail" aria-label="導入ケース">
+            <ol className="cb-case-grid">
+              {connectBoxCases.map((c) => (
+                <li className="cb-case" key={c.n}>
+                  <span className="cb-case__n">{c.n}</span>
+                  <h3 className="cb-case__title">{c.label}</h3>
+                  <div className="cb-case__block">
+                    <p className="cb-case__label">課題</p>
+                    <ul className="cb-case__list">
+                      {c.challenges.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="cb-case__block">
+                    <p className="cb-case__label">支援</p>
+                    <ul className="cb-case__tags">
+                      {c.supports.map((item) => (
+                        <li className="cb-case__tag" key={item}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
           <div className="cb-value__price">
             <p className="cb-value__amount">{connectBoxPrice.amount}</p>
             <p className="cb-value__note">{connectBoxPrice.note}</p>
