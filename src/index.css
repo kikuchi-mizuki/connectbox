@@ -2311,7 +2311,7 @@ button {
 
 .cb-hero__title {
   margin: 0 0 0.85rem;
-  max-width: 14em;
+  max-width: 16em;
   font-size: clamp(1.2rem, 3.6vw, 1.7rem);
   font-weight: 700;
   line-height: 1.45;
@@ -2323,9 +2323,9 @@ button {
 
 .cb-hero__lead {
   margin: 0 0 1.5rem;
-  max-width: 26em;
+  max-width: 28em;
   font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-  line-height: 1.7;
+  line-height: 1.75;
   color: rgba(255, 255, 255, 0.9);
   word-break: keep-all;
   overflow-wrap: anywhere;
@@ -2529,6 +2529,7 @@ button {
   font-size: 0.84rem;
   color: var(--ink-soft);
   line-height: 1.65;
+  white-space: pre-line;
 }
 
 .cb-benefit--on-ink p {

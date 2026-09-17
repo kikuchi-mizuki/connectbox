@@ -27,7 +27,7 @@ export default function ConnectBoxPage() {
   usePageMeta({
     title: "Connect Box｜企業と人の課題解決をひとつの窓口で",
     description:
-      "Connect Box（コネクトボックス）。人を増やす前に、業務を外に出す。企業と人の課題解決をひとつの窓口で。必要な分だけ支援します。",
+      "Connect Box（コネクトボックス）。人が、人の時間に戻る時代。いらない作業は手放す。手放すから、時間が生まれる。",
     keywords:
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     path: "/connect-box",
@@ -60,9 +60,9 @@ export default function ConnectBoxPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
-              人を増やす前に、
+              人が、人の時間に
               <br />
-              業務を外に出しませんか？
+              戻る時代。
             </motion.h1>
             <motion.p
               className="cb-hero__lead"
@@ -70,9 +70,9 @@ export default function ConnectBoxPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             >
-              企業と人の課題解決を
+              いらない作業は手放す。
               <br />
-              ひとつの窓口で。
+              手放すから、時間が生まれる。
             </motion.p>
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -140,9 +140,9 @@ export default function ConnectBoxPage() {
       <section className="section section--ink cb-value" aria-labelledby="value-title">
         <FadeIn className="section__inner">
           <h2 className="section__title" id="value-title">
-            必要な業務を
+            必要な支援を、
             <br />
-            必要な期間だけ。
+            必要な分だけ。
           </h2>
           <p className="section__lead">
             経理・採用・Webなど、
