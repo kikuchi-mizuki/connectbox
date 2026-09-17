@@ -2243,6 +2243,8 @@ button {
   display: flex;
   align-items: center;
   min-height: clamp(15.5rem, 40svh, 22rem);
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+  padding-bottom: clamp(0.35rem, 1vw, 0.75rem);
   overflow: hidden;
 }
 
@@ -2281,7 +2283,7 @@ button {
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(4.25rem, 7vw, 5rem) var(--space) clamp(1.75rem, 3.5vw, 2.25rem);
+  padding: clamp(3.25rem, 5.5vw, 4rem) var(--space) clamp(2rem, 4vw, 2.75rem);
 }
 
 .cb-hero__copy {
@@ -2290,13 +2292,13 @@ button {
 
 .cb-logo {
   display: block;
-  margin: 0 0 0.85rem;
+  margin: 0 0 1.2rem;
   line-height: 0;
 }
 
 .cb-logo img {
   display: block;
-  width: min(100%, 14.5rem);
+  width: min(100%, 12.5rem);
   height: auto;
 }
 
@@ -2312,9 +2314,9 @@ button {
 .cb-hero__title {
   margin: 0;
   max-width: 16em;
-  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+  font-size: clamp(1.2rem, 3.2vw, 1.55rem);
   font-weight: 700;
-  line-height: 1.65;
+  line-height: 1.6;
   letter-spacing: 0.01em;
   color: #fff;
   word-break: keep-all;
@@ -2331,11 +2333,13 @@ button {
 
 @media (max-width: 899px) {
   .cb-hero {
-    min-height: clamp(14.5rem, 36svh, 20rem);
+    min-height: clamp(14.5rem, 38svh, 20rem);
+    padding-top: clamp(1rem, 2.5vw, 1.5rem);
+    padding-bottom: 0.5rem;
   }
 
   .cb-hero__inner {
-    padding: clamp(4rem, 9vw, 4.75rem) var(--space) clamp(1.5rem, 4vw, 2rem);
+    padding: clamp(3rem, 7vw, 3.75rem) var(--space) clamp(1.75rem, 4.5vw, 2.25rem);
   }
 
   .cb-hero__copy {
@@ -2343,13 +2347,17 @@ button {
     max-width: none;
   }
 
+  .cb-logo {
+    margin: 0 0 1.05rem;
+  }
+
   .cb-logo img {
-    width: min(100%, 12.5rem);
+    width: min(100%, 11rem);
   }
 
   .cb-hero__title {
-    font-size: clamp(1.05rem, 3.6vw, 1.25rem);
-    line-height: 1.7;
+    font-size: clamp(1.15rem, 3.8vw, 1.35rem);
+    line-height: 1.65;
   }
 }
 
