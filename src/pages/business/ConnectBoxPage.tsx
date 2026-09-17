@@ -25,9 +25,9 @@ export default function ConnectBoxPage() {
   const reduce = useReducedMotion();
 
   usePageMeta({
-    title: "Connect Box｜企業と人の課題を、ひとつの窓口で",
+    title: "Connect Box｜企業と人の課題解決をひとつの窓口で",
     description:
-      "Connect Box（コネクトボックス）。人を増やす前に、業務を外に出す。企業と人のあらゆる課題を、ひとつの窓口で。必要な分だけ支援します。",
+      "Connect Box（コネクトボックス）。人を増やす前に、業務を外に出す。企業と人の課題解決をひとつの窓口で。必要な分だけ支援します。",
     keywords:
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     path: "/connect-box",
@@ -70,7 +70,7 @@ export default function ConnectBoxPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             >
-              企業と人のあらゆる課題を、
+              企業と人の課題解決を
               <br />
               ひとつの窓口で。
             </motion.p>
@@ -184,9 +184,9 @@ export default function ConnectBoxPage() {
               />
             </span>
             <span>
-              企業のあらゆる課題を、
+              企業と人の課題解決を
               <br />
-              一つの窓口で。
+              ひとつの窓口で。
             </span>
           </p>
           <p>ご都合のよい方法でご連絡ください。</p>

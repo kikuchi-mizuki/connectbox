@@ -5,8 +5,8 @@ export const connectBoxBrand = {
   nameWithDot: "Connect Box.",
   logoSrc: "/connect-box/logo.png?v=2",
   logoWhiteSrc: "/connect-box/logo-white.png?v=2",
-  concept: "企業と人のあらゆる課題を、ひとつの窓口で",
-  conceptShort: "企業のあらゆる課題を、一つの窓口で。",
+  concept: "企業と人の課題解決をひとつの窓口で",
+  conceptShort: "企業と人の課題解決をひとつの窓口で。",
   servicesLead: "外部経営チームをあなたの企業へ",
   servicesNote: "業務の一部分だけでも外注・依頼可能。課題に合わせて組み合わせできます。",
 } as const;
