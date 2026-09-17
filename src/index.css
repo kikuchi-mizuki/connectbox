@@ -2242,7 +2242,7 @@ button {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: clamp(22rem, 68svh, 34rem);
+  min-height: clamp(15.5rem, 40svh, 22rem);
   overflow: hidden;
 }
 
@@ -2281,22 +2281,22 @@ button {
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(5rem, 10vw, 6.25rem) var(--space) clamp(2rem, 4.5vw, 2.75rem);
+  padding: clamp(4.25rem, 7vw, 5rem) var(--space) clamp(1.75rem, 3.5vw, 2.25rem);
 }
 
 .cb-hero__copy {
-  max-width: 34rem;
+  max-width: 28rem;
 }
 
 .cb-logo {
   display: block;
-  margin: 0 0 1.15rem;
+  margin: 0 0 0.85rem;
   line-height: 0;
 }
 
 .cb-logo img {
   display: block;
-  width: min(100%, 17.5rem);
+  width: min(100%, 14.5rem);
   height: auto;
 }
 
@@ -2311,15 +2311,15 @@ button {
 
 .cb-hero__title {
   margin: 0;
-  max-width: 14em;
-  font-size: clamp(1.55rem, 5.2vw, 2.35rem);
+  max-width: 16em;
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
   font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.02em;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
   color: #fff;
   word-break: keep-all;
   overflow-wrap: anywhere;
-  text-shadow: 0 2px 24px rgba(21, 34, 56, 0.28);
+  text-shadow: 0 1px 16px rgba(21, 34, 56, 0.22);
 }
 
 .cb-cta-brand {
@@ -2331,11 +2331,11 @@ button {
 
 @media (max-width: 899px) {
   .cb-hero {
-    min-height: clamp(20rem, 62svh, 30rem);
+    min-height: clamp(14.5rem, 36svh, 20rem);
   }
 
   .cb-hero__inner {
-    padding-bottom: clamp(1.75rem, 5vw, 2.5rem);
+    padding: clamp(4rem, 9vw, 4.75rem) var(--space) clamp(1.5rem, 4vw, 2rem);
   }
 
   .cb-hero__copy {
@@ -2344,11 +2344,12 @@ button {
   }
 
   .cb-logo img {
-    width: min(100%, 15rem);
+    width: min(100%, 12.5rem);
   }
 
   .cb-hero__title {
-    font-size: clamp(1.45rem, 6.2vw, 1.95rem);
+    font-size: clamp(1.05rem, 3.6vw, 1.25rem);
+    line-height: 1.7;
   }
 }
 
