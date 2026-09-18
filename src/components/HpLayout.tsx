@@ -7,6 +7,8 @@ import { companyMission } from "../data/company";
 export default function HpLayout() {
   const { pathname } = useLocation();
   const isTop = pathname === "/";
+  /** FVにヘッダーを重ねるページ（スクロール前は透過） */
+  const isHeroOverlay = isTop || pathname === "/connect-box";
   const [solid, setSolid] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,7 +34,7 @@ export default function HpLayout() {
   return (
     <div className="hp">
       <header
-        className={`site-header${solid || !isTop ? " is-solid" : ""}${
+        className={`site-header${solid || !isHeroOverlay ? " is-solid" : ""}${
           isTop && !solid ? " site-header--light" : ""
         }`}
       >

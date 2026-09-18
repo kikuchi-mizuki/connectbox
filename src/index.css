@@ -2252,9 +2252,7 @@ button {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: clamp(15.5rem, 40svh, 22rem);
-  padding-top: clamp(1.25rem, 3vw, 2rem);
-  padding-bottom: clamp(0.35rem, 1vw, 0.75rem);
+  min-height: clamp(18rem, 48svh, 26rem);
   overflow: hidden;
 }
 
@@ -2293,7 +2291,7 @@ button {
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(3.25rem, 5.5vw, 4rem) var(--space) clamp(2rem, 4vw, 2.75rem);
+  padding: clamp(5.5rem, 9vw, 6.5rem) var(--space) clamp(2.25rem, 4.5vw, 3rem);
 }
 
 .cb-hero__copy {
@@ -2302,7 +2300,7 @@ button {
 
 .cb-logo {
   display: block;
-  margin: 0 0 1.2rem;
+  margin: 0 0 1.15rem;
   line-height: 0;
 }
 
@@ -2343,13 +2341,11 @@ button {
 
 @media (max-width: 899px) {
   .cb-hero {
-    min-height: clamp(14.5rem, 38svh, 20rem);
-    padding-top: clamp(1rem, 2.5vw, 1.5rem);
-    padding-bottom: 0.5rem;
+    min-height: clamp(16.5rem, 44svh, 22rem);
   }
 
   .cb-hero__inner {
-    padding: clamp(3rem, 7vw, 3.75rem) var(--space) clamp(1.75rem, 4.5vw, 2.25rem);
+    padding: clamp(5rem, 12vw, 5.75rem) var(--space) clamp(2rem, 5vw, 2.5rem);
   }
 
   .cb-hero__copy {
