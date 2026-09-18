@@ -1,4 +1,4 @@
-import { LINE_URL } from "../constants";
+import { CONNECT_BOX_LINE_URL } from "../constants";
 
 function LineMark({ className }: { className?: string }) {
   return (
@@ -21,14 +21,16 @@ function LineMark({ className }: { className?: string }) {
 export default function CtaButton({
   className = "",
   children = "まずは15分、LINEで相談する",
+  href = CONNECT_BOX_LINE_URL,
 }: {
   className?: string;
   children?: string;
+  href?: string;
 }) {
   return (
     <a
       className={`btn btn--line ${className}`.trim()}
-      href={LINE_URL}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
     >

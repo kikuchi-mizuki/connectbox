@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import CtaButton from "../../components/CtaButton";
 import FadeIn from "../../components/FadeIn";
-import { LINE_URL } from "../../constants";
+import { CONNECT_BOX_LINE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 const pains = [
@@ -21,76 +21,52 @@ const pains = [
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
   },
   {
-    text: "バックオフィスのコストを見直したい",
+    text: "事務員を1名採るほどではないが、手が足りない",
     image:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80",
   },
 ];
 
 const offerings = [
-  "請求書・見積書・発注書の作成",
-  "売掛金・買掛金管理",
-  "経費精算・データ入力",
-  "勤怠管理・給与計算補助",
-  "営業事務（受発注・資料作成）",
-  "人事・労務・総務業務",
-  "マニュアル作成・業務フロー整理",
+  "請求書の発行・送付／入金確認・消込",
+  "経費精算・データ入力／仕訳入力",
+  "勤怠集計・給与計算補助／入退社手続き",
+  "採用事務・面接の日程調整",
+  "受発注・見積・問い合わせ一次対応",
+  "業務棚卸し・マニュアル・フロー整備",
 ];
 
 const cases = [
   {
-    industry: "人材会社",
-    metric: "月200件+",
-    metricLabel: "応募対応の定型を外出し",
-    title: "採用事務を切り出し、人事をコア業務へ",
-    challenge:
-      "自社求人へ月200件以上の応募があり、メッセージ対応・面談調整・リマインド・確認連絡に人事の時間が取られていた。",
-    action:
-      "応募者対応・日程調整・リマインド・確認連絡など、定型化できる採用事務を切り出して代行。",
-    effect:
-      "人事は面談・採用判断・社員対応・人事施策など、人事にしかできないコア業務へ集中できる。",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    industry: "経理部門",
+    industry: "士業・専門｜経理部門",
     metric: "月初 約6割減",
-    metricLabel: "定型処理にかかる時間のイメージ",
+    metricLabel: "定型処理のイメージ",
     title: "定型的な経理事務を切り出す",
-    challenge:
-      "請求書発行・データ入力・入金確認・経費集計など、毎月の定型に時間が取られ、月末月初の残業につながっている。",
-    action:
-      "「請求データ確認 → 請求書作成・発行 → 管理表更新 → 入金状況確認」といった定型フローを整理し、対応可能な範囲を代行。",
-    effect:
-      "経理は資金管理・予実管理・数値分析など、判断が必要な業務に集中。繁忙期だけの人員増も抑えられる。",
+    challenge: "請求・入金・経費が月末月初に集中し、残業につながっている。",
+    action: "請求発行・入金確認・経費集計など、定型フローを代行。",
+    effect: "経理は判断業務へ集中。追加採用なしで繁忙を吸収できる。",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    industry: "管理部門",
+    industry: "卸・製造｜管理部門",
     metric: "採用 0",
-    metricLabel: "退職後も処理を止めない",
-    title: "「○○さんしか分からない」を仕組み化",
-    challenge:
-      "Excel管理や日々の事務が特定社員に集中。「休むと止まる」「退職すると引き継ぎが大変」という属人化が発生。",
-    action:
-      "既存業務をヒアリングしてフローを整理。マニュアル化したうえで、定型業務をConnect Box側で運用。",
-    effect:
-      "人に依存する業務から、仕組みで回る業務へ。採用→教育→退職→再採用の負の循環を減らせる。",
+    metricLabel: "属人化を仕組みで解消",
+    title: "「〇〇さんしか分からない」を解消",
+    challenge: "事務が特定社員に集中し、休むと止まり、辞めると引き継げない。",
+    action: "フローを手順書化し、定型業務をConnect Box側で運用。",
+    effect: "人に依存しない形へ。採用と教育の循環が減る。",
     image:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    industry: "中小企業",
+    industry: "中小企業｜〜10名",
     metric: "週8h → 2h",
     metricLabel: "代表・営業の事務兼務のイメージ",
     title: "採用せず、必要な業務だけ外部化",
-    challenge:
-      "事務員を1名採用するほどではない。ただ、社長や営業が事務作業までやっている状態。",
-    action:
-      "総務・経理・人事・営業事務から必要な業務だけ選択。週次の集計、月末の請求、随時のメール・資料作成など、使い方は柔軟。",
-    effect:
-      "新たに1名採用するのではなく、必要な分だけ外部化。社員は売上や事業成長につながる仕事へ集中できる。",
+    challenge: "事務員1名ほどではないが、社長や営業が事務まで兼務している。",
+    action: "経理・人事・営業事務から必要な業務だけ選択して外出し。",
+    effect: "社員は売上につながる仕事へ。固定の採用コストを増やさずに回せる。",
     image:
       "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1200&q=80",
   },
@@ -98,60 +74,58 @@ const cases = [
 
 const steps = [
   {
-    title: "LINEで友だち追加・ご相談",
-    body: "公式アカウントを追加し、対象業務やいま困っている点を簡単にお送りください。",
+    title: "ご相談",
+    body: "困っている点を伺います。LINEでもOKです。",
     image:
       "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
   },
   {
-    title: "オンラインでヒアリング（15分程度）",
-    body: "現状を伺いながら、どこから始めるのがよいかを一緒に整理します。",
+    title: "業務の確認",
+    body: "外に出せる範囲と、社内に残す範囲を分けます。",
     image:
       "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80",
   },
   {
-    title: "適用範囲をご提案",
-    body: "やる範囲と今やらなくてよい範囲を分けてお返しします。",
+    title: "マニュアル作成",
+    body: "手順書に落とし、受託範囲を確定します。",
     image:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
   },
   {
-    title: "引き継ぎ後、運用開始",
-    body: "合意後に業務を引き継ぎ、専任体制で安定運用に入ります。",
+    title: "担当者との顔合わせ",
+    body: "実際に対応する担当者と責任者をご紹介します。",
     image:
       "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    title: "業務開始",
+    body: "進捗は週次で共有します。",
+    image:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
 const faqs = [
   {
-    q: "どのくらいの業務量から相談できますか？",
-    a: "月数十時間程度のスポット的なご相談からでも問題ありません。まずは対象業務の整理から一緒に進められます。",
-  },
-  {
-    q: "セキュリティや情報管理はどうなっていますか？",
-    a: "業務に必要な範囲での情報共有を前提に、取り扱いルールをご説明したうえで進めます。詳細は初回ヒアリング時にご確認ください。",
+    q: "料金の目安は？",
+    a: "一部から月6万円〜、まるっと月20万円〜（税別）。時間の切り売りではなく、業務範囲での定額です。初期費用はありません。",
   },
   {
     q: "いきなり契約する必要がありますか？",
-    a: "いいえ。まずはLINEでのご相談と、短いオンラインヒアリングからで大丈夫です。導入判断は内容をご覧いただいたあとに行えます。",
+    a: "いいえ。まずは現状の共有からで大丈夫です。対象業務が固まっていない段階でもご相談いただけます。",
   },
   {
-    q: "どの業務から始めるのがよいですか？",
-    a: "定型度が高く、属人化しにくい経理・営業事務の処理から始める企業様が多いです。状況に合わせてご提案します。",
-  },
-  {
-    q: "掲載の数字は、必ずその通りになりますか？",
-    a: "いいえ。よくある変化のイメージです。業務量・範囲・いまの持ち方で変わります。現状を伺ったうえで、御社の数字でご提案します。",
+    q: "掲載の数字は必ずその通りになりますか？",
+    a: "想定モデル（代表例）です。実際の業務量と体制により変わります。",
   },
 ];
 
 export default function BackOfficeLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "バックオフィス代行｜Connect Box",
+    title: "バックオフィス業務代行｜Connect Box",
     description:
-      "Connect Box（コネクトボックス）のバックオフィス代行。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。",
+      "採用せずに、必要な業務だけ外に出せます。経理・人事・営業事務などのバックオフィス代行。月6万円〜。初期費用なし。",
     keywords:
       "バックオフィス代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
     path: "/connect-box/back-office",
@@ -159,7 +133,6 @@ export default function BackOfficeLp() {
 
   return (
     <main>
-      {/* ① ファーストビュー */}
       <section className="hero" id="page-hero" aria-label="メインビジュアル">
         <div className="hero__media" aria-hidden="true">
           <img
@@ -174,13 +147,10 @@ export default function BackOfficeLp() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="hero__title">
-              バックオフィスの負担を、
-              <br />
-              採用せずに減らす。
-            </h1>
+            <p className="hero__brand">Connect Box.</p>
+            <h1 className="hero__title">バックオフィス業務代行</h1>
             <p className="hero__lead">
-              経理・総務・人事・営業事務などの業務を代行し、属人化や繁忙期の揺れにも耐えられる体制をつくります。
+              採用せずに、必要な業務だけ外に出せます。
             </p>
             <div className="cta-row">
               <CtaButton className="btn--large btn--pulse" />
@@ -189,7 +159,6 @@ export default function BackOfficeLp() {
         </div>
       </section>
 
-      {/* ② こんなお悩み */}
       <section className="section" aria-labelledby="pain-title">
         <FadeIn className="section__inner">
           <p className="section__label">Challenges</p>
@@ -212,35 +181,36 @@ export default function BackOfficeLp() {
         </FadeIn>
       </section>
 
-      {/* ③ 何を頼める？ */}
       <section className="section section--muted" aria-labelledby="offer-title">
         <FadeIn className="section__inner">
           <p className="section__label">Services</p>
           <h2 className="section__title" id="offer-title">
-            こんな業務をお任せいただけます
+            お任せいただける業務
           </h2>
           <p className="section__lead">
-            業務内容に合わせて、実務経験のあるアシスタントが対応します。量の増減にも柔軟に合わせられます。
+            必要なものだけ選べます。1つの業務からでも構いません。
+            <br />
+            一部から月6万円〜／まるっと月20万円〜。初期費用なし。
           </p>
           <div className="service-grid">
             {offerings.map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
+          <p className="section__lead" style={{ marginTop: "1.25rem" }}>
+            記載のない業務も、定型化できるものであればご相談ください。
+          </p>
         </FadeIn>
       </section>
 
-      {/* ④ なぜここに任せられるか */}
       <section className="section" aria-labelledby="team-title">
         <FadeIn className="section__inner">
           <p className="section__label">Team</p>
           <h2 className="section__title" id="team-title">
-            実務経験のある人材から、
-            <br />
-            御社に合うメンバーをアサイン
+            実務経験のある人材をアサイン
           </h2>
           <p className="section__lead">
-            大手企業での勤務経験を持つ人材や、子育てと両立しながら働く経験者が在籍。請求・経費・営業事務などの実務経験を持つアシスタントが、対象業務に合わせて対応します。
+            経理・総務・営業事務などの実務経験者が、対象業務に合わせて対応します。
           </p>
           <ul className="stat-row">
             <li>
@@ -252,22 +222,21 @@ export default function BackOfficeLp() {
               <span>業務量に合わせてアサイン</span>
             </li>
             <li>
-              <strong>伴走支援</strong>
-              <span>状況に合わせて進め方を調整</span>
+              <strong>顔合わせあり</strong>
+              <span>開始前に担当者をご紹介</span>
             </li>
           </ul>
         </FadeIn>
       </section>
 
-      {/* ⑤ 実際どう変わるか */}
       <section className="section section--muted" aria-labelledby="cases-title">
         <FadeIn className="section__inner">
           <p className="section__label">Use Cases</p>
           <h2 className="section__title" id="cases-title">
-            よくある使い方
+            こう変わるイメージ
           </h2>
           <p className="section__lead">
-            数字はよくある変化のイメージです。課題・対応・効果とともに、切り出し方の具体像を示しています。
+            よくある使い方です。数値は想定モデルです。
           </p>
           <ul className="use-cases">
             {cases.map((c, i) => (
@@ -291,7 +260,7 @@ export default function BackOfficeLp() {
                       <dd>{c.action}</dd>
                     </div>
                     <div>
-                      <dt>効果</dt>
+                      <dt>導入後</dt>
                       <dd>{c.effect}</dd>
                     </div>
                   </dl>
@@ -302,7 +271,6 @@ export default function BackOfficeLp() {
         </FadeIn>
       </section>
 
-      {/* ⑥ どう始めるか */}
       <section className="section" aria-labelledby="flow-title">
         <FadeIn className="section__inner">
           <p className="section__label">Process</p>
@@ -310,7 +278,7 @@ export default function BackOfficeLp() {
             ご相談から開始までの流れ
           </h2>
           <p className="section__lead">
-            いきなり契約ではありません。まずはLINEでの現状共有から。
+            いきなり契約ではありません。まずは現状の共有から。
           </p>
           <ol className="flow">
             {steps.map((s, i) => (
@@ -327,7 +295,6 @@ export default function BackOfficeLp() {
         </FadeIn>
       </section>
 
-      {/* ⑦ FAQ */}
       <section className="section section--muted" aria-labelledby="faq-title">
         <FadeIn className="section__inner">
           <p className="section__label">FAQ</p>
@@ -345,24 +312,25 @@ export default function BackOfficeLp() {
         </FadeIn>
       </section>
 
-      {/* ⑧ Final CTA */}
       <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
         <FadeIn className="final-cta__inner">
           <h2 id="cta-title">
-            まずは現状の課題を、
+            まずは、御社の課題を
             <br />
-            LINEでお聞かせください
+            お聞かせください
           </h2>
-          <p>
-            公式アカウントを友だち追加のうえ、ご状況を簡単にお送りください。折り返しご連絡いたします。
-          </p>
+          <p>15分ほどで、対象になりそうな業務があるかを一緒に整理します。</p>
           <div className="cta-row">
             <CtaButton className="btn--large btn--pulse" />
           </div>
           <p className="mail-hint">
             友だち追加：{" "}
-            <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-              lin.ee/RiVp6pb
+            <a
+              href={CONNECT_BOX_LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              lin.ee/w0pvsAp
             </a>
           </p>
         </FadeIn>
