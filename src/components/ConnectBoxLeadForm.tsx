@@ -33,9 +33,11 @@ export default function ConnectBoxLeadForm() {
     const email = String(data.get("email") ?? "").trim();
     const phone = String(data.get("phone") ?? "").trim();
 
-    if (!company || !name || !email) {
+    if (!company || !name || !email || !phone) {
       setStatus("error");
-      setErrorMessage("会社名、お名前、メールアドレスは必須です。");
+      setErrorMessage(
+        "会社名、お名前、メールアドレス、電話番号はすべて必須です。",
+      );
       return;
     }
 
@@ -59,7 +61,7 @@ export default function ConnectBoxLeadForm() {
             会社名: company,
             お名前: name,
             メールアドレス: email,
-            電話番号: phone || "（未入力）",
+            電話番号: phone,
           }),
         },
       );
@@ -141,11 +143,14 @@ export default function ConnectBoxLeadForm() {
           />
         </label>
         <label className="cb-lead-form__field">
-          <span>電話番号</span>
+          <span>
+            電話番号 <abbr title="必須">*</abbr>
+          </span>
           <input
             name="phone"
             type="tel"
             autoComplete="tel"
+            required
             placeholder="090-0000-0000"
           />
         </label>

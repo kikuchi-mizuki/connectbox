@@ -260,24 +260,6 @@ export default function ConnectBoxPage() {
         </FadeIn>
       </section>
 
-      <section
-        className="section section--muted"
-        id="download"
-        aria-labelledby="download-title"
-      >
-        <FadeIn className="section__inner cb-download">
-          <h2 className="section__title" id="download-title">
-            サービス資料をダウンロード
-          </h2>
-          <p className="section__lead">
-            会社名・ご連絡先をご入力ください。
-            <br />
-            送信後すぐにPDFをダウンロードできます。
-          </p>
-          <ConnectBoxLeadForm />
-        </FadeIn>
-      </section>
-
       <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
         <FadeIn className="final-cta__inner final-cta__inner--wide">
           <h2 id="cta-title">
@@ -327,6 +309,24 @@ export default function ConnectBoxPage() {
               </a>
             ))}
           </div>
+        </FadeIn>
+      </section>
+
+      <section
+        className="section section--muted"
+        id="download"
+        aria-labelledby="download-title"
+      >
+        <FadeIn className="section__inner cb-download">
+          <h2 className="section__title" id="download-title">
+            サービス資料をダウンロード
+          </h2>
+          <p className="section__lead">
+            まずは資料だけ見たい方もご利用ください。
+            <br />
+            送信後すぐにPDFをダウンロードできます。
+          </p>
+          <ConnectBoxLeadForm />
         </FadeIn>
       </section>
     </main>
