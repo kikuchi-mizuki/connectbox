@@ -37,9 +37,9 @@ export default function ConnectBoxPage() {
   const caseCtaRef = useRef<HTMLLIElement>(null);
 
   usePageMeta({
-    title: "Connect Box｜企業と人の課題解決をひとつの窓口で",
+    title: "Connect Box｜企業と人の課題を、ひとつの窓口で",
     description:
-      "Connect Box（コネクトボックス）。いらない作業は手放す。そこから、時間が生まれる。企業と人の課題解決をひとつの窓口で。",
+      "Connect Box（コネクトボックス）。人を増やす前に、業務を外に出す。企業と人のあらゆる課題を、ひとつの窓口で。バックオフィス代行から採用・戦略・制作まで、必要な分だけ支援します。",
     keywords:
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     path: "/connect-box",

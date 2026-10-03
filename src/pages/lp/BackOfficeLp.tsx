@@ -123,9 +123,9 @@ const faqs = [
 export default function BackOfficeLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "バックオフィス業務代行｜Connect Box",
+    title: "バックオフィス代行｜Connect Box",
     description:
-      "採用せずに、必要な業務だけ外に出せます。経理・人事・営業事務などのバックオフィス代行。月6万円〜。初期費用なし。",
+      "Connect Box（コネクトボックス）のバックオフィス代行。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。",
     keywords:
       "バックオフィス代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
     path: "/connect-box/back-office",

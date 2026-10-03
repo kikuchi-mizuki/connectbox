@@ -14,9 +14,10 @@ function LegacyConnectBoxServiceRedirect() {
   return <Navigate to={`/connect-box/${slug ?? ""}`} replace />;
 }
 
-export default function App() {
+/** BrowserRouter / StaticRouter 共通のルートツリー */
+export function AppRoutes() {
   return (
-    <BrowserRouter>
+    <>
       <GoogleAnalytics />
       <Routes>
         <Route element={<HpLayout />}>
@@ -48,6 +49,14 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
