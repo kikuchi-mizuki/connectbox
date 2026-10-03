@@ -1,8 +1,31 @@
 import { motion, useReducedMotion } from "framer-motion";
 import CtaButton from "../../components/CtaButton";
 import FadeIn from "../../components/FadeIn";
-import { CONNECT_BOX_LINE_URL } from "../../constants";
+import { CONNECT_BOX_LINE_URL, SITE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
+
+const PAGE_PATH = "/connect-box/back-office";
+const PAGE_TITLE = "事務代行・バックオフィス業務代行｜Connect Box";
+const PAGE_DESCRIPTION =
+  "事務代行・バックオフィス代行ならConnect Box（コネクトボックス）。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。";
+
+function getBackOfficeServiceJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "事務代行・バックオフィス業務代行",
+    alternateName: ["事務代行", "バックオフィス代行", "バックオフィス業務代行"],
+    description: PAGE_DESCRIPTION,
+    url: `${SITE_URL}${PAGE_PATH}`,
+    provider: {
+      "@type": "Organization",
+      name: "株式会社T-connect",
+      url: `${SITE_URL}/`,
+    },
+    areaServed: "JP",
+    serviceType: "事務代行・バックオフィス業務代行",
+  };
+}
 
 const pains = [
   {
@@ -124,23 +147,30 @@ const faqs = [
   },
   {
     q: "どの業務から頼めますか？",
-    a: "経理・総務・人事・営業事務など、必要な範囲だけから始められます。全部まとめての依頼も可能です。",
+    a: "事務代行として、経理・総務・人事・営業事務など、必要な範囲だけから始められます。全部まとめての依頼も可能です。",
   },
 ];
 
 export default function BackOfficeLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "バックオフィス代行｜Connect Box",
-    description:
-      "Connect Box（コネクトボックス）のバックオフィス代行。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     keywords:
-      "バックオフィス代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
-    path: "/connect-box/back-office",
+      "事務代行,バックオフィス代行,バックオフィス業務代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
+    path: PAGE_PATH,
+    ogTitle: PAGE_TITLE,
+    ogDescription: PAGE_DESCRIPTION,
   });
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getBackOfficeServiceJsonLd()),
+        }}
+      />
       <section className="hero" id="page-hero" aria-label="メインビジュアル">
         <div className="hero__media" aria-hidden="true">
           <img
@@ -156,9 +186,9 @@ export default function BackOfficeLp() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="hero__brand">Connect Box.</p>
-            <h1 className="hero__title">バックオフィス業務代行</h1>
+            <h1 className="hero__title">事務代行・バックオフィス業務代行</h1>
             <p className="hero__lead">
-              採用せずに、必要な業務だけ外に出せます。
+              採用せずに、必要な事務代行だけ外に出せます。
             </p>
             <div className="cta-row">
               <CtaButton className="btn--large btn--pulse" ctaPosition="hero" />
@@ -196,7 +226,7 @@ export default function BackOfficeLp() {
             お任せいただける業務
           </h2>
           <p className="section__lead">
-            必要なものだけ選べます。1つの業務からでも構いません。
+            事務代行としてお任せいただける業務です。必要なものだけ選べます。1つの業務からでも構いません。
             <br />
             一部から月6万円〜／まるっと月20万円〜。初期費用なし。
           </p>

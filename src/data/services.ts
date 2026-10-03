@@ -21,7 +21,7 @@ export type Service = {
 
 const backOffice: Service = {
   slug: "back-office",
-  name: "バックオフィス",
+  name: "事務代行・バックオフィス業務代行",
   en: "Back office",
   path: "/connect-box/back-office",
   hasLp: true,
@@ -75,7 +75,7 @@ const backOffice: Service = {
     },
   ],
   description:
-    "Connect Box（コネクトボックス）のバックオフィス代行。属人化しない回し方に変えます。",
+    "事務代行・バックオフィス代行ならConnect Box（コネクトボックス）。属人化しない回し方に変えます。",
 };
 
 const logTrack: Service = {

@@ -44,11 +44,11 @@ export const PUBLIC_SITE_PAGES = [
     path: "/connect-box/back-office",
     priority: 0.8,
     changefreq: "monthly",
-    title: "バックオフィス代行｜Connect Box",
+    title: "事務代行・バックオフィス業務代行｜Connect Box",
     description:
-      "Connect Box（コネクトボックス）のバックオフィス代行。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。",
+      "事務代行・バックオフィス代行ならConnect Box（コネクトボックス）。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。",
     keywords:
-      "バックオフィス代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
+      "事務代行,バックオフィス代行,バックオフィス業務代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
   },
