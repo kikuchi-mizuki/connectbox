@@ -5,6 +5,9 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { Plugin, PreviewServer } from "vite";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+// JS 共用ヘルパー（prerender.mjs と同一実装）
+// @ts-expect-error no types for .mjs helper
+import { applyRouteMeta } from "./scripts/seo-html.mjs";
 
 type RouteShell = {
   path: string;
@@ -26,101 +29,6 @@ async function loadSeoStatic() {
     shellOutputFile: (path: string) => string;
     buildSitemapXml: (lastmod?: string) => string;
   };
-}
-
-function escapeAttr(value: string) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
-
-function upsertMeta(
-  html: string,
-  attr: "name" | "property",
-  key: string,
-  content: string,
-) {
-  const safe = escapeAttr(content);
-  const re = new RegExp(
-    `(<meta\\s+${attr}=["']${key}["']\\s+content=["'])([^"']*)(["'])`,
-    "i",
-  );
-  if (re.test(html)) {
-    return html.replace(re, `$1${safe}$3`);
-  }
-  return html.replace(
-    /<\/head>/i,
-    `    <meta ${attr}="${key}" content="${safe}" />\n  </head>`,
-  );
-}
-
-function upsertLink(html: string, rel: string, href: string) {
-  const safe = escapeAttr(href);
-  const re = new RegExp(
-    `(<link\\s+rel=["']${rel}["']\\s+href=["'])([^"']*)(["'])`,
-    "i",
-  );
-  if (re.test(html)) {
-    return html.replace(re, `$1${safe}$3`);
-  }
-  return html.replace(
-    /<\/head>/i,
-    `    <link rel="${rel}" href="${safe}" />\n  </head>`,
-  );
-}
-
-function upsertTitle(html: string, title: string) {
-  const safe = escapeAttr(title);
-  if (/<title>[\s\S]*?<\/title>/i.test(html)) {
-    return html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${safe}</title>`);
-  }
-  return html.replace(/<\/head>/i, `    <title>${safe}</title>\n  </head>`);
-}
-
-function applyRouteMeta(
-  html: string,
-  shell: RouteShell,
-  canonical: string,
-) {
-  const title = shell.title ?? "";
-  const description = shell.description ?? "";
-  const keywords = shell.keywords ?? "";
-  const siteName = shell.siteName ?? "T-connect";
-  const ogImage = shell.ogImage ?? "";
-
-  let next = html;
-  if (shell.stripOrganizationJsonLd) {
-    next = next.replace(
-      /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/i,
-      "",
-    );
-  }
-  next = upsertTitle(next, title);
-  next = upsertMeta(next, "name", "description", description);
-  next = upsertMeta(next, "name", "keywords", keywords);
-  // 公開ページは明示的に index 許可（noindex が残らないように上書き）
-  next = upsertMeta(
-    next,
-    "name",
-    "robots",
-    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  );
-  next = upsertMeta(next, "name", "googlebot", "index, follow");
-  next = upsertMeta(next, "property", "og:title", title);
-  next = upsertMeta(next, "property", "og:description", description);
-  next = upsertMeta(next, "property", "og:url", canonical);
-  next = upsertMeta(next, "property", "og:image", ogImage);
-  next = upsertMeta(next, "property", "og:site_name", siteName);
-  next = upsertMeta(next, "property", "og:type", "website");
-  next = upsertMeta(next, "property", "og:locale", "ja_JP");
-  next = upsertMeta(next, "name", "twitter:card", "summary_large_image");
-  next = upsertMeta(next, "name", "twitter:title", title);
-  next = upsertMeta(next, "name", "twitter:description", description);
-  next = upsertMeta(next, "name", "twitter:image", ogImage);
-  next = upsertLink(next, "canonical", canonical);
-  return next;
 }
 
 function matchShell(pages: RouteShell[], path: string) {
@@ -201,12 +109,22 @@ function spaRouteShells(): Plugin {
       );
     },
     async closeBundle() {
+      // prerender 用 SSR ビルドでは dist のシェルを触らない
+      if (process.env.PRERENDER_SSR === "1") return;
+
       await refreshSeo();
 
       const outDir = resolve(process.cwd(), "dist");
       const indexPath = resolve(outDir, "index.html");
       if (!existsSync(indexPath)) return;
-      const indexHtml = readFileSync(indexPath, "utf8");
+      let indexHtml = readFileSync(indexPath, "utf8");
+
+      // TOP（/）もシェル meta を適用してから他ルートの元にする
+      const home = pages.find((page) => page.path === "/");
+      if (home?.title) {
+        indexHtml = applyRouteMeta(indexHtml, home, absoluteSiteUrl("/"));
+        writeFileSync(indexPath, indexHtml, "utf8");
+      }
 
       for (const shell of pages) {
         if (shell.path === "/" || !shell.title) continue;

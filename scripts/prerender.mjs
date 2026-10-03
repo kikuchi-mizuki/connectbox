@@ -1,6 +1,6 @@
 /**
- * Vite client ビルド後に各公開 URL を StaticRouter + renderToString でプリレンダし、
- * dist のシェル HTML の #root に本文を埋め込む。
+ * Vite client ビルド後に各公開 URL（TOP / を含む）を
+ * StaticRouter + renderToString でプリレンダし、dist の #root に本文を埋め込む。
  */
 import { mkdirSync, readFileSync, rmSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -8,31 +8,23 @@ import { pathToFileURL } from "node:url";
 import { build } from "vite";
 import {
   PUBLIC_SITE_PAGES,
+  absoluteSiteUrl,
   shellOutputFile,
 } from "./seo-static.mjs";
+import { applyRouteMeta, injectRoot } from "./seo-html.mjs";
 
 const root = process.cwd();
 const distDir = resolve(root, "dist");
 const ssrOutDir = resolve(root, "dist-ssr");
 
-function injectRoot(html, appHtml) {
-  if (!/<div\s+id=["']root["'][\s\S]*?<\/div>/i.test(html)) {
-    throw new Error('Could not find <div id="root">...</div> in HTML shell');
-  }
-  return html.replace(
-    /<div\s+id=["']root["'][\s\S]*?<\/div>/i,
-    `<div id="root">${appHtml}</div>`,
-  );
-}
-
 async function buildSsrBundle() {
+  process.env.PRERENDER_SSR = "1";
   await build({
     configFile: resolve(root, "vite.config.ts"),
     build: {
       ssr: resolve(root, "src/entry-server.tsx"),
       outDir: ssrOutDir,
       emptyOutDir: true,
-      // クライアント dist の CSS/アセットを使うため SSR 側は出さない
       ssrEmitAssets: false,
     },
   });
@@ -55,13 +47,22 @@ async function main() {
     throw new Error("dist/index.html missing. Run vite build first.");
   }
 
+  // TOP を必ず先頭で処理する
+  const pages = [
+    ...PUBLIC_SITE_PAGES.filter((p) => p.path === "/"),
+    ...PUBLIC_SITE_PAGES.filter((p) => p.path !== "/"),
+  ];
+  if (!pages.some((p) => p.path === "/")) {
+    throw new Error('PUBLIC_SITE_PAGES must include path "/"');
+  }
+
   console.log("[prerender] building SSR bundle…");
   await buildSsrBundle();
 
   const render = await loadRender();
   let ok = 0;
 
-  for (const page of PUBLIC_SITE_PAGES) {
+  for (const page of pages) {
     const outRel = shellOutputFile(page.path);
     const outFile = resolve(distDir, outRel);
     if (!existsSync(outFile)) {
@@ -72,17 +73,26 @@ async function main() {
     if (!appHtml || appHtml.length < 20) {
       throw new Error(`Empty SSR output for ${page.path}`);
     }
+    if (!/<h1[\s>]/i.test(appHtml)) {
+      throw new Error(`SSR output for ${page.path} has no <h1>`);
+    }
 
     const shell = readFileSync(outFile, "utf8");
-    const html = injectRoot(shell, appHtml);
+    const withMeta = applyRouteMeta(shell, page, absoluteSiteUrl(page.path));
+    const html = injectRoot(withMeta, appHtml);
     mkdirSync(dirname(outFile), { recursive: true });
     writeFileSync(outFile, html, "utf8");
     console.log(`[prerender] ${page.path} → ${outRel} (${appHtml.length} chars)`);
     ok += 1;
   }
 
+  const homeHtml = readFileSync(resolve(distDir, "index.html"), "utf8");
+  if (!/<div id="root">[\s\S]*?<h1[\s>]/i.test(homeHtml)) {
+    throw new Error("dist/index.html was not prerendered correctly (missing h1 in #root)");
+  }
+
   rmSync(ssrOutDir, { recursive: true, force: true });
-  console.log(`[prerender] done (${ok} pages)`);
+  console.log(`[prerender] done (${ok} pages, including /)`);
 }
 
 main().catch((err) => {
