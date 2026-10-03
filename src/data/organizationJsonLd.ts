@@ -15,7 +15,7 @@ export function getOrganizationJsonLd() {
         url: `${SITE_URL}/`,
         logo: `${SITE_URL}/tconnect-logo.png`,
         description:
-          "Connect BoxのBPO・コンサルティング、宝飾、起業家育成など、人と人との縁を紡ぐ事業を展開する株式会社T-connectの公式サイト。",
+          "Connect BoxのBPO・コンサルティングを中心に、人と人との縁を紡ぐ事業を展開する株式会社T-connectの公式サイト。",
         address: {
           "@type": "PostalAddress",
           postalCode: "160-0023",

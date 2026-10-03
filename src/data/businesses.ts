@@ -6,7 +6,11 @@ export type Business = {
   tagline: string;
   description: string;
   heroImage: string;
-  status: "active" | "preparing";
+  /**
+   * linked: HP上に詳細ページあり（集客導線あり）
+   * overview: 事業紹介のみ（HPからは詳細・問い合わせへ誘導しない）
+   */
+  status: "linked" | "overview";
 };
 
 /** HP・ナビに出す事業（探偵は独立LPのため含めない） */
@@ -21,7 +25,7 @@ export const businesses: Business[] = [
       "Connect Box（コネクトボックス）のBPO・コンサルティング。バックオフィス代行を中心に、必要な業務だけを外部化。",
     heroImage:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80",
-    status: "active",
+    status: "linked",
   },
   {
     slug: "jewelry",
@@ -32,7 +36,7 @@ export const businesses: Business[] = [
     description: "大阪を拠点に、金・プラチナ・ブランド品買取を展開しています。",
     heroImage:
       "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=2400&q=80",
-    status: "preparing",
+    status: "overview",
   },
   {
     slug: "incubation",
@@ -43,7 +47,7 @@ export const businesses: Business[] = [
     description: "起業を目指す方への支援事業です。",
     heroImage:
       "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2400&q=80",
-    status: "preparing",
+    status: "overview",
   },
 ];
 

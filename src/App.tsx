@@ -5,6 +5,7 @@ import HpLayout from "./components/HpLayout";
 import LpLayout from "./components/LpLayout";
 import CompanyPage from "./pages/CompanyPage";
 import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
 import ConnectBoxPage from "./pages/business/ConnectBoxPage";
 import DetectivePage from "./pages/business/DetectivePage";
 import LpPage from "./pages/LpPage";
@@ -47,7 +48,7 @@ export function AppRoutes() {
         <Route path="/lp/:slug" element={<LegacyConnectBoxServiceRedirect />} />
         <Route path="/services/:slug" element={<LegacyConnectBoxServiceRedirect />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

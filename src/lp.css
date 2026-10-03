@@ -1619,6 +1619,18 @@
   color: var(--accent);
 }
 
+.use-case__model-tag {
+  margin-left: auto;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid rgba(21, 34, 56, 0.18);
+  border-radius: 2px;
+  font-family: var(--font-sans) !important;
+  font-size: 0.68rem !important;
+  font-weight: 700;
+  letter-spacing: 0.06em !important;
+  color: var(--ink-soft) !important;
+}
+
 .use-case__metric {
   margin: 0.15rem 0 0;
   font-family: var(--font-display);

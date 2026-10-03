@@ -1,4 +1,4 @@
-import { GA_MEASUREMENT_ID, LINE_URL } from "../constants";
+import { GA_MEASUREMENT_ID } from "../constants";
 
 function isGtagReady() {
   return typeof window !== "undefined" && typeof window.gtag === "function";
@@ -42,15 +42,13 @@ export function trackGenerateLead(params?: Record<string, string>) {
   });
 }
 
+/** Connect Box / 探偵 / 旧コーポレート LINE など、lin.ee・line.me をすべて計測対象にする */
 export function isLineHref(href: string | null | undefined): boolean {
   if (!href) return false;
   try {
     const url = new URL(href, window.location.origin);
     const host = url.hostname.replace(/^www\./, "").toLowerCase();
-    if (host === "lin.ee" || host === "line.me" || host.endsWith(".line.me")) {
-      return true;
-    }
-    return url.href === LINE_URL || url.href.startsWith(`${LINE_URL}`);
+    return host === "lin.ee" || host === "line.me" || host.endsWith(".line.me");
   } catch {
     return href.includes("lin.ee/") || href.includes("line.me/");
   }

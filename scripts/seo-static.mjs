@@ -10,9 +10,9 @@ export const PUBLIC_SITE_PAGES = [
     changefreq: "weekly",
     title: "株式会社T-connect（T-connect）｜公式サイト",
     description:
-      "株式会社T-connect（ティーコネクト）の公式ホームページ。Connect Box（コネクトボックス）のBPO・コンサルティング、宝飾、起業家育成など、人と人との縁を紡ぐ事業を展開。東京都新宿区。",
+      "株式会社T-connect（ティーコネクト）の公式ホームページ。Connect Box（コネクトボックス）のBPO・コンサルティングを中心に、人と人との縁を紡ぐ事業を展開。東京都新宿区。",
     keywords:
-      "株式会社T-connect,T-connect,ティーコネクト,公式サイト,Connect Box,コネクトボックス,BPO,バックオフィス代行,宝飾,起業家育成",
+      "株式会社T-connect,T-connect,ティーコネクト,公式サイト,Connect Box,コネクトボックス,BPO,バックオフィス代行",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
   },
@@ -22,7 +22,7 @@ export const PUBLIC_SITE_PAGES = [
     changefreq: "monthly",
     title: "会社情報｜株式会社T-connect",
     description:
-      "株式会社T-connectの会社情報。所在地・代表者・事業内容（Connect BoxのBPO・コンサルティング、宝飾、起業家育成など）。",
+      "株式会社T-connectの会社情報。所在地・代表者・事業内容（Connect BoxのBPO・コンサルティングなど）。",
     keywords:
       "株式会社T-connect,T-connect,会社情報,会社概要,Connect Box,コネクトボックス",
     siteName: "T-connect",
@@ -119,7 +119,7 @@ export function getOrganizationJsonLd() {
         url: `${SITE_URL}/`,
         logo: `${SITE_URL}/tconnect-logo.png`,
         description:
-          "Connect BoxのBPO・コンサルティング、宝飾、起業家育成など、人と人との縁を紡ぐ事業を展開する株式会社T-connectの公式サイト。",
+          "Connect BoxのBPO・コンサルティングを中心に、人と人との縁を紡ぐ事業を展開する株式会社T-connectの公式サイト。",
         address: {
           "@type": "PostalAddress",
           postalCode: "160-0023",

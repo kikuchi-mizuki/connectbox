@@ -116,7 +116,15 @@ const faqs = [
   },
   {
     q: "掲載の数字は必ずその通りになりますか？",
-    a: "想定モデル（代表例）です。実際の業務量と体制により変わります。",
+    a: "想定モデル（代表例）です。実際の業務量と体制により変わります。実績数値として保証するものではありません。",
+  },
+  {
+    q: "誰が担当しますか？",
+    a: "開始前に担当者をご紹介します。進捗は週次で共有し、業務範囲の変更も相談できます。",
+  },
+  {
+    q: "どの業務から頼めますか？",
+    a: "経理・総務・人事・営業事務など、必要な範囲だけから始められます。全部まとめての依頼も可能です。",
   },
 ];
 
@@ -236,7 +244,7 @@ export default function BackOfficeLp() {
             こう変わるイメージ
           </h2>
           <p className="section__lead">
-            よくある使い方です。数値は想定モデルです。
+            よくある使い方のイメージです。掲載の数値は実績ではなく、想定モデルです。
           </p>
           <ul className="use-cases">
             {cases.map((c, i) => (
@@ -246,6 +254,7 @@ export default function BackOfficeLp() {
                   <p className="use-case__industry">
                     <span>{String(i + 1).padStart(2, "0")}</span>
                     {c.industry}
+                    <span className="use-case__model-tag">想定</span>
                   </p>
                   <p className="use-case__metric">{c.metric}</p>
                   <p className="use-case__metric-label">{c.metricLabel}</p>

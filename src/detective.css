@@ -864,6 +864,10 @@
   text-underline-offset: 0.2em;
 }
 
+.det-final__operator {
+  margin-top: 0.65rem;
+}
+
 /* Buttons */
 .det-btn {
   display: inline-flex;

@@ -50,9 +50,9 @@ export default function HomePage() {
   usePageMeta({
     title: "株式会社T-connect（T-connect）｜公式サイト",
     description:
-      "株式会社T-connect（ティーコネクト）の公式ホームページ。Connect Box（コネクトボックス）のBPO・コンサルティング、宝飾、起業家育成など、人と人との縁を紡ぐ事業を展開。東京都新宿区。",
+      "株式会社T-connect（ティーコネクト）の公式ホームページ。Connect Box（コネクトボックス）のBPO・コンサルティングを中心に、人と人との縁を紡ぐ事業を展開。東京都新宿区。",
     keywords:
-      "株式会社T-connect,T-connect,ティーコネクト,公式サイト,Connect Box,コネクトボックス,BPO,バックオフィス代行,宝飾,起業家育成",
+      "株式会社T-connect,T-connect,ティーコネクト,公式サイト,Connect Box,コネクトボックス,BPO,バックオフィス代行",
     path: "/",
   });
 
@@ -132,6 +132,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section top-cta" aria-labelledby="top-cta-title">
+        <FadeIn className="section__inner top-cta__inner">
+          <p className="section__label">Connect Box</p>
+          <h2 className="section__title top-section-title" id="top-cta-title">
+            企業の課題は、ひとつの窓口で。
+          </h2>
+          <p className="top-cta__lead">
+            バックオフィス代行を中心に、必要な支援だけを組み合わせて相談できます。
+          </p>
+          <div className="top-cta__actions">
+            <Link className="btn btn--primary btn--large" to="/connect-box">
+              Connect Boxを見る
+            </Link>
+            <Link className="btn btn--secondary btn--large" to="/connect-box/back-office">
+              バックオフィス代行の詳細
+            </Link>
+          </div>
+        </FadeIn>
+      </section>
+
       <section className="section top-biz" id="business" aria-labelledby="biz-title">
         <FadeIn className="section__inner">
           <header className="top-section-head top-section-head--stack">
@@ -148,7 +168,7 @@ export default function HomePage() {
           <div className="biz-grid biz-grid--top">
             {businesses.map((b, i) => (
               <FadeIn key={b.slug} delay={0.08 * i}>
-                {b.status === "active" ? (
+                {b.status === "linked" ? (
                   <Link className="biz-card biz-card--top" to={b.path}>
                     <div className="biz-card__media">
                       <img src={b.heroImage} alt="" />

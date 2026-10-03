@@ -51,7 +51,7 @@ export default function HpLayout() {
               </button>
               <div className="nav-dropdown__panel">
                 {businesses
-                  .filter((b) => b.status === "active")
+                  .filter((b) => b.status === "linked")
                   .map((b) => (
                     <Link key={b.slug} to={b.path}>
                       {b.name}
@@ -86,7 +86,7 @@ export default function HpLayout() {
       >
         <p className="mobile-menu__label">事業一覧</p>
         {businesses
-          .filter((b) => b.status === "active")
+          .filter((b) => b.status === "linked")
           .map((b) => (
             <Link key={b.slug} to={b.path}>
               {b.name}
@@ -110,7 +110,7 @@ export default function HpLayout() {
           </div>
           <nav className="site-footer__nav" aria-label="フッター">
             {businesses
-              .filter((b) => b.status === "active")
+              .filter((b) => b.status === "linked")
               .map((b) => (
                 <Link key={b.slug} to={b.path}>
                   {b.name}

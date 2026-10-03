@@ -472,6 +472,9 @@ export default function DetectivePage() {
               lin.ee/zJ0hTwc
             </a>
           </p>
+          <p className="det-final__hint det-final__operator">
+            運営：株式会社T-connect
+          </p>
         </FadeIn>
       </section>
     </main>

@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import CtaButton from "../../components/CtaButton";
 import FadeIn from "../../components/FadeIn";
-import { LINE_URL } from "../../constants";
+import { CONNECT_BOX_LINE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 const chips = ["リリース前", "自動で記録", "日当が見える", "報告書まで"];
@@ -258,8 +258,12 @@ export default function LogTrackLp() {
           <CtaButton className="btn--large btn--pulse">事前相談をする</CtaButton>
           <p className="mail-hint">
             LINE：{" "}
-            <a href={LINE_URL} target="_blank" rel="noopener noreferrer">
-              lin.ee/RiVp6pb
+            <a
+              href={CONNECT_BOX_LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              lin.ee/w0pvsAp
             </a>
           </p>
         </FadeIn>

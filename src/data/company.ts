@@ -1,4 +1,4 @@
-import { COMPANY_NAME, LINE_URL } from "../constants";
+import { COMPANY_NAME, CONNECT_BOX_LINE_URL } from "../constants";
 
 export const company = {
   legalName: COMPANY_NAME,
@@ -10,7 +10,8 @@ export const company = {
   address: "東京都新宿区西新宿３丁目１−３ MITSUWAビル １０階",
   business:
     "BPO・コンサルティング（Connect Box）、探偵事業、宝飾事業、起業家育成事業",
-  lineUrl: LINE_URL,
+  /** HPからの問い合わせ導線は Connect Box LINE に寄せる */
+  lineUrl: CONNECT_BOX_LINE_URL,
 };
 
 export const companyMission = {

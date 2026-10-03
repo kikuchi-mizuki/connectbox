@@ -2,6 +2,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../components/FadeIn";
 import MessageSection from "../components/MessageSection";
 import ValueSection from "../components/ValueSection";
+import { Link } from "react-router-dom";
+import { CONNECT_BOX_EMAIL } from "../constants";
 import { company, companyMission } from "../data/company";
 import { usePageMeta } from "../hooks/usePageMeta";
 
@@ -24,7 +26,7 @@ export default function CompanyPage() {
   usePageMeta({
     title: "会社情報｜株式会社T-connect",
     description:
-      "株式会社T-connectの会社情報。所在地・代表者・事業内容（Connect BoxのBPO・コンサルティング、宝飾、起業家育成など）。",
+      "株式会社T-connectの会社情報。所在地・代表者・事業内容（Connect BoxのBPO・コンサルティングなど）。",
     keywords: "株式会社T-connect,T-connect,会社情報,会社概要,Connect Box,コネクトボックス",
     path: "/company",
   });
@@ -72,6 +74,12 @@ export default function CompanyPage() {
               </div>
             ))}
           </dl>
+          <p className="company-contact">
+            お問い合わせ（Connect Box）：{" "}
+            <a href={`mailto:${CONNECT_BOX_EMAIL}`}>{CONNECT_BOX_EMAIL}</a>
+            {" / "}
+            <Link to="/connect-box">サービス詳細へ</Link>
+          </p>
         </FadeIn>
       </section>
     </main>

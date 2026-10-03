@@ -194,6 +194,11 @@ export default function ConnectBoxPage() {
               );
             })}
           </ul>
+          <p className="cb-services-featured">
+            まずは本命の{" "}
+            <Link to="/connect-box/back-office">バックオフィス代行</Link>
+            からご相談ください。その他の領域も、同じ窓口で組み合わせ可能です。
+          </p>
         </FadeIn>
       </section>
 
