@@ -1,3 +1,5 @@
+# 本番は railway.json の Dockerfile + Caddy を使用する。
+# Nixpacks に切り替えた場合のフォールバック（vite preview ではなく静的配信を推奨）。
 [variables]
 NIXPACKS_NODE_VERSION = "22"
 
@@ -8,4 +10,5 @@ nixPkgs = ["nodejs_22", "npm-10_x"]
 cmds = ["npm run build"]
 
 [start]
+# 注意: vite preview は SPA フォールバックになりやすい。本番は Dockerfile/Caddy を使うこと。
 cmd = "npx vite preview --host 0.0.0.0 --port ${PORT:-3000}"

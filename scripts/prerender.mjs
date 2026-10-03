@@ -79,7 +79,14 @@ async function main() {
 
     const shell = readFileSync(outFile, "utf8");
     const withMeta = applyRouteMeta(shell, page, absoluteSiteUrl(page.path));
-    const html = injectRoot(withMeta, appHtml);
+    let html = injectRoot(withMeta, appHtml);
+    // 配信経路の切り分け用（クローラ取得HTMLに残る）
+    if (!html.includes("<!-- prerendered:")) {
+      html = html.replace(
+        /<div\s+id=["']root["']>/i,
+        `<!-- prerendered:${page.path} --><div id="root">`,
+      );
+    }
     mkdirSync(dirname(outFile), { recursive: true });
     writeFileSync(outFile, html, "utf8");
     console.log(`[prerender] ${page.path} → ${outRel} (${appHtml.length} chars)`);

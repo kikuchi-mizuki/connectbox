@@ -23,6 +23,10 @@
 	@retiredLp path_regexp (?i)^/(connect-box|connectbox|lp|services)/(web-marketing|hr|coaching|strategy|business-upgrade)/?$
 	redir @retiredLp /connect-box permanent
 
+	# TOP（/）は try_files のディレクトリ解決に頼らず、必ず prerender 済み index.html を返す
+	@home path /
+	rewrite @home /index.html
+
 	# 各公開ルートの静的シェル（*.html）を優先し、なければ SPA の index.html
 	try_files {path}.html {path} /index.html
 	file_server
