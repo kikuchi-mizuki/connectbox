@@ -86,9 +86,15 @@ async function main() {
     ok += 1;
   }
 
-  const homeHtml = readFileSync(resolve(distDir, "index.html"), "utf8");
-  if (!/<div id="root">[\s\S]*?<h1[\s>]/i.test(homeHtml)) {
-    throw new Error("dist/index.html was not prerendered correctly (missing h1 in #root)");
+  for (const page of pages) {
+    const outFile = resolve(distDir, shellOutputFile(page.path));
+    const html = readFileSync(outFile, "utf8");
+    if (/<div\s+id=["']root["']>\s*<\/div>/i.test(html)) {
+      throw new Error(`${shellOutputFile(page.path)} still has empty #root`);
+    }
+    if (!/<div\s+id=["']root["']>[\s\S]*?<h1[\s>]/i.test(html)) {
+      throw new Error(`${shellOutputFile(page.path)} missing <h1> inside #root`);
+    }
   }
 
   rmSync(ssrOutDir, { recursive: true, force: true });

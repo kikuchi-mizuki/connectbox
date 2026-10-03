@@ -54,7 +54,9 @@ export default function LpLayout() {
             <Link className="lp-header__back" to="/connect-box">
               Connect Boxへ
             </Link>
-            <CtaButton className="header-cta btn--compact">15分で相談</CtaButton>
+            <CtaButton className="header-cta btn--compact" ctaPosition="header">
+              15分で相談
+            </CtaButton>
           </div>
         </div>
       </header>
@@ -65,7 +67,7 @@ export default function LpLayout() {
         className={`sticky-cta${showStickyCta ? " sticky-cta--visible" : ""}`}
         aria-hidden={!showStickyCta}
       >
-        <CtaButton className="btn--large sticky-cta__btn">
+        <CtaButton className="btn--large sticky-cta__btn" ctaPosition="sticky">
           まずは15分、LINEで相談する
         </CtaButton>
       </div>

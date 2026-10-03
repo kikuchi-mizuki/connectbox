@@ -74,9 +74,14 @@ export default function CompanyPage() {
               </div>
             ))}
           </dl>
-          <p className="company-contact">
+          <p className="company-contact" data-cta-position="content">
             お問い合わせ（Connect Box）：{" "}
-            <a href={`mailto:${CONNECT_BOX_EMAIL}`}>{CONNECT_BOX_EMAIL}</a>
+            <a
+              href={`mailto:${CONNECT_BOX_EMAIL}`}
+              data-cta-position="content"
+            >
+              {CONNECT_BOX_EMAIL}
+            </a>
             {" / "}
             <Link to="/connect-box">サービス詳細へ</Link>
           </p>

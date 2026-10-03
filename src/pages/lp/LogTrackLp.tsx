@@ -114,7 +114,9 @@ export default function LogTrackLp() {
               ))}
             </ul>
             <div className="lt-hero__cta">
-              <CtaButton className="btn--large">事前相談をする</CtaButton>
+              <CtaButton className="btn--large" ctaPosition="hero">
+                事前相談をする
+              </CtaButton>
             </div>
           </motion.div>
         </div>
@@ -255,13 +257,16 @@ export default function LogTrackLp() {
             移動の多さ、日当の有無、報告書の作り方をLINEでお聞かせください。
             公開に向けたご要望も伺えます。
           </p>
-          <CtaButton className="btn--large btn--pulse">事前相談をする</CtaButton>
+          <CtaButton className="btn--large btn--pulse" ctaPosition="footer">
+            事前相談をする
+          </CtaButton>
           <p className="mail-hint">
             LINE：{" "}
             <a
               href={CONNECT_BOX_LINE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              data-cta-position="footer"
             >
               lin.ee/w0pvsAp
             </a>

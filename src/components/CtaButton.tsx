@@ -22,10 +22,13 @@ export default function CtaButton({
   className = "",
   children = "まずは15分、LINEで相談する",
   href = CONNECT_BOX_LINE_URL,
+  ctaPosition,
 }: {
   className?: string;
   children?: string;
   href?: string;
+  /** GA 用。未指定時は周辺DOMから推定 */
+  ctaPosition?: string;
 }) {
   return (
     <a
@@ -33,6 +36,7 @@ export default function CtaButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      {...(ctaPosition ? { "data-cta-position": ctaPosition } : {})}
     >
       <LineMark className="btn__icon" />
       <span>{children}</span>

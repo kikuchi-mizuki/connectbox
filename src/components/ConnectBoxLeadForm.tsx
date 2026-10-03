@@ -72,7 +72,8 @@ export default function ConnectBoxLeadForm() {
 
       trackGenerateLead({
         lead_source: "connect_box_material",
-        page_path: "/connect-box",
+        page_path: `${window.location.pathname}${window.location.search}`,
+        cta_position: "download",
       });
       triggerDownload();
       setStatus("success");

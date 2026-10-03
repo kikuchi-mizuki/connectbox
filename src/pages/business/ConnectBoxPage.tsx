@@ -288,12 +288,13 @@ export default function ConnectBoxPage() {
             </span>
           </p>
           <p>ご都合のよい方法でご連絡ください。</p>
-          <div className="cb-contact-grid">
+          <div className="cb-contact-grid" data-cta-position="footer">
             {connectBoxContacts.map((c) => (
               <a
                 key={c.id}
                 className={`cb-contact-card cb-contact-card--${c.id}`}
                 href={contactHrefs[c.hrefKey]}
+                data-cta-position="footer"
                 {...(c.hrefKey === "email" || c.hrefKey === "download"
                   ? {}
                   : { target: "_blank", rel: "noopener noreferrer" })}

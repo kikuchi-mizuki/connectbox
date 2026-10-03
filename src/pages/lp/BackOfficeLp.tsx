@@ -161,7 +161,7 @@ export default function BackOfficeLp() {
               採用せずに、必要な業務だけ外に出せます。
             </p>
             <div className="cta-row">
-              <CtaButton className="btn--large btn--pulse" />
+              <CtaButton className="btn--large btn--pulse" ctaPosition="hero" />
             </div>
           </motion.div>
         </div>
@@ -330,7 +330,7 @@ export default function BackOfficeLp() {
           </h2>
           <p>15分ほどで、対象になりそうな業務があるかを一緒に整理します。</p>
           <div className="cta-row">
-            <CtaButton className="btn--large btn--pulse" />
+            <CtaButton className="btn--large btn--pulse" ctaPosition="footer" />
           </div>
           <p className="mail-hint">
             友だち追加：{" "}
@@ -338,6 +338,7 @@ export default function BackOfficeLp() {
               href={CONNECT_BOX_LINE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              data-cta-position="footer"
             >
               lin.ee/w0pvsAp
             </a>

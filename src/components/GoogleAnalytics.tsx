@@ -1,11 +1,20 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { isLineHref, trackLineClick, trackPageView } from "../lib/ga";
+import {
+  isEmailHref,
+  isLineHref,
+  isScheduleHref,
+  resolveCtaPosition,
+  trackEmailClick,
+  trackLineClick,
+  trackPageView,
+  trackScheduleClick,
+} from "../lib/ga";
 
 /**
  * 全ルート共通の GA4 計測。
- * - page_view: ルート変更ごと（タグの二重読込・自動 page_view は index.html で抑止）
- * - line_click: LINE CTA へのクリックをドキュメント委譲で捕捉（新規ページも自動対象）
+ * - page_view: ルート変更ごと（自動 page_view は index.html で抑止）
+ * - line_click / schedule_click / email_click: ドキュメント委譲
  */
 export default function GoogleAnalytics() {
   const location = useLocation();
@@ -37,14 +46,27 @@ export default function GoogleAnalytics() {
 
       const hrefAttr = anchor.getAttribute("href");
       const linkUrl = anchor.href || hrefAttr || "";
-      if (!isLineHref(hrefAttr) && !isLineHref(linkUrl)) return;
-
-      const ctaText = (anchor.textContent ?? "").replace(/\s+/g, " ").trim();
-      trackLineClick({
-        page_path: `${window.location.pathname}${window.location.search}`,
-        cta_text: ctaText.slice(0, 120),
+      const pagePath = `${window.location.pathname}${window.location.search}`;
+      const ctaText = (anchor.textContent ?? "").replace(/\s+/g, " ").trim().slice(0, 120);
+      const ctaPosition = resolveCtaPosition(anchor);
+      const params = {
+        page_path: pagePath,
+        cta_position: ctaPosition,
+        cta_text: ctaText,
         link_url: linkUrl,
-      });
+      };
+
+      if (isLineHref(hrefAttr) || isLineHref(linkUrl)) {
+        trackLineClick(params);
+        return;
+      }
+      if (isScheduleHref(hrefAttr) || isScheduleHref(linkUrl)) {
+        trackScheduleClick(params);
+        return;
+      }
+      if (isEmailHref(hrefAttr) || isEmailHref(linkUrl)) {
+        trackEmailClick(params);
+      }
     };
 
     document.addEventListener("click", onClick, true);

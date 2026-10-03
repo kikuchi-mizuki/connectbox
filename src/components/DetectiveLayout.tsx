@@ -65,7 +65,13 @@ export default function DetectiveLayout() {
             <strong>{tentOffice.name}</strong>
           </a>
           <div className="det-header__actions">
-            <a className="det-btn det-btn--line" href={DETECTIVE_LINE_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              className="det-btn det-btn--line"
+              href={DETECTIVE_LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta-position="header"
+            >
               <LineIcon />
               LINE相談
             </a>
@@ -91,7 +97,13 @@ export default function DetectiveLayout() {
           {tentOffice.name}｜秘密厳守｜無料相談
         </p>
         <div className="det-sticky__btns">
-          <a className="det-btn det-btn--line" href={DETECTIVE_LINE_URL} target="_blank" rel="noopener noreferrer">
+          <a
+            className="det-btn det-btn--line"
+            href={DETECTIVE_LINE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta-position="sticky"
+          >
             <LineIcon />
             LINEで相談
           </a>
