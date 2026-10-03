@@ -22,10 +22,5 @@ export const PUBLIC_SITE_PATHS = [
   "/connect-box",
   "/connect-box/back-office",
   "/connect-box/ryohi-one",
-  "/connect-box/web-marketing",
-  "/connect-box/hr",
-  "/connect-box/coaching",
-  "/connect-box/strategy",
-  "/connect-box/business-upgrade",
   "/detective",
 ] as const;

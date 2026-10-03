@@ -65,61 +65,6 @@ export const PUBLIC_SITE_PAGES = [
     ogImage: DEFAULT_OG_IMAGE,
   },
   {
-    path: "/connect-box/web-marketing",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "WEBマーケ｜Connect Box",
-    description:
-      "Connect Box（コネクトボックス）のWEBマーケ。選ばれ続ける導線と信頼をつくる。",
-    keywords: "WEBマーケ,Webマーケティング,集客,Connect Box,コネクトボックス",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
-    path: "/connect-box/hr",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "採用・人事｜Connect Box",
-    description:
-      "Connect Box（コネクトボックス）の採用・人事支援。長く働ける採用と定着をつくる。",
-    keywords: "採用支援,人事代行,定着,Connect Box,コネクトボックス",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
-    path: "/connect-box/coaching",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "組織コーチング｜Connect Box",
-    description:
-      "Connect Box（コネクトボックス）の組織コーチング。判断の軸を揃える。",
-    keywords: "組織コーチング,コーチング,Connect Box,コネクトボックス",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
-    path: "/connect-box/strategy",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "経営戦略｜Connect Box",
-    description:
-      "Connect Box（コネクトボックス）の経営戦略支援。未来を選ぶ意思決定を支える。",
-    keywords: "経営戦略,コンサルティング,Connect Box,コネクトボックス",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
-    path: "/connect-box/business-upgrade",
-    priority: 0.7,
-    changefreq: "monthly",
-    title: "既存事業ブラッシュアップ｜Connect Box",
-    description:
-      "Connect Box（コネクトボックス）の既存事業ブラッシュアップ。次に選ばれる理由を磨く。",
-    keywords: "事業改善,ブラッシュアップ,Connect Box,コネクトボックス",
-    siteName: "T-connect",
-    ogImage: DEFAULT_OG_IMAGE,
-  },
-  {
     path: "/detective",
     priority: 0.8,
     changefreq: "weekly",

@@ -15,6 +15,10 @@
 	@legacyLpDeck path /lp/back-office/deck /lp/back-office/deck/
 	rewrite @legacyLpDeck /lp/back-office/deck.html
 
+	# 廃止した薄いLP → Connect Box ハブへ（旧インデックス対策）
+	@retiredLp path_regexp (?i)^/(connect-box|connectbox|lp|services)/(web-marketing|hr|coaching|strategy|business-upgrade)/?$
+	redir @retiredLp /connect-box permanent
+
 	# 各公開ルートの静的シェル（*.html）を優先し、なければ SPA の index.html
 	try_files {path}.html {path} /index.html
 	file_server
