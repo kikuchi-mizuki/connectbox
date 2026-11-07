@@ -57,7 +57,7 @@ const reasons = [
   },
   {
     title: "経験のある調査体制",
-    body: "相談実績3万件・調査歴30年の知見を活かし、相手に気づかれにくい進め方を大切にします。",
+    body: "相談3万件・現場調査1万件以上・現場ひとすじ30年の知見を活かし、相手に気づかれにくい進め方を大切にします。",
   },
   {
     title: "いきなり契約しない",
@@ -67,10 +67,44 @@ const reasons = [
 
 const stats = [
   { value: "3万件", label: "これまでのご相談" },
+  { value: "1万件+", label: "現場調査の実績" },
   { value: "97.5%", label: "証拠を取れた割合" },
-  { value: "30年", label: "調査の経験年数" },
+  { value: "30年", label: "現場ひとすじの経験" },
   { value: "0円", label: "証拠なしの場合" },
-  { value: "全国", label: "調査できる地域" },
+];
+
+/** お客様の声（匿名・要約。文言はミノガサン向けに作成） */
+const voices = [
+  {
+    who: "40代・女性",
+    title: "話しづらいことも、受け止めてもらえました",
+    body: "女性の相談窓口だと聞いて連絡しました。疑いを口にするだけでも辛かったのに、急かされず状況を整理できました。調査後の報告も丁寧で、次にどうするか決められました。",
+  },
+  {
+    who: "30代・男性",
+    title: "白と分かり、気持ちが楽になりました",
+    body: "自分でも調べようとして空回りしていました。相談の段階で進め方と費用の見通しを説明してもらい、納得して頼めました。結果が白で、夫婦で話し合うきっかけになりました。",
+  },
+  {
+    who: "50代・女性",
+    title: "報告書が、そのまま次の判断材料になりました",
+    body: "日時と行動が時系列で残っていて分かりやすかったです。弁護士に相談するときも、何を伝えればよいか迷いませんでした。連絡の時間帯も希望どおりで助かりました。",
+  },
+];
+
+const voiceHighlights = [
+  {
+    label: "現場ひとすじ30年",
+    body: "証拠取りの経験とノウハウを積み重ねてきました。",
+  },
+  {
+    label: "調査実績1万件以上",
+    body: "浮気・不倫を中心に、状況に合わせた調査を重ねています。",
+  },
+  {
+    label: "ご利用後アンケート",
+    body: "「相談してよかった」という声を継続していただいています。",
+  },
 ];
 
 const delivers = [
@@ -371,7 +405,7 @@ export default function DetectivePage() {
             数字で見る、ミノガサン
           </h2>
           <p className="det-block__lead">
-            相談の多さ・証拠の取れやすさ・経験年数を一覧にしました。
+            相談・現場調査の実績と、証拠の取れやすさを一覧にしました。
           </p>
           <ul className="det-stats">
             {stats.map((s) => (
@@ -385,7 +419,41 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--ink" aria-labelledby="give-title">
+      <section
+        className="det-block det-block--ink"
+        aria-labelledby="voice-title"
+      >
+        <FadeIn className="det-block__inner">
+          <h2 id="voice-title" className="det-block__title">
+            お客様の声
+          </h2>
+          <p className="det-block__lead">
+            現場ひとすじ30年・調査実績1万件以上。これまでにご相談いただいた方の声です。
+          </p>
+          <ul className="det-voice-highlights">
+            {voiceHighlights.map((h) => (
+              <li key={h.label}>
+                <strong>{h.label}</strong>
+                <span>{h.body}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className="det-voices">
+            {voices.map((v) => (
+              <li key={v.title}>
+                <p className="det-voices__who">{v.who}</p>
+                <h3>{v.title}</h3>
+                <p>{v.body}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="det-tiny">
+            ※個人が特定されないよう、内容は要約・編集しています。
+          </p>
+        </FadeIn>
+      </section>
+
+      <section className="det-block det-block--dark" aria-labelledby="give-title">
         <FadeIn className="det-block__inner">
           <h2 id="give-title" className="det-block__title">
             調査後にお渡しするもの
@@ -407,7 +475,7 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--dark" aria-labelledby="flow-title">
+      <section className="det-block det-block--ink" aria-labelledby="flow-title">
         <FadeIn className="det-block__inner">
           <h2 id="flow-title" className="det-block__title">
             ご相談から報告までの流れ

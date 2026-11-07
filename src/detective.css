@@ -609,6 +609,91 @@
   }
 }
 
+/* お客様の声 */
+.det-voice-highlights {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.det-voice-highlights li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 2px solid #7dcdc0;
+}
+
+.det-voice-highlights strong {
+  font-family: var(--det-serif);
+  font-size: 0.95rem;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.det-voice-highlights span {
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.det-voices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.det-voices li {
+  padding: 1.05rem 1.05rem 1.1rem;
+  background: rgba(255, 255, 255, 0.035);
+  border-left: 2px solid rgba(125, 205, 192, 0.7);
+}
+
+.det-voices__who {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 700;
+}
+
+.det-voices h3 {
+  margin: 0 0 0.45rem;
+  font-family: var(--det-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+}
+
+.det-voices p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+@media (min-width: 720px) {
+  .det-voice-highlights {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .det-voices h3 {
+    font-size: 0.9rem;
+  }
+
+  .det-voices p {
+    font-size: 0.76rem;
+  }
+}
+
 /* Give — 横並び優先 */
 .det-give {
   list-style: none;
