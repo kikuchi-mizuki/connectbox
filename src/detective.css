@@ -243,8 +243,8 @@
   object-position: center center;
   opacity: 0;
   transition: opacity 0.85s ease;
-  /* 縦クロップ済み画像をそのまま見せる（暗くしすぎない） */
-  filter: none;
+  /* スマホでも主題が読めるよう、わずかに持ち上げる */
+  filter: brightness(1.06) contrast(1.04);
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
@@ -257,16 +257,16 @@
 .det-fv__veil {
   position: absolute;
   inset: 0;
-  /* 中央の写真はほぼそのまま。上下だけ文字可読用に落とす */
+  /* 写真の主題を優先。上下だけ文字・ドック用に落とす */
   background:
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.08) 22%,
-      rgba(0, 0, 0, 0) 40%,
-      rgba(0, 0, 0, 0.15) 58%,
-      rgba(0, 0, 0, 0.55) 78%,
-      rgba(0, 0, 0, 0.94) 100%
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.04) 18%,
+      rgba(0, 0, 0, 0) 32%,
+      rgba(0, 0, 0, 0) 52%,
+      rgba(0, 0, 0, 0.28) 72%,
+      rgba(0, 0, 0, 0.88) 100%
     );
   pointer-events: none;
 }

@@ -26,22 +26,22 @@ const storyBeats: ReadonlyArray<{
   {
     src: "/detective/fv/01-late.jpg",
     lines: ["最近、", "帰りが遅くなった。"],
-    focus: "center center",
+    focus: "center 38%",
   },
   {
     src: "/detective/fv/02-hide.jpg",
     lines: ["誰かと二人で、", "どこかへ向かっている。"],
-    focus: "center center",
+    focus: "center 55%",
   },
   {
     src: "/detective/fv/03-doubt.jpg",
-    lines: ["信じたい。でも、", "確かめたい。"],
-    focus: "center 40%",
+    lines: ["信じたい。", "でも、確かめたい。"],
+    focus: "center 36%",
   },
   {
     src: "/detective/fv/04-fact.jpg",
     lines: ["その疑いを、", "事実に変える。"],
-    focus: "center 45%",
+    focus: "center 48%",
   },
 ];
 
