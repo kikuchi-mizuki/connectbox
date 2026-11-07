@@ -15,37 +15,33 @@ const NOTE2 =
 
 /**
  * 気持ちの流れ。
- * 画像はコピーの意味がスマホでも一眼で分かるものを1枚ずつ選定。
+ * lines = 意図した改行位置（スマホで変な折り返しをしない）
+ * src = 縦構図に切り出したFV専用画像（主題が大きく見える）
  */
 const storyBeats: ReadonlyArray<{
   src: string;
-  line: string;
-  /** object-position：人物・主題が中央に来る位置 */
+  lines: readonly [string, string];
   focus: string;
 }> = [
   {
-    // 夜、一人で建物へ入る＝帰りが遅い
-    src: "/detective/story-01.jpg",
-    line: "最近、帰りが遅くなった。",
-    focus: "center 22%",
+    src: "/detective/fv/01-late.jpg",
+    lines: ["最近、", "帰りが遅くなった。"],
+    focus: "center center",
   },
   {
-    // 二人で建物へ入る＝隠している気配
-    src: "/detective/story-02.jpg",
-    line: "スマホの画面を、見せてくれなくなった。",
-    focus: "center 35%",
+    src: "/detective/fv/02-hide.jpg",
+    lines: ["誰かと二人で、", "どこかへ向かっている。"],
+    focus: "center center",
   },
   {
-    // 夜の部屋で街を見つめる＝信じたい／確かめたい
-    src: "/detective/scene-consult.jpg",
-    line: "信じたい。でも、このままではいられない。",
+    src: "/detective/fv/03-doubt.jpg",
+    lines: ["信じたい。でも、", "確かめたい。"],
+    focus: "center 40%",
+  },
+  {
+    src: "/detective/fv/04-fact.jpg",
+    lines: ["その疑いを、", "事実に変える。"],
     focus: "center 45%",
-  },
-  {
-    // 車内からの撮影＝疑いを事実に
-    src: "/detective/scene-2.jpg",
-    line: "その疑いを、確かな事実に変える。",
-    focus: "35% 40%",
   },
 ];
 
@@ -298,7 +294,7 @@ export default function DetectivePage() {
         <div className="det-fv__stage" aria-hidden="true">
           {storyBeats.map((s, i) => (
             <img
-              key={`${s.src}-${s.line}`}
+              key={s.src}
               src={s.src}
               alt=""
               className={`det-fv__photo${i === beat ? " is-active" : ""}`}
@@ -315,14 +311,16 @@ export default function DetectivePage() {
           <div className="det-fv__line-wrap" aria-live="polite">
             <AnimatePresence mode="wait">
               <motion.p
-                key={current.line}
+                key={current.lines.join("")}
                 className="det-fv__line"
                 initial={reduce ? false : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduce ? undefined : { opacity: 0, y: -10 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
-                {current.line}
+                {current.lines[0]}
+                <br />
+                {current.lines[1]}
               </motion.p>
             </AnimatePresence>
           </div>
@@ -331,14 +329,14 @@ export default function DetectivePage() {
           <div className="det-fv__dots" role="tablist" aria-label="ストーリー">
             {storyBeats.map((s, i) => (
               <button
-                key={s.line}
+                key={s.src}
                 type="button"
                 role="tab"
                 aria-selected={i === beat}
                 className={`det-fv__dot${i === beat ? " is-on" : ""}`}
                 onClick={() => goToBeat(i)}
               >
-                <span className="sr-only">{s.line}</span>
+                <span className="sr-only">{s.lines.join("")}</span>
               </button>
             ))}
           </div>
