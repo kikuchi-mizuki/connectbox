@@ -240,10 +240,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 28%;
+  object-position: center 30%;
   opacity: 0;
   transition: opacity 0.85s ease;
-  filter: saturate(0.82) contrast(1.04);
+  /* 暗すぎて何の写真か分からないのを防ぐ */
+  filter: saturate(0.95) contrast(1.08) brightness(1.08);
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
@@ -256,15 +257,35 @@
 .det-fv__veil {
   position: absolute;
   inset: 0;
+  /* 中央の主題は残し、上下だけ読めるように落とす */
   background:
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.18) 38%,
-      rgba(0, 0, 0, 0.5) 68%,
-      rgba(0, 0, 0, 0.9) 100%
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.12) 28%,
+      rgba(0, 0, 0, 0.08) 48%,
+      rgba(0, 0, 0, 0.45) 72%,
+      rgba(0, 0, 0, 0.92) 100%
     );
   pointer-events: none;
+}
+
+@media (max-width: 520px) {
+  .det-fv__photo {
+    filter: saturate(1) contrast(1.1) brightness(1.12);
+  }
+
+  .det-fv__veil {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.06) 26%,
+        rgba(0, 0, 0, 0.04) 46%,
+        rgba(0, 0, 0, 0.4) 70%,
+        rgba(0, 0, 0, 0.94) 100%
+      );
+  }
 }
 
 .det-fv__story {
@@ -610,35 +631,6 @@
 }
 
 /* お客様の声 */
-.det-voice-highlights {
-  list-style: none;
-  margin: 0 0 1.25rem;
-  padding: 0;
-  display: grid;
-  gap: 0.55rem;
-}
-
-.det-voice-highlights li {
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.85rem 0.95rem;
-  background: rgba(255, 255, 255, 0.04);
-  border-top: 2px solid #7dcdc0;
-}
-
-.det-voice-highlights strong {
-  font-family: var(--det-serif);
-  font-size: 0.95rem;
-  color: #fff;
-  letter-spacing: 0.04em;
-}
-
-.det-voice-highlights span {
-  font-size: 0.76rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.58);
-}
-
 .det-voices {
   list-style: none;
   margin: 0;
@@ -676,12 +668,6 @@
   font-size: 0.8rem;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.62);
-}
-
-@media (min-width: 720px) {
-  .det-voice-highlights {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 520px) {

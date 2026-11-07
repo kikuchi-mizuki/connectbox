@@ -13,26 +13,39 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 const NOTE2 =
   "※証拠が取れなかった場合、お預かりした調査費用は全額返金します。条件の詳細はご契約前に書面でご説明します。";
 
-/** 気持ちの流れ。意味が通じる長さ（スマホは最大2行） */
+/**
+ * 気持ちの流れ。
+ * 画像はコピーの意味がスマホでも一眼で分かるものを1枚ずつ選定。
+ */
 const storyBeats: ReadonlyArray<{
   src: string;
   line: string;
+  /** object-position：人物・主題が中央に来る位置 */
+  focus: string;
 }> = [
   {
+    // 夜、一人で建物へ入る＝帰りが遅い
     src: "/detective/story-01.jpg",
     line: "最近、帰りが遅くなった。",
+    focus: "center 22%",
   },
   {
-    src: "/detective/story-01.jpg",
-    line: "スマホの画面を、見せてくれなくなった。",
-  },
-  {
+    // 二人で建物へ入る＝隠している気配
     src: "/detective/story-02.jpg",
-    line: "信じたい。でも、このままではいられない。",
+    line: "スマホの画面を、見せてくれなくなった。",
+    focus: "center 35%",
   },
   {
-    src: "/detective/story-03.jpg",
+    // 夜の部屋で街を見つめる＝信じたい／確かめたい
+    src: "/detective/scene-consult.jpg",
+    line: "信じたい。でも、このままではいられない。",
+    focus: "center 45%",
+  },
+  {
+    // 車内からの撮影＝疑いを事実に
+    src: "/detective/scene-2.jpg",
     line: "その疑いを、確かな事実に変える。",
+    focus: "35% 40%",
   },
 ];
 
@@ -92,21 +105,6 @@ const voices = [
   },
 ];
 
-const voiceHighlights = [
-  {
-    label: "現場ひとすじ30年",
-    body: "証拠取りの経験とノウハウを積み重ねてきました。",
-  },
-  {
-    label: "調査実績1万件以上",
-    body: "浮気・不倫を中心に、状況に合わせた調査を重ねています。",
-  },
-  {
-    label: "ご利用後アンケート",
-    body: "「相談してよかった」という声を継続していただいています。",
-  },
-];
-
 const delivers = [
   {
     src: "/detective/scene-report.jpg",
@@ -114,7 +112,7 @@ const delivers = [
     body: "日時・場所・行動を記録した書面です。弁護士への提出も想定した体裁でお渡しします。",
   },
   {
-    src: "/detective/story-01.jpg",
+    src: "/detective/scene-2.jpg",
     title: "調査映像・写真",
     body: "現場で撮った映像と写真を、時系列がわかる形に整理してお渡しします。",
   },
@@ -304,6 +302,7 @@ export default function DetectivePage() {
               src={s.src}
               alt=""
               className={`det-fv__photo${i === beat ? " is-active" : ""}`}
+              style={{ objectPosition: s.focus }}
               loading={i === 0 ? "eager" : "lazy"}
               draggable={false}
             />
@@ -430,14 +429,6 @@ export default function DetectivePage() {
           <p className="det-block__lead">
             現場ひとすじ30年・調査実績1万件以上。これまでにご相談いただいた方の声です。
           </p>
-          <ul className="det-voice-highlights">
-            {voiceHighlights.map((h) => (
-              <li key={h.label}>
-                <strong>{h.label}</strong>
-                <span>{h.body}</span>
-              </li>
-            ))}
-          </ul>
           <ul className="det-voices">
             {voices.map((v) => (
               <li key={v.title}>
