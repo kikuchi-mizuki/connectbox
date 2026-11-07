@@ -34,7 +34,7 @@ export default function DetectiveLayout() {
     link.id = id;
     link.rel = "stylesheet";
     link.href =
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@500;600&family=Zen+Maru+Gothic:wght@700&display=swap";
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@500;600&display=swap";
     document.head.appendChild(link);
   }, []);
 
@@ -77,7 +77,7 @@ export default function DetectiveLayout() {
               data-cta-position="header"
             >
               <LineIcon />
-              LINEで無料相談
+              <span className="det-header__line-label">LINEで無料相談</span>
             </a>
             <a
               className="det-btn det-btn--tel"
@@ -121,13 +121,10 @@ export default function DetectiveLayout() {
           <p className="det-footer__org">
             株式会社T-connect {tentOffice.name}
           </p>
+          <p>{tentOffice.licenseLabel}</p>
+          <p className="det-footer__sub">{tentOffice.licenseNote}</p>
           <p>
-            探偵業届出番号：東京都公安委員会 第
-            <span className="det-ph">{tentOffice.licensePlaceholder}</span>号
-          </p>
-          <p>
-            面談場所：東京都新宿区西新宿
-            <span className="det-ph">{tentOffice.addressPlaceholder}</span>
+            面談場所：{tentOffice.postalCode} {tentOffice.address}
           </p>
           <p>
             TEL{" "}
@@ -138,10 +135,12 @@ export default function DetectiveLayout() {
             <a href={`mailto:${tentOffice.email}`}>{tentOffice.email}</a>
           </p>
           <p>
-            <a className="det-ph" href="#privacy">
-              {tentOffice.privacyUrlPlaceholder}
-            </a>
+            <a href={tentOffice.privacyHref}>{tentOffice.privacyLabel}</a>
           </p>
+          <div className="det-footer__privacy" id="privacy">
+            <strong>{tentOffice.privacyLabel}</strong>
+            <p>{tentOffice.privacyBody}</p>
+          </div>
           <span className="det-footer__copy">
             © {new Date().getFullYear()} {tentOffice.name} / {tentOffice.legalNote}
           </span>

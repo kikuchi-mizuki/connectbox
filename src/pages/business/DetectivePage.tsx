@@ -40,6 +40,33 @@ const storyBeats: ReadonlyArray<{
 
 const BEAT_MS = 3000;
 
+const reasons = [
+  {
+    title: "証拠が取れなければ0円",
+    body: "お預かりした調査費用は、証拠が取れなかった場合に全額返金します。条件は契約前に書面で明示します。",
+  },
+  {
+    title: "女性の相談窓口がある",
+    body: `${tentOffice.counselorName}（女性）が窓口です。話しづらいことも、無理に急かさず伺います。`,
+  },
+  {
+    title: "秘密を最優先に守る",
+    body: "連絡の手段・時間帯はご希望に合わせます。内容を無断で第三者へ伝えることはありません。",
+  },
+  {
+    title: "追加料金を後出ししない",
+    body: "調査の範囲と費用は見積りで事前に示します。見積りにない費用を、あとから請求しません。",
+  },
+  {
+    title: "経験のある調査体制",
+    body: "相談実績3万件・調査歴30年の知見を活かし、相手に気づかれにくい進め方を大切にします。",
+  },
+  {
+    title: "いきなり契約しない",
+    body: "ご相談・お見積りはご契約まで無料です。納得いただけなければ、その場で終わって構いません。",
+  },
+];
+
 const stats = [
   { value: "3万件", label: "これまでのご相談" },
   { value: "97.5%", label: "証拠を取れた割合" },
@@ -105,7 +132,7 @@ const faqs = [
   },
   {
     q: "途中でやめられますか？",
-    a: "はい。中止する場合の費用の扱いは、ご契約前に書面でご説明します。",
+    a: `はい。${tentOffice.cancelPolicy}`,
   },
   {
     q: "結果が「白」（問題なし）だったら？",
@@ -163,11 +190,9 @@ function CtaPair({ position }: { position: "footer" }) {
 
 export default function DetectivePage() {
   const reduce = useReducedMotion();
-  const videoRef = useRef<HTMLVideoElement>(null);
   const dockRef = useRef<HTMLDivElement>(null);
   const fvRef = useRef<HTMLElement>(null);
   const resumeTimer = useRef<number | null>(null);
-  const [playing, setPlaying] = useState(false);
   const [beat, setBeat] = useState(0);
   const [paused, setPaused] = useState(false);
   const [offerReady, setOfferReady] = useState(false);
@@ -239,13 +264,6 @@ export default function DetectivePage() {
     pauseBriefly();
   };
 
-  const playVideo = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    void v.play();
-    setPlaying(true);
-  };
-
   return (
     <main className="det-main">
       <section
@@ -313,7 +331,7 @@ export default function DetectivePage() {
               証拠が取れなければ<strong>0円</strong>
             </span>
             <span className="det-fv__offer-sub">
-              浮気調査 {tentOffice.minPrice}円〜（税別）
+              まずは無料相談から。見積り以外の追加料金はありません。
             </span>
           </h1>
           <div className="det-fv__dock-cta">
@@ -339,27 +357,25 @@ export default function DetectivePage() {
         </div>
       </section>
 
-      <section className="det-block det-block--black" aria-label="動画">
-        <FadeIn className="det-block__inner det-block__inner--center">
-          <p className="det-block__lead">事務所の雰囲気を、短い動画でご覧ください。</p>
-          <button
-            type="button"
-            className="det-video-btn"
-            onClick={playVideo}
-            hidden={playing}
-          >
-            オープニング動画を見る（約25秒）
-          </button>
-          <div className={`det-video${playing ? " is-on" : ""}`}>
-            <video
-              ref={videoRef}
-              src="/detective/opening.mp4"
-              controls
-              playsInline
-              preload="none"
-              poster="/detective/story-01.jpg"
-            />
-          </div>
+      <section
+        className="det-block det-block--ink"
+        aria-labelledby="reason-title"
+      >
+        <FadeIn className="det-block__inner">
+          <h2 id="reason-title" className="det-block__title">
+            なぜ、ミノガサンが安心なのか
+          </h2>
+          <p className="det-block__lead">
+            不安をあおるのではなく、事実と選択肢を残すことを大切にしています。
+          </p>
+          <ul className="det-reasons">
+            {reasons.map((r) => (
+              <li key={r.title}>
+                <h3>{r.title}</h3>
+                <p>{r.body}</p>
+              </li>
+            ))}
+          </ul>
         </FadeIn>
       </section>
 
@@ -379,10 +395,7 @@ export default function DetectivePage() {
               </li>
             ))}
           </ul>
-          <p className="det-tiny">
-            ※証拠を取れた割合の定義は
-            <span className="det-ph">{tentOffice.note1Placeholder}</span>
-          </p>
+          <p className="det-tiny">※{tentOffice.successRateNote}</p>
         </FadeIn>
       </section>
 

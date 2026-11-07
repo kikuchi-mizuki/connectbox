@@ -421,10 +421,13 @@
 
 .det-fv__offer-sub {
   font-family: var(--det-sans);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
+  max-width: 22em;
+  margin-inline: auto;
 }
 
 .det-fv__dock-cta {
@@ -453,47 +456,6 @@
   text-align: center;
   max-width: 36em;
   margin-inline: auto;
-}
-
-.det-block--black {
-  background: #000;
-  padding: 2rem 0;
-}
-
-.det-block__inner--center {
-  text-align: center;
-}
-
-.det-video-btn {
-  appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: transparent;
-  color: #fff;
-  font-family: var(--det-sans);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 0.6rem 1.15rem;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.det-video {
-  display: none;
-  margin-top: 0.85rem;
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.det-video.is-on {
-  display: block;
-}
-
-.det-video video {
-  width: 100%;
-  border-radius: 4px;
-  background: #111;
 }
 
 /* Blocks */
@@ -549,8 +511,47 @@
 .det-tiny {
   margin: 0.85rem 0 0;
   font-size: 0.7rem;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.4);
   text-align: center;
+}
+
+/* 安心ポイント */
+.det-reasons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.det-reasons li {
+  padding: 1rem 1.05rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid #7dcdc0;
+}
+
+.det-reasons h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--det-serif);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.det-reasons p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+@media (min-width: 640px) {
+  .det-reasons {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Stats */
@@ -594,8 +595,26 @@
     grid-column: 1 / -1;
   }
 
+  .det-stats strong {
+    font-size: clamp(1.05rem, 5vw, 1.25rem);
+    white-space: normal;
+  }
+
   .det-stats span {
-    font-size: 0.66rem;
+    font-size: 0.68rem;
+  }
+
+  .det-block__inner {
+    padding: 0 1rem;
+  }
+
+  .det-block__title {
+    font-size: 1.08rem;
+    letter-spacing: 0.05em;
+  }
+
+  .det-block__lead {
+    font-size: 0.8rem;
   }
 }
 
@@ -867,6 +886,32 @@
   font-size: 0.88rem;
 }
 
+.det-footer__sub {
+  margin: -0.1rem 0 0.15rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.det-footer__privacy {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.det-footer__privacy strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+}
+
+.det-footer__privacy p {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.45);
+}
+
 .det-footer a {
   color: rgba(255, 255, 255, 0.78);
   text-decoration: underline;
@@ -886,8 +931,15 @@
     font-size: 0.78rem;
   }
 
+  .det-header__line-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
   .det-header__actions .det-btn--line {
-    font-size: 0;
     gap: 0;
     padding-inline: 0.75rem;
   }
@@ -904,6 +956,34 @@
 
   .det-fv__dock-cta {
     max-width: 100%;
+    grid-template-columns: 1.35fr 0.9fr;
+    gap: 0.35rem;
+  }
+
+  .det-fv__dock-cta .det-btn {
+    font-size: 0.74rem;
+    padding-inline: 0.45rem;
+  }
+
+  .det-fv__offer-sub {
+    font-size: 0.68rem;
+    max-width: 18em;
+  }
+
+  .det-reasons {
+    grid-template-columns: 1fr;
+  }
+
+  .det-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .det-give h3 {
+    font-size: 0.92rem;
+  }
+
+  .det-give p {
+    font-size: 0.78rem;
   }
 }
 
