@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { DETECTIVE_FORM_URL, DETECTIVE_LINE_URL } from "../constants";
+import {
+  DETECTIVE_LINE_URL,
+  DETECTIVE_TEL,
+  DETECTIVE_TEL_DISPLAY,
+} from "../constants";
 import { tentOffice } from "../data/tent";
 import "../detective.css";
 
@@ -30,7 +34,7 @@ export default function DetectiveLayout() {
     link.id = id;
     link.rel = "stylesheet";
     link.href =
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&display=swap";
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@500;600&family=Zen+Maru+Gothic:wght@700&display=swap";
     document.head.appendChild(link);
   }, []);
 
@@ -42,7 +46,7 @@ export default function DetectiveLayout() {
         setShowSticky(false);
         return;
       }
-      const pastHero = hero.getBoundingClientRect().bottom < 72;
+      const pastHero = hero.getBoundingClientRect().bottom < 8;
       const finalVisible =
         finalCta.getBoundingClientRect().top < window.innerHeight * 0.88;
       setShowSticky(pastHero && !finalVisible);
@@ -73,15 +77,14 @@ export default function DetectiveLayout() {
               data-cta-position="header"
             >
               <LineIcon />
-              LINE相談
+              LINEで無料相談
             </a>
             <a
-              className="det-header__form"
-              href={DETECTIVE_FORM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              className="det-btn det-btn--tel"
+              href={`tel:${DETECTIVE_TEL}`}
+              data-cta-position="header"
             >
-              フォーム
+              電話
             </a>
           </div>
         </div>
@@ -93,38 +96,53 @@ export default function DetectiveLayout() {
         className={`det-sticky${showSticky ? " is-visible" : ""}`}
         aria-hidden={!showSticky}
       >
-        <p className="det-sticky__label">
-          {tentOffice.name}｜秘密厳守｜無料相談
-        </p>
-        <div className="det-sticky__btns">
-          <a
-            className="det-btn det-btn--line"
-            href={DETECTIVE_LINE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cta-position="sticky"
-          >
-            <LineIcon />
-            LINEで相談
-          </a>
-          <a
-            className="det-btn det-btn--outline"
-            href={DETECTIVE_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            フォームで相談
-          </a>
-        </div>
+        <a
+          className="det-sticky__line"
+          href={DETECTIVE_LINE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cta-position="sticky"
+        >
+          <LineIcon />
+          LINEで無料相談
+        </a>
+        <a
+          className="det-sticky__tel"
+          href={`tel:${DETECTIVE_TEL}`}
+          data-cta-position="sticky"
+        >
+          電話
+          <span>{DETECTIVE_TEL_DISPLAY}</span>
+        </a>
       </div>
 
       <footer className="det-footer">
         <div className="det-footer__inner">
-          <div className="det-footer__brand">
-            <p>{tentOffice.name}</p>
-            <span>秘密厳守｜無料相談受付</span>
-          </div>
-          <span>
+          <p className="det-footer__org">
+            株式会社T-connect {tentOffice.name}
+          </p>
+          <p>
+            探偵業届出番号：東京都公安委員会 第
+            <span className="det-ph">{tentOffice.licensePlaceholder}</span>号
+          </p>
+          <p>
+            面談場所：東京都新宿区西新宿
+            <span className="det-ph">{tentOffice.addressPlaceholder}</span>
+          </p>
+          <p>
+            TEL{" "}
+            <a href={`tel:${DETECTIVE_TEL}`} data-cta-position="footer">
+              {DETECTIVE_TEL_DISPLAY}
+            </a>
+            {" ／ "}
+            <a href={`mailto:${tentOffice.email}`}>{tentOffice.email}</a>
+          </p>
+          <p>
+            <a className="det-ph" href="#privacy">
+              {tentOffice.privacyUrlPlaceholder}
+            </a>
+          </p>
+          <span className="det-footer__copy">
             © {new Date().getFullYear()} {tentOffice.name} / {tentOffice.legalNote}
           </span>
         </div>

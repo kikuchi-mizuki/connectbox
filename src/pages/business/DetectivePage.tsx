@@ -1,187 +1,125 @@
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
-import { DETECTIVE_FORM_URL, DETECTIVE_LINE_URL } from "../../constants";
+import {
+  DETECTIVE_LINE_URL,
+  DETECTIVE_TEL,
+  DETECTIVE_TEL_DISPLAY,
+} from "../../constants";
 import { detectiveSeo } from "../../data/detectiveSeo";
-import { detectiveInvestigations, tentOffice } from "../../data/tent";
+import { tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
-const pains = [
-  "パートナーの帰宅時間や連絡が、最近おかしい気がする",
-  "スマホや服装の変化が気になるが、問い詰める勇気がない",
-  "疑いだけが膨らみ、夜も眠れない日が続いている",
-  "証拠がなければ動けないが、誰にも相談できない",
+const NOTE2 =
+  "※証拠が取れなかった場合、お預かりした調査費用は全額返金します。条件の詳細はご契約前に書面でご説明します。";
+
+/** 気持ちの流れ。意味が通じる長さ（スマホは最大2行） */
+const storyBeats = [
+  {
+    src: "/detective/story-01.jpg",
+    line: "最近、帰りが遅くなった。",
+  },
+  {
+    src: "/detective/story-01.jpg",
+    line: "スマホの画面を、見せてくれなくなった。",
+  },
+  {
+    src: "/detective/story-02.jpg",
+    line: "信じたい。でも、このままではいられない。",
+  },
+  {
+    src: "/detective/story-03.jpg",
+    line: "その疑いを、確かな事実に変える。",
+    final: true,
+  },
+] as const;
+
+const BEAT_MS = 3000;
+
+const stats = [
+  { value: "3万件", label: "これまでのご相談" },
+  { value: "97.5%", label: "証拠を取れた割合" },
+  { value: "30年", label: "調査の経験年数" },
+  { value: "0円", label: "証拠なしの場合" },
+  { value: "全国", label: "調査できる地域" },
 ];
 
-const reasons = [
+const delivers = [
+  {
+    src: "/detective/scene-report.jpg",
+    title: "調査報告書",
+    body: "日時・場所・行動を記録した書面です。弁護士への提出も想定した体裁でお渡しします。",
+  },
+  {
+    src: "/detective/story-01.jpg",
+    title: "調査映像・写真",
+    body: "現場で撮った映像と写真を、時系列がわかる形に整理してお渡しします。",
+  },
+  {
+    src: "/detective/scene-consult.jpg",
+    title: "報告面談",
+    body: "結果の読み方と、この先の選択肢（話し合う／弁護士／様子を見る）を一緒に整理します。",
+  },
+];
+
+const flow = [
   {
     n: "01",
-    title: "秘密を、最優先に守ります",
-    body: "ご相談内容・調査内容は厳重に管理し、ご本人の同意なく第三者へ開示しません。周囲に知られない進め方を大切にします。",
-    icon: "lock" as const,
+    title: "無料相談",
+    body: "いまの状況を伺います。ご契約までは費用はかかりません。",
   },
   {
     n: "02",
-    title: "不安に寄り添い、事実で整理します",
-    body: "感情をあおるのではなく、状況を丁寧に伺い、何を確かめるべきかを一緒に整理します。迷っている段階でもご相談ください。",
-    icon: "listen" as const,
+    title: "お見積り",
+    body: "調査の範囲と日数に応じた費用を、事前に明示します。",
   },
   {
     n: "03",
-    title: "証拠が、次の一手につながります",
-    body: "報告書として事実を残し、話し合い・決断・専門家への相談など、その後の選択を支えます。",
-    icon: "doc" as const,
+    title: "ご契約",
+    body: "内容・費用・返金条件を書面で確認してから進めます。",
   },
   {
     n: "04",
-    title: "法令を守った調査のみ行います",
-    body: "探偵業法をはじめ、法令の範囲内で調査します。無理な勧誘はいたしません。",
-    icon: "scale" as const,
-  },
-];
-
-const steps = [
-  {
-    title: "無料相談",
-    body: "LINEまたはフォームで、いま感じている違和感をお聞かせください。",
-    icon: "chat" as const,
-  },
-  {
-    title: "ヒアリング",
-    body: "状況を整理し、調べるべきポイントを一緒に絞り込みます。",
-    icon: "listen" as const,
-  },
-  {
-    title: "方針・お見積り",
-    body: "調査の進め方と費用感をわかりやすくご案内します。",
-    icon: "plan" as const,
-  },
-  {
     title: "調査",
-    body: "秘密厳守のもと、必要な範囲で調査を実施します。",
-    icon: "search" as const,
+    body: "経験のある調査員が、相手に気づかれないよう実態を調べます。",
   },
   {
-    title: "報告と今後の整理",
-    body: "報告書をもとに、証拠の扱い方や次に取れる行動を整理します。",
-    icon: "doc" as const,
+    n: "05",
+    title: "ご報告",
+    body: "報告書と映像をお渡しし、今後の選択を一緒に整理します。",
   },
 ];
 
 const faqs = [
   {
-    q: "相談したことは、誰かに知られますか？",
-    a: "いいえ。ご相談・調査に関する情報は厳重に管理し、ご本人の同意なく第三者へ開示しません。",
+    q: "相手に調査がバレませんか？",
+    a: "経験を積んだ調査チームが担当します。調査の進め方と、注意していただきたい点は事前にお伝えします。",
   },
   {
-    q: "まだ調査するか決めていなくても大丈夫ですか？",
-    a: "はい。迷っている段階のご相談がほとんどです。話を聞いたうえで、調査が必要かどうかも一緒に整理できます。",
+    q: "家族や職場に知られませんか？",
+    a: "連絡の手段・時間帯はご希望に合わせます。ご相談内容は秘密として扱い、無断で第三者には伝えません。",
   },
   {
-    q: "費用はどのくらいかかりますか？",
-    a: "内容や期間によって異なります。まずは無料相談で状況を伺い、方針と費用感をお伝えします。無理な勧誘はしません。",
+    q: "途中でやめられますか？",
+    a: "はい。中止する場合の費用の扱いは、ご契約前に書面でご説明します。",
   },
   {
-    q: "証拠はどのように使えますか？",
-    a: "ご自身の判断材料としてご利用いただけます。法的な手続きでの活用については、必要に応じて専門家への相談もご案内します。",
+    q: "結果が「白」（問題なし）だったら？",
+    a: "疑いが晴れることも、ひとつの答えです。報告面談で、この先の関係の整理をお手伝いします。",
+  },
+  {
+    q: "男性でも相談できますか？",
+    a: "はい。男性からのご相談もお受けしています。相談窓口は女性スタッフも対応できます。",
+  },
+  {
+    q: "関東以外でも頼めますか？",
+    a: "全国に対応しています。関東以外で発生する交通費・宿泊費は実費をいただきます。",
+  },
+  {
+    q: "相談だけでもいいですか？",
+    a: "はい。ご相談とお見積りは、ご契約まで無料です。無理にお勧めすることはありません。",
   },
 ];
-
-type IconName =
-  | "lock"
-  | "listen"
-  | "doc"
-  | "scale"
-  | "chat"
-  | "plan"
-  | "search"
-  | "shield"
-  | "talk"
-  | "law";
-
-function DetIcon({ name }: { name: IconName }) {
-  const common = {
-    viewBox: "0 0 32 32",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.4,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true as const,
-  };
-
-  const paths: Record<IconName, ReactNode> = {
-    lock: (
-      <>
-        <rect x="9" y="14" width="14" height="12" rx="2" />
-        <path d="M12 14v-3a4 4 0 0 1 8 0v3" />
-        <circle cx="16" cy="20" r="1.2" fill="currentColor" stroke="none" />
-      </>
-    ),
-    listen: (
-      <>
-        <path d="M8 18v-3a8 8 0 0 1 16 0v3" />
-        <path d="M7 18h3v5H9a2 2 0 0 1-2-2v-3zM25 18h-3v5h1a2 2 0 0 0 2-2v-3z" />
-      </>
-    ),
-    doc: (
-      <>
-        <path d="M10 6h9l5 5v15H10V6z" />
-        <path d="M19 6v5h5M13 16h8M13 20h8M13 24h5" />
-      </>
-    ),
-    scale: (
-      <>
-        <path d="M16 6v18M10 24h12" />
-        <path d="M16 10h-7l2.5 6H16M16 10h7l-2.5 6H16" />
-      </>
-    ),
-    chat: (
-      <>
-        <path d="M7 9h18v12H13l-4 4v-4H7V9z" />
-        <path d="M12 14h8M12 18h5" />
-      </>
-    ),
-    plan: (
-      <>
-        <rect x="8" y="7" width="16" height="18" rx="1.5" />
-        <path d="M12 12h8M12 16h8M12 20h5" />
-      </>
-    ),
-    search: (
-      <>
-        <circle cx="14" cy="14" r="6.5" />
-        <path d="M19 19l5 5" />
-      </>
-    ),
-    shield: (
-      <>
-        <path d="M16 5l10 4v7c0 6-4.5 10-10 11C10.5 26 6 22 6 16V9l10-4z" />
-        <path d="M12.5 16.5l2.5 2.5 5-5" />
-      </>
-    ),
-    talk: (
-      <>
-        <circle cx="11" cy="13" r="3.2" />
-        <circle cx="21" cy="13" r="3.2" />
-        <path d="M6.5 22c.8-3 2.8-4.5 4.5-4.5S14.5 19 15.2 22M16.8 22c.8-3 2.8-4.5 4.5-4.5s3.7 1.5 4.5 4.5" />
-      </>
-    ),
-    law: (
-      <>
-        <path d="M16 6v18M9 24h14" />
-        <path d="M11 10h10M13 10v3M19 10v3" />
-        <path d="M8 16h4l-2 5H8l2-5zM20 16h4l-2 5h-2l2-5z" />
-      </>
-    ),
-  };
-
-  return (
-    <svg className="det-icon" {...common}>
-      {paths[name]}
-    </svg>
-  );
-}
 
 function LineIcon() {
   return (
@@ -194,47 +132,43 @@ function LineIcon() {
   );
 }
 
-function LineButton({
-  className = "",
-  children = "LINEで無料相談する",
-}: {
-  className?: string;
-  children?: string;
-}) {
+function CtaPair({ position }: { position: "footer" }) {
   return (
-    <a
-      className={`det-btn det-btn--line ${className}`.trim()}
-      href={DETECTIVE_LINE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <LineIcon />
-      {children}
-    </a>
-  );
-}
-
-function FormButton({
-  className = "",
-  children = "フォームで無料相談する",
-}: {
-  className?: string;
-  children?: string;
-}) {
-  return (
-    <a
-      className={`det-btn det-btn--outline ${className}`.trim()}
-      href={DETECTIVE_FORM_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {children}
-    </a>
+    <div className="det-cta-pair">
+      <a
+        className="det-btn det-btn--line det-btn--lg"
+        href={DETECTIVE_LINE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-cta-position={position}
+      >
+        <LineIcon />
+        LINEで無料相談する
+      </a>
+      <a
+        className="det-btn det-btn--tel det-btn--lg"
+        href={`tel:${DETECTIVE_TEL}`}
+        data-cta-position={position}
+      >
+        電話で相談する
+        <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
+      </a>
+    </div>
   );
 }
 
 export default function DetectivePage() {
   const reduce = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const dockRef = useRef<HTMLDivElement>(null);
+  const fvRef = useRef<HTMLElement>(null);
+  const resumeTimer = useRef<number | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [beat, setBeat] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [offerReady, setOfferReady] = useState(false);
+  const current = storyBeats[beat];
+
   usePageMeta({
     title: detectiveSeo.title,
     description: detectiveSeo.description,
@@ -246,196 +180,260 @@ export default function DetectivePage() {
     ogSiteName: detectiveSeo.siteName,
   });
 
+  useEffect(() => {
+    if (current.final) setOfferReady(true);
+  }, [current.final]);
+
+  useEffect(() => {
+    if (!offerReady) return;
+    const dock = dockRef.current;
+    const fv = fvRef.current;
+    if (!dock || !fv) return;
+    const sync = () => {
+      const h = Math.ceil(dock.getBoundingClientRect().height);
+      if (h > 0) fv.style.setProperty("--det-dock-h", `${h}px`);
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(dock);
+    window.addEventListener("resize", sync);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", sync);
+    };
+  }, [offerReady]);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reduce) {
+      setBeat(storyBeats.length - 1);
+      setOfferReady(true);
+      return;
+    }
+    if (paused) return;
+    if (current.final) return;
+    const id = window.setInterval(() => {
+      setBeat((i) => Math.min(i + 1, storyBeats.length - 1));
+    }, BEAT_MS);
+    return () => window.clearInterval(id);
+  }, [reduce, paused, current.final]);
+
+  const pauseBriefly = () => {
+    setPaused(true);
+    if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+    resumeTimer.current = window.setTimeout(() => setPaused(false), 5000);
+  };
+
+  const goToBeat = (i: number) => {
+    setBeat(i);
+    if (storyBeats[i]?.final) setOfferReady(true);
+    pauseBriefly();
+  };
+
+  const playVideo = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    void v.play();
+    setPlaying(true);
+  };
+
   return (
-    <main>
-      <section className="det-hero" id="det-hero" aria-label="メインビジュアル">
-        <div className="det-hero__content">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+    <main className="det-main">
+      <section
+        ref={fvRef}
+        className={`det-fv${offerReady ? " is-offer" : ""}`}
+        id="det-hero"
+        aria-label="ファーストビュー"
+      >
+        <div className="det-fv__stage" aria-hidden="true">
+          {storyBeats.map((s, i) => (
+            <img
+              key={`${s.src}-${s.line}`}
+              src={s.src}
+              alt=""
+              className={`det-fv__photo${i === beat ? " is-active" : ""}`}
+              loading={i === 0 ? "eager" : "lazy"}
+              draggable={false}
+            />
+          ))}
+          <div className="det-fv__veil" />
+        </div>
+
+        <div className="det-fv__story">
+          <p className="det-fv__brand">{tentOffice.name}</p>
+          <div className="det-fv__line-wrap" aria-live="polite">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={current.line}
+                className="det-fv__line"
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduce ? undefined : { opacity: 0, y: -10 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {current.line}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+          <p className="det-fv__tag">※再現映像です</p>
+
+          <div className="det-fv__dots" role="tablist" aria-label="ストーリー">
+            {storyBeats.map((s, i) => (
+              <button
+                key={s.line}
+                type="button"
+                role="tab"
+                aria-selected={i === beat}
+                className={`det-fv__dot${i === beat ? " is-on" : ""}`}
+                onClick={() => goToBeat(i)}
+              >
+                <span className="sr-only">{s.line}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div
+          ref={dockRef}
+          className={`det-fv__dock${offerReady ? " is-ready" : ""}`}
+          aria-hidden={!offerReady}
+          inert={!offerReady ? true : undefined}
+        >
+          <h1 className="det-fv__offer">
+            <span className="det-fv__offer-main">
+              証拠が取れなければ<strong>0円</strong>
+            </span>
+            <span className="det-fv__offer-sub">
+              浮気調査 {tentOffice.minPrice}円〜（税別）
+            </span>
+          </h1>
+          <div className="det-fv__dock-cta">
+            <a
+              className="det-btn det-btn--line"
+              href={DETECTIVE_LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta-position="fv"
+            >
+              <LineIcon />
+              LINEで無料相談
+            </a>
+            <a
+              className="det-btn det-btn--tel"
+              href={`tel:${DETECTIVE_TEL}`}
+              data-cta-position="fv"
+            >
+              電話する
+            </a>
+          </div>
+          <p className="det-fv__dock-note">{NOTE2}</p>
+        </div>
+      </section>
+
+      <section className="det-block det-block--black" aria-label="動画">
+        <FadeIn className="det-block__inner det-block__inner--center">
+          <p className="det-block__lead">事務所の雰囲気を、短い動画でご覧ください。</p>
+          <button
+            type="button"
+            className="det-video-btn"
+            onClick={playVideo}
+            hidden={playing}
           >
-            <p className="det-hero__brand">
-              <span className="det-hero__brand-en">{tentOffice.nameEn}</span>
-              <span className="det-hero__brand-ja">{tentOffice.name}</span>
-            </p>
-            <h1>
-              その不安、
-              <br />
-              一人で抱え込まないでください。
-            </h1>
-            <p className="det-hero__tagline">{tentOffice.tagline}</p>
-            <p className="det-hero__promise">{tentOffice.message}</p>
-            <p className="det-hero__lead">
-              「気のせい」で済ませたい気持ちと、「確かめたい」気持ちが、同時にあるかもしれません。
-              不倫・身辺・素行など、無料相談では状況の整理からお手伝いします。いきなり契約ではありません。
-            </p>
-            <div className="det-hero__cta">
-              <LineButton className="det-btn--lg" />
-              <FormButton className="det-btn--lg" />
-            </div>
-            <p className="det-hero__note">秘密厳守｜無料相談｜無理な勧誘はいたしません</p>
-          </motion.div>
-        </div>
-        <div className="det-hero__media" aria-hidden="true">
-          <div className="det-hero__scenes">
-            <img src="/detective/scene-1.jpg" alt="" />
-            <img src="/detective/scene-2.jpg" alt="" />
-            <img src="/detective/scene-3.jpg" alt="" />
+            オープニング動画を見る（約25秒）
+          </button>
+          <div className={`det-video${playing ? " is-on" : ""}`}>
+            <video
+              ref={videoRef}
+              src="/detective/opening.mp4"
+              controls
+              playsInline
+              preload="none"
+              poster="/detective/story-01.jpg"
+            />
           </div>
-          <div className="det-hero__shade" />
-        </div>
-      </section>
-
-      <section className="det-trust" aria-label="安心のポイント">
-        <div className="det-trust__inner">
-          <div className="det-trust__item">
-            <span className="det-trust__icon">
-              <DetIcon name="shield" />
-            </span>
-            <strong>秘密厳守</strong>
-            <span>相談内容を外部に漏らしません</span>
-          </div>
-          <div className="det-trust__item">
-            <span className="det-trust__icon">
-              <DetIcon name="talk" />
-            </span>
-            <strong>まずは無料相談</strong>
-            <span>迷っている段階でも大丈夫です</span>
-          </div>
-          <div className="det-trust__item">
-            <span className="det-trust__icon">
-              <DetIcon name="law" />
-            </span>
-            <strong>法令遵守</strong>
-            <span>探偵業法の範囲で調査します</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="det-section det-section--pain" aria-labelledby="pain-title">
-        <FadeIn className="det-section__inner det-split">
-          <div className="det-split__copy">
-            <p className="det-section__label">Concerns</p>
-            <h2 id="pain-title">
-              こんな気持ち、
-              <br />
-              ありませんか
-            </h2>
-            <p className="det-section__lead">
-              疑いを口にできないまま、毎日が過ぎていく。その苦しさから、相談は始まっています。
-            </p>
-            <ul className="det-pain-list">
-              {pains.map((item, i) => (
-                <li key={item}>
-                  <span className="det-pain-list__num">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <figure className="det-split__media">
-            <img src="/detective/scene-consult.jpg" alt="" />
-            <figcaption>一人で抱え込まなくていい。</figcaption>
-          </figure>
         </FadeIn>
       </section>
 
-      <section className="det-section det-section--navy" aria-labelledby="reason-title">
-        <FadeIn className="det-section__inner">
-          <p className="det-section__label">Why Us</p>
-          <h2 id="reason-title">大切にしていること</h2>
-          <p className="det-section__lead">
-            不安をあおるのではなく、信頼できる事実と、その後の選択肢を残すことを大切にしています。
+      <section className="det-block det-block--dark" aria-labelledby="stats-title">
+        <FadeIn className="det-block__inner">
+          <h2 id="stats-title" className="det-block__title">
+            数字で見る、ミノガサン
+          </h2>
+          <p className="det-block__lead">
+            相談の多さ・証拠の取れやすさ・経験年数を一覧にしました。
           </p>
-          <div className="det-reasons">
-            {reasons.map((r) => (
-              <article key={r.n} className="det-reason">
-                <div className="det-reason__mark">
-                  <span className="det-reason__icon">
-                    <DetIcon name={r.icon} />
-                  </span>
-                  <span className="det-reason__n">{r.n}</span>
-                </div>
+          <ul className="det-stats">
+            {stats.map((s) => (
+              <li key={s.label}>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="det-tiny">
+            ※証拠を取れた割合の定義は
+            <span className="det-ph">{tentOffice.note1Placeholder}</span>
+          </p>
+        </FadeIn>
+      </section>
+
+      <section className="det-block det-block--ink" aria-labelledby="give-title">
+        <FadeIn className="det-block__inner">
+          <h2 id="give-title" className="det-block__title">
+            調査後にお渡しするもの
+          </h2>
+          <p className="det-block__lead">
+            「何がわかったか」を、あとから見返せる形で残します。
+          </p>
+          <ul className="det-give">
+            {delivers.map((d) => (
+              <li key={d.title}>
+                <img src={d.src} alt="" loading="lazy" />
                 <div>
-                  <h3>{r.title}</h3>
-                  <p>{r.body}</p>
+                  <h3>{d.title}</h3>
+                  <p>{d.body}</p>
                 </div>
-              </article>
+              </li>
             ))}
-          </div>
+          </ul>
         </FadeIn>
       </section>
 
-      <section className="det-section det-section--paper" aria-labelledby="service-title">
-        <FadeIn className="det-section__inner">
-          <p className="det-section__label">Investigation</p>
-          <h2 id="service-title">見逃さない、3つの調査</h2>
-          <p className="det-section__lead">
-            「知りたいこと」に合わせて、調査の範囲をご提案します。迷っている段階でも大丈夫です。
+      <section className="det-block det-block--dark" aria-labelledby="flow-title">
+        <FadeIn className="det-block__inner">
+          <h2 id="flow-title" className="det-block__title">
+            ご相談から報告までの流れ
+          </h2>
+          <p className="det-block__lead">
+            いきなり契約ではありません。相談と見積もりは無料です。
           </p>
-          <div className="det-service-grid">
-            {detectiveInvestigations.map((s) => (
-              <article key={s.title} className="det-service-card">
-                <div className="det-service-card__media">
-                  <img src={s.image} alt="" />
-                </div>
-                <div className="det-service-card__body">
-                  <h3>{s.title}</h3>
-                  <p className="det-service-card__slogan">{s.slogan}</p>
+          <ol className="det-flow-list">
+            {flow.map((s) => (
+              <li key={s.n}>
+                <span className="det-flow-list__n">{s.n}</span>
+                <div>
+                  <strong>{s.title}</strong>
                   <p>{s.body}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      <section className="det-section" aria-labelledby="flow-title">
-        <FadeIn className="det-section__inner">
-          <p className="det-section__label">Flow</p>
-          <h2 id="flow-title">ご相談から報告までの流れ</h2>
-          <p className="det-section__lead">
-            まずは無料のご相談から。状況を伺ったうえで、進め方をご案内します。
-          </p>
-          <ol className="det-flow">
-            {steps.map((s, i) => (
-              <li key={s.title}>
-                <span className="det-flow__n">{i + 1}</span>
-                <div className="det-flow__body">
-                  <span className="det-flow__icon">
-                    <DetIcon name={s.icon} />
-                  </span>
-                  <div>
-                    <h3>{s.title}</h3>
-                    <p>{s.body}</p>
-                  </div>
                 </div>
               </li>
             ))}
           </ol>
-
-          <div className="det-consult">
-            <h3>まずは無料でご相談ください</h3>
-            <p>
-              どんな小さな違和感でも構いません。
-              <br />
-              LINEまたはフォームから、お気軽にご連絡ください。
-            </p>
-            <div className="det-consult__btns">
-              <LineButton className="det-btn--lg" />
-              <FormButton className="det-btn--lg" />
-            </div>
-          </div>
+          <p className="det-tiny">
+            相談窓口：{tentOffice.counselorName}（女性）／ご希望に応じて対応します
+          </p>
         </FadeIn>
       </section>
 
-      <section className="det-section det-section--soft" aria-labelledby="faq-title">
-        <FadeIn className="det-section__inner">
-          <p className="det-section__label">FAQ</p>
-          <h2 id="faq-title">よくあるご質問</h2>
+      <section className="det-block det-block--light" aria-labelledby="faq-title">
+        <FadeIn className="det-block__inner">
+          <h2 id="faq-title" className="det-block__title det-block__title--dark">
+            よくあるご質問
+          </h2>
           <div className="det-faq">
             {faqs.map((f) => (
               <details key={f.q}>
@@ -447,34 +445,19 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-final" id="det-final-cta" aria-labelledby="cta-title">
-        <div className="det-final__bg" aria-hidden="true">
-          <img src="/detective/scene-report.jpg" alt="" />
-        </div>
+      <section
+        className="det-final"
+        id="det-final-cta"
+        aria-labelledby="final-title"
+      >
         <FadeIn className="det-final__inner">
-          <p className="det-final__brand">{tentOffice.name}</p>
-          <h2 id="cta-title">
-            今夜も、一人で
-            <br />
-            悩まなくていい。
+          <h2 id="final-title">
+            まずは、いまのお気持ちを聞かせてください。
           </h2>
-          <p>
-            いきなり契約ではありません。まずは無料のご相談から。
-            秘密厳守で、あなたの話を伺います。
+          <p className="det-final__lead">
+            相談だけでも構いません。ご契約までは費用はかかりません。
           </p>
-          <div className="det-final__btns">
-            <LineButton className="det-btn--lg" />
-            <FormButton className="det-btn--lg" />
-          </div>
-          <p className="det-final__hint">
-            LINE：{" "}
-            <a href={DETECTIVE_LINE_URL} target="_blank" rel="noopener noreferrer">
-              lin.ee/zJ0hTwc
-            </a>
-          </p>
-          <p className="det-final__hint det-final__operator">
-            運営：株式会社T-connect
-          </p>
+          <CtaPair position="footer" />
         </FadeIn>
       </section>
     </main>

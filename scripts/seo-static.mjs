@@ -68,13 +68,13 @@ export const PUBLIC_SITE_PAGES = [
     path: "/detective",
     priority: 0.8,
     changefreq: "weekly",
-    title: "ミノガサン探偵事務所｜浮気・不倫・素行調査の無料相談",
+    title: "ミノガサン探偵事務所｜浮気調査の料金・証拠なし0円の無料相談",
     description:
-      "浮気・不倫を見逃さん。ミノガサン探偵事務所。不倫調査・身辺調査・素行調査の無料相談を受付中。秘密厳守。いきなり契約ではありません。",
+      "証拠が取れなければ0円。浮気調査の料金は無料相談でお伝えします。女性が相談できる探偵事務所。見積り以外の追加料金はありません。",
     keywords:
-      "ミノガサン探偵事務所,見逃さん,不倫調査,浮気調査,身辺調査,素行調査,探偵,無料相談,秘密厳守",
+      "ミノガサン探偵事務所,浮気調査,料金,証拠なし0円,不倫調査,探偵,無料相談,女性相談",
     siteName: "ミノガサン探偵事務所",
-    ogImage: `${SITE_URL}/detective/scene-1.jpg`,
+    ogImage: `${SITE_URL}/detective/scene-consult-bright.jpg`,
     stripOrganizationJsonLd: true,
   },
 ];

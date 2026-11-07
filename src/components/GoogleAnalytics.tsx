@@ -4,17 +4,19 @@ import {
   isEmailHref,
   isLineHref,
   isScheduleHref,
+  isTelHref,
   resolveCtaPosition,
   trackEmailClick,
   trackLineClick,
   trackPageView,
   trackScheduleClick,
+  trackTelClick,
 } from "../lib/ga";
 
 /**
  * 全ルート共通の GA4 計測。
  * - page_view: ルート変更ごと（自動 page_view は index.html で抑止）
- * - line_click / schedule_click / email_click: ドキュメント委譲
+ * - line_click / schedule_click / email_click / tel_click: ドキュメント委譲
  */
 export default function GoogleAnalytics() {
   const location = useLocation();
@@ -58,6 +60,10 @@ export default function GoogleAnalytics() {
 
       if (isLineHref(hrefAttr) || isLineHref(linkUrl)) {
         trackLineClick(params);
+        return;
+      }
+      if (isTelHref(hrefAttr) || isTelHref(linkUrl)) {
+        trackTelClick(params);
         return;
       }
       if (isScheduleHref(hrefAttr) || isScheduleHref(linkUrl)) {

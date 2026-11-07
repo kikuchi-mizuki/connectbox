@@ -9,7 +9,17 @@ type ClickParams = {
   cta_position: string;
   cta_text: string;
   link_url: string;
+  utm_term?: string;
 };
+
+function withUtm(params: ClickParams) {
+  const utm =
+    params.utm_term ??
+    (typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("utm_term") ?? ""
+      : "");
+  return utm ? { ...params, utm_term: utm } : params;
+}
 
 /** SPA の page_view（index.html 側は send_page_view: false） */
 export function trackPageView(pagePath: string, pageTitle: string) {
@@ -24,36 +34,56 @@ export function trackPageView(pagePath: string, pageTitle: string) {
 
 export function trackLineClick(params: ClickParams) {
   if (!isGtagReady()) return;
+  const p = withUtm(params);
   window.gtag("event", "line_click", {
-    page_path: params.page_path,
+    page_path: p.page_path,
     page_location: window.location.href,
-    cta_position: params.cta_position,
-    cta_text: params.cta_text,
-    link_url: params.link_url,
+    cta_position: p.cta_position,
+    cta_text: p.cta_text,
+    link_url: p.link_url,
+    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
     send_to: GA_MEASUREMENT_ID,
   });
 }
 
 export function trackScheduleClick(params: ClickParams) {
   if (!isGtagReady()) return;
+  const p = withUtm(params);
   window.gtag("event", "schedule_click", {
-    page_path: params.page_path,
+    page_path: p.page_path,
     page_location: window.location.href,
-    cta_position: params.cta_position,
-    cta_text: params.cta_text,
-    link_url: params.link_url,
+    cta_position: p.cta_position,
+    cta_text: p.cta_text,
+    link_url: p.link_url,
+    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
     send_to: GA_MEASUREMENT_ID,
   });
 }
 
 export function trackEmailClick(params: ClickParams) {
   if (!isGtagReady()) return;
+  const p = withUtm(params);
   window.gtag("event", "email_click", {
-    page_path: params.page_path,
+    page_path: p.page_path,
     page_location: window.location.href,
-    cta_position: params.cta_position,
-    cta_text: params.cta_text,
-    link_url: params.link_url,
+    cta_position: p.cta_position,
+    cta_text: p.cta_text,
+    link_url: p.link_url,
+    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
+    send_to: GA_MEASUREMENT_ID,
+  });
+}
+
+export function trackTelClick(params: ClickParams) {
+  if (!isGtagReady()) return;
+  const p = withUtm(params);
+  window.gtag("event", "tel_click", {
+    page_path: p.page_path,
+    page_location: window.location.href,
+    cta_position: p.cta_position,
+    cta_text: p.cta_text,
+    link_url: p.link_url,
+    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
     send_to: GA_MEASUREMENT_ID,
   });
 }
@@ -97,6 +127,11 @@ export function isEmailHref(href: string | null | undefined): boolean {
   return href.trim().toLowerCase().startsWith("mailto:");
 }
 
+export function isTelHref(href: string | null | undefined): boolean {
+  if (!href) return false;
+  return href.trim().toLowerCase().startsWith("tel:");
+}
+
 /** ボタン位置。data-cta-position 優先、なければ周辺DOMから推定 */
 export function resolveCtaPosition(el: Element): string {
   const explicit = el
@@ -112,6 +147,7 @@ export function resolveCtaPosition(el: Element): string {
   ) {
     return "header";
   }
+  if (el.closest("#det-price, .det-price")) return "price";
   if (
     el.closest(
       "#final-cta, .final-cta, #det-final-cta, .det-final, footer, .site-footer, .lp-footer",
@@ -121,10 +157,10 @@ export function resolveCtaPosition(el: Element): string {
   }
   if (
     el.closest(
-      "#page-hero, .hero, .cb-hero, .det-hero, .top-hero, .lt-hero, .bo-hero",
+      "#page-hero, #det-hero, .hero, .cb-hero, .det-hero, .top-hero, .lt-hero, .bo-hero",
     )
   ) {
-    return "hero";
+    return "fv";
   }
   if (el.closest("#download, .cb-download, .cb-lead-form")) return "download";
   return "content";
