@@ -68,11 +68,11 @@ export const PUBLIC_SITE_PAGES = [
     path: "/detective",
     priority: 0.8,
     changefreq: "weekly",
-    title: "ミノガサン探偵事務所｜証拠なし0円の浮気調査・無料相談",
+    title: "ミノガサン探偵事務所｜浮気調査10万円〜・証拠なし0円",
     description:
-      "証拠が取れなければ0円。女性相談窓口あり。秘密厳守で、見積り以外の追加料金はありません。まずは無料相談から。",
+      "浮気調査10万円〜（税別）。証拠が取れなければ0円。女性の相談員が対応。秘密厳守で、見積り以外の追加料金はありません。",
     keywords:
-      "ミノガサン探偵事務所,浮気調査,証拠なし0円,不倫調査,探偵,無料相談,女性相談,秘密厳守",
+      "ミノガサン探偵事務所,浮気調査,浮気調査 費用,探偵 料金,証拠なし0円,不倫調査,探偵,無料相談,女性相談,秘密厳守",
     siteName: "ミノガサン探偵事務所",
     ogImage: `${SITE_URL}/detective/scene-consult-bright.jpg`,
     stripOrganizationJsonLd: true,

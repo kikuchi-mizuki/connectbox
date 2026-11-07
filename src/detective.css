@@ -298,12 +298,21 @@
 }
 
 .det-fv__brand {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.35rem;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   color: rgba(255, 255, 255, 0.72);
   font-weight: 700;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+}
+
+.det-fv__women {
+  margin: 0 0 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9fd9cf;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
 }
 
 /* 改行はJSXの<br>で固定。帯＋影で写真上でも読める */
@@ -425,15 +434,15 @@
 
 .det-fv__offer-main {
   font-family: var(--det-serif);
-  font-size: clamp(1.05rem, 3.8vw, 1.25rem);
+  font-size: clamp(1.02rem, 3.7vw, 1.22rem);
   font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1.3;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
 }
 
-.det-fv__offer-main strong {
+.det-fv__offer-zero strong {
   color: #7dcdc0;
-  font-size: 1.22em;
+  font-size: 1.15em;
 }
 
 .det-fv__offer-sub {
@@ -443,7 +452,7 @@
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.78);
   line-height: 1.45;
-  max-width: 22em;
+  max-width: 24em;
   margin-inline: auto;
 }
 
@@ -601,6 +610,16 @@
   font-size: 0.58rem;
   line-height: 1.35;
   color: rgba(255, 255, 255, 0.55);
+}
+
+.det-stats em {
+  display: block;
+  margin-top: 0.2rem;
+  font-style: normal;
+  font-size: 0.52rem;
+  line-height: 1.3;
+  color: #7dcdc0;
+  letter-spacing: 0.02em;
 }
 
 @media (max-width: 520px) {
@@ -1066,6 +1085,11 @@
 
   .det-fv.is-offer .det-fv__brand {
     display: none;
+  }
+
+  .det-fv.is-offer .det-fv__women {
+    margin-bottom: 0.45rem;
+    font-size: 0.68rem;
   }
 
   .det-fv__line-wrap {

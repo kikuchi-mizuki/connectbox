@@ -67,11 +67,11 @@ const reasons = [
 ];
 
 const stats = [
-  { value: "3万件", label: "これまでのご相談" },
-  { value: "1万件+", label: "現場調査の実績" },
-  { value: "97.5%", label: "証拠を取れた割合" },
-  { value: "30年", label: "現場ひとすじの経験" },
-  { value: "0円", label: "証拠なしの場合" },
+  { value: "3万件", label: "これまでのご相談", note: "探偵事業以外を含む" },
+  { value: "1万件+", label: "現場調査の実績", note: "提携調査チーム" },
+  { value: "97.5%", label: "証拠を取れた割合", note: "提携調査会社" },
+  { value: "30年", label: "調査の経験年数", note: "提携調査チーム" },
+  { value: "0円", label: "証拠なしの場合", note: "条件あり" },
 ];
 
 /** お客様の声（匿名・要約。文言はミノガサン向けに作成） */
@@ -141,8 +141,12 @@ const flow = [
 
 const faqs = [
   {
+    q: "料金の目安は？",
+    a: `浮気調査は${tentOffice.minPriceLabel}〜（税別）です。証拠が取れなかった場合、お預かりした調査費用は全額返金します（条件は契約前に書面で明示）。見積りにない追加料金は請求しません。`,
+  },
+  {
     q: "相手に調査がバレませんか？",
-    a: "経験を積んだ調査チームが担当します。調査の進め方と、注意していただきたい点は事前にお伝えします。",
+    a: "提携の調査チームが担当します。調査の進め方と、注意していただきたい点は事前にお伝えします。",
   },
   {
     q: "家族や職場に知られませんか？",
@@ -150,7 +154,7 @@ const faqs = [
   },
   {
     q: "途中でやめられますか？",
-    a: `はい。${tentOffice.cancelPolicy}`,
+    a: tentOffice.cancelPolicy,
   },
   {
     q: "結果が「白」（問題なし）だったら？",
@@ -300,6 +304,7 @@ export default function DetectivePage() {
 
         <div className="det-fv__story">
           <p className="det-fv__brand">{tentOffice.name}</p>
+          <p className="det-fv__women">女性の相談員が対応します</p>
           <div className="det-fv__line-wrap" aria-live="polite">
             <AnimatePresence mode="wait">
               <motion.p
@@ -337,10 +342,13 @@ export default function DetectivePage() {
         <div ref={dockRef} className="det-fv__dock is-ready">
           <h1 className="det-fv__offer">
             <span className="det-fv__offer-main">
-              証拠が取れなければ<strong>0円</strong>
+              浮気調査 {tentOffice.minPriceLabel}〜（税別）
+              <span className="det-fv__offer-zero">
+                ／証拠なし<strong>0円</strong>
+              </span>
             </span>
             <span className="det-fv__offer-sub">
-              まずは無料相談から。見積り以外の追加料金はありません。
+              女性の相談員が対応します。まずは無料相談から。
             </span>
           </h1>
           <div className="det-fv__dock-cta">
@@ -394,17 +402,21 @@ export default function DetectivePage() {
             数字で見る、ミノガサン
           </h2>
           <p className="det-block__lead">
-            相談・現場調査の実績と、証拠の取れやすさを一覧にしました。
+            相談実績と、提携調査チームの調査実績を分けて掲載しています。
           </p>
           <ul className="det-stats">
             {stats.map((s) => (
               <li key={s.label}>
                 <strong>{s.value}</strong>
                 <span>{s.label}</span>
+                <em>{s.note}</em>
               </li>
             ))}
           </ul>
-          <p className="det-tiny">※{tentOffice.successRateNote}</p>
+          <p className="det-tiny">
+            ※97.5%：{tentOffice.successRateNote}
+            （{tentOffice.successRatePeriod}）
+          </p>
         </FadeIn>
       </section>
 
@@ -417,7 +429,7 @@ export default function DetectivePage() {
             お客様の声
           </h2>
           <p className="det-block__lead">
-            現場ひとすじ30年・調査実績1万件以上。これまでにご相談いただいた方の声です。
+            ご相談いただいた方の声です。
           </p>
           <ul className="det-voices">
             {voices.map((v) => (
