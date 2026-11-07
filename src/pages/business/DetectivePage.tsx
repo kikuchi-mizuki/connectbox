@@ -17,7 +17,6 @@ const NOTE2 =
 const storyBeats: ReadonlyArray<{
   src: string;
   line: string;
-  final?: boolean;
 }> = [
   {
     src: "/detective/story-01.jpg",
@@ -34,7 +33,6 @@ const storyBeats: ReadonlyArray<{
   {
     src: "/detective/story-03.jpg",
     line: "その疑いを、確かな事実に変える。",
-    final: true,
   },
 ];
 
@@ -195,7 +193,6 @@ export default function DetectivePage() {
   const resumeTimer = useRef<number | null>(null);
   const [beat, setBeat] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [offerReady, setOfferReady] = useState(false);
   const current = storyBeats[beat];
 
   usePageMeta({
@@ -209,12 +206,8 @@ export default function DetectivePage() {
     ogSiteName: detectiveSeo.siteName,
   });
 
+  /* 案内ドックは最初から表示。実高を --det-dock-h に反映 */
   useEffect(() => {
-    if (current.final) setOfferReady(true);
-  }, [current.final]);
-
-  useEffect(() => {
-    if (!offerReady) return;
     const dock = dockRef.current;
     const fv = fvRef.current;
     if (!dock || !fv) return;
@@ -230,7 +223,7 @@ export default function DetectivePage() {
       ro.disconnect();
       window.removeEventListener("resize", sync);
     };
-  }, [offerReady]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -241,16 +234,15 @@ export default function DetectivePage() {
   useEffect(() => {
     if (reduce) {
       setBeat(storyBeats.length - 1);
-      setOfferReady(true);
       return;
     }
     if (paused) return;
-    if (current.final) return;
+    // 最終ビートのあともループしてストーリーを回す
     const id = window.setInterval(() => {
-      setBeat((i) => Math.min(i + 1, storyBeats.length - 1));
+      setBeat((i) => (i + 1) % storyBeats.length);
     }, BEAT_MS);
     return () => window.clearInterval(id);
-  }, [reduce, paused, current.final]);
+  }, [reduce, paused]);
 
   const pauseBriefly = () => {
     setPaused(true);
@@ -260,7 +252,6 @@ export default function DetectivePage() {
 
   const goToBeat = (i: number) => {
     setBeat(i);
-    if (storyBeats[i]?.final) setOfferReady(true);
     pauseBriefly();
   };
 
@@ -268,7 +259,7 @@ export default function DetectivePage() {
     <main className="det-main">
       <section
         ref={fvRef}
-        className={`det-fv${offerReady ? " is-offer" : ""}`}
+        className="det-fv is-offer"
         id="det-hero"
         aria-label="ファーストビュー"
       >
@@ -320,12 +311,7 @@ export default function DetectivePage() {
           </div>
         </div>
 
-        <div
-          ref={dockRef}
-          className={`det-fv__dock${offerReady ? " is-ready" : ""}`}
-          aria-hidden={!offerReady}
-          inert={!offerReady ? true : undefined}
-        >
+        <div ref={dockRef} className="det-fv__dock is-ready">
           <h1 className="det-fv__offer">
             <span className="det-fv__offer-main">
               証拠が取れなければ<strong>0円</strong>

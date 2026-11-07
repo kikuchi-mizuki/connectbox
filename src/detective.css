@@ -367,34 +367,25 @@
   height: 0.5rem;
 }
 
-/* 案内ドック：absolute。非表示時は高さ0でタップも奪わない */
-.det-fv__dock {
+/* 案内ドック：FV最初から常時表示 */
+.det-fv__dock,
+.det-fv__dock.is-ready {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 2;
-  height: 0;
-  overflow: hidden;
-  padding: 0 1rem;
+  height: auto;
+  overflow: visible;
+  padding: 1.1rem 1rem calc(0.85rem + env(safe-area-inset-bottom, 0px));
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.88) 22%,
     #000 100%
   );
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.det-fv__dock.is-ready {
-  height: auto;
-  overflow: visible;
-  padding: 1.1rem 1rem calc(0.85rem + env(safe-area-inset-bottom, 0px));
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
   pointer-events: auto;
 }
 
