@@ -14,7 +14,11 @@ const NOTE2 =
   "※証拠が取れなかった場合、お預かりした調査費用は全額返金します。条件の詳細はご契約前に書面でご説明します。";
 
 /** 気持ちの流れ。意味が通じる長さ（スマホは最大2行） */
-const storyBeats = [
+const storyBeats: ReadonlyArray<{
+  src: string;
+  line: string;
+  final?: boolean;
+}> = [
   {
     src: "/detective/story-01.jpg",
     line: "最近、帰りが遅くなった。",
@@ -32,7 +36,7 @@ const storyBeats = [
     line: "その疑いを、確かな事実に変える。",
     final: true,
   },
-] as const;
+];
 
 const BEAT_MS = 3000;
 
