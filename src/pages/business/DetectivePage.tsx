@@ -16,14 +16,17 @@ const reasons = [
   {
     title: "女性が、相談から報告まで担当",
     body: "話しづらいことも、女性の相談員が最初から最後まで伺います。",
+    icon: "talk" as const,
   },
   {
     title: "秘密を守ります",
     body: "連絡の手段や時間帯はご希望に合わせます。内容を無断で他人に伝えません。",
+    icon: "lock" as const,
   },
   {
     title: "経験のある調査チーム",
     body: "提携調査チームの経験は約30年。進め方の不安も、相談の段階で一緒に整理します。",
+    icon: "team" as const,
   },
 ];
 
@@ -71,12 +74,127 @@ const delivers = [
 ];
 
 const flow = [
-  { n: "01", title: "無料相談", body: "いまのお気持ちを、女性の担当が伺います。" },
-  { n: "02", title: "お見積り", body: "調査の内容と、お支払い総額を先に明示します。" },
-  { n: "03", title: "ご契約", body: "大切なお約束を書面で確認してから進めます。" },
-  { n: "04", title: "調査", body: "途中の様子も、ご連絡します。" },
-  { n: "05", title: "ご報告", body: "報告書・映像・説明で、事実をお渡しします。" },
+  {
+    n: "01",
+    title: "無料相談",
+    body: "いまのお気持ちを、女性の担当が伺います。",
+    icon: "consult" as const,
+  },
+  {
+    n: "02",
+    title: "お見積り",
+    body: "調査の内容と、お支払い総額を先に明示します。",
+    icon: "estimate" as const,
+  },
+  {
+    n: "03",
+    title: "ご契約",
+    body: "大切なお約束を書面で確認してから進めます。",
+    icon: "contract" as const,
+  },
+  {
+    n: "04",
+    title: "調査",
+    body: "途中の様子も、ご連絡します。",
+    icon: "search" as const,
+  },
+  {
+    n: "05",
+    title: "ご報告",
+    body: "報告書・映像・説明で、事実をお渡しします。",
+    icon: "report" as const,
+  },
 ];
+
+type ReasonIcon = (typeof reasons)[number]["icon"];
+type FlowIcon = (typeof flow)[number]["icon"];
+
+function ReasonGlyph({ name }: { name: ReasonIcon }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+  if (name === "talk") {
+    return (
+      <svg {...common}>
+        <path d="M5 18.5V8.2A2.2 2.2 0 0 1 7.2 6h9.6A2.2 2.2 0 0 1 19 8.2v5.1a2.2 2.2 0 0 1-2.2 2.2H9.2L5 18.5z" />
+        <path d="M8.5 10.2h7M8.5 13h4.5" />
+      </svg>
+    );
+  }
+  if (name === "lock") {
+    return (
+      <svg {...common}>
+        <rect x="6.5" y="10.5" width="11" height="8.5" rx="1.6" />
+        <path d="M9 10.5V8.2a3 3 0 0 1 6 0v2.3" />
+        <path d="M12 13.6v2.2" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <circle cx="9" cy="9" r="2.2" />
+      <circle cx="15.5" cy="9.5" r="2" />
+      <path d="M4.8 17.5c.6-2.2 2.4-3.4 4.2-3.4s3.6 1.2 4.2 3.4" />
+      <path d="M13.2 17.5c.4-1.6 1.6-2.6 3-2.6 1.2 0 2.2.7 2.8 2" />
+    </svg>
+  );
+}
+
+function FlowGlyph({ name }: { name: FlowIcon }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+  if (name === "consult") {
+    return (
+      <svg {...common}>
+        <path d="M5 18.5V8.2A2.2 2.2 0 0 1 7.2 6h9.6A2.2 2.2 0 0 1 19 8.2v5.1a2.2 2.2 0 0 1-2.2 2.2H9.2L5 18.5z" />
+        <path d="M8.5 10.2h7M8.5 13h4.5" />
+      </svg>
+    );
+  }
+  if (name === "estimate") {
+    return (
+      <svg {...common}>
+        <rect x="6" y="4.5" width="12" height="15" rx="1.5" />
+        <path d="M9 9h6M9 12.5h6M9 16h3.5" />
+      </svg>
+    );
+  }
+  if (name === "contract") {
+    return (
+      <svg {...common}>
+        <path d="M8 4.5h6.5L18 8v11.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 7 19.5v-13A1.5 1.5 0 0 1 8.5 5" />
+        <path d="M14 4.8V8h3.2M9.5 13.5l1.6 1.6 3.4-3.6" />
+      </svg>
+    );
+  }
+  if (name === "search") {
+    return (
+      <svg {...common}>
+        <circle cx="10.5" cy="10.5" r="4.5" />
+        <path d="M14.2 14.2 18.5 18.5" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <rect x="5.5" y="5" width="13" height="14" rx="1.5" />
+      <path d="M8.5 9.5h7M8.5 13h7M8.5 16.5h4" />
+    </svg>
+  );
+}
 
 const faqs = [
   {
@@ -231,7 +349,29 @@ export default function DetectivePage() {
       </section>
 
       <section
-        className="det-block det-block--dark"
+        className="det-block det-block--dark det-human"
+        aria-labelledby="human-title"
+      >
+        <FadeIn className="det-block__inner">
+          <div className="det-human__accent" aria-hidden="true">
+            <img
+              src="/detective/people/counselor-gen-a.jpg"
+              alt=""
+              className="det-human__face"
+              loading="lazy"
+            />
+          </div>
+          <h2 id="human-title" className="det-block__title">
+            話しづらいことも、女性に話せます
+          </h2>
+          <p className="det-block__lead">
+            相談から報告まで、女性の相談員が担当します。無理に契約を急かしません。
+          </p>
+        </FadeIn>
+      </section>
+
+      <section
+        className="det-block det-block--ink"
         aria-labelledby="reason-title"
       >
         <FadeIn className="det-block__inner">
@@ -240,9 +380,14 @@ export default function DetectivePage() {
           </h2>
           <ul className="det-reasons">
             {reasons.map((r) => (
-              <li key={r.title}>
-                <h3>{r.title}</h3>
-                <p>{r.body}</p>
+              <li key={r.title} className="has-icon">
+                <span className="det-reasons__icon">
+                  <ReasonGlyph name={r.icon} />
+                </span>
+                <div>
+                  <h3>{r.title}</h3>
+                  <p>{r.body}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -421,8 +566,11 @@ export default function DetectivePage() {
           <ol className="det-flow-list">
             {flow.map((s) => (
               <li key={s.n}>
-                <span className="det-flow-list__n">{s.n}</span>
+                <span className="det-flow-list__icon" aria-hidden="true">
+                  <FlowGlyph name={s.icon} />
+                </span>
                 <div>
+                  <p className="det-flow-list__n">{s.n}</p>
                   <strong>{s.title}</strong>
                   <p>{s.body}</p>
                 </div>

@@ -462,6 +462,29 @@
   text-align: center;
 }
 
+/* 女性カットは1点だけ・実在スタッフではなく雰囲気のアクセント */
+.det-human {
+  padding-top: 2.25rem;
+  padding-bottom: 2.25rem;
+}
+
+.det-human__accent {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 0.95rem;
+}
+
+.det-human__face {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 2px solid rgba(125, 205, 192, 0.45);
+  opacity: 0.92;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+}
+
 /* 安心ポイント（短文・詰めすぎない） */
 .det-reasons {
   list-style: none;
@@ -475,6 +498,29 @@
   padding: 0.85rem 1rem;
   background: rgba(255, 255, 255, 0.04);
   border-left: 2px solid #7dcdc0;
+}
+
+.det-reasons li.has-icon {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.det-reasons__icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #9fd9cf;
+  background: rgba(125, 205, 192, 0.1);
+  border: 1px solid rgba(125, 205, 192, 0.28);
+}
+
+.det-reasons__icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .det-reasons h3 {
@@ -496,7 +542,7 @@
 
 @media (min-width: 640px) {
   .det-reasons {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -905,20 +951,37 @@
 
 .det-flow-list li {
   display: grid;
-  grid-template-columns: 2.4rem 1fr;
+  grid-template-columns: 2.7rem 1fr;
   gap: 0.75rem;
   align-items: start;
   padding: 0.85rem 0.9rem;
   background: rgba(255, 255, 255, 0.04);
-  border-left: 2px solid var(--det-accent);
+  border-left: 2px solid #7dcdc0;
+}
+
+.det-flow-list__icon {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #9fd9cf;
+  background: rgba(125, 205, 192, 0.1);
+  border: 1px solid rgba(125, 205, 192, 0.28);
+}
+
+.det-flow-list__icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .det-flow-list__n {
+  margin: 0 0 0.15rem;
   font-family: var(--det-serif);
-  font-size: 0.85rem;
-  color: var(--det-accent);
-  line-height: 1.4;
-  padding-top: 0.1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: #9fd9cf;
+  line-height: 1.3;
 }
 
 .det-flow-list strong {
