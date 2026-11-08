@@ -25,7 +25,7 @@ const storyBeats: ReadonlyArray<{
 }> = [
   {
     src: "/detective/fv/01-late.jpg",
-    lines: ["最近、", "帰りが遅くなった。"],
+    lines: ["最近、帰りが", "遅くなった。"],
     focus: "center 38%",
   },
   {
@@ -35,7 +35,7 @@ const storyBeats: ReadonlyArray<{
   },
   {
     src: "/detective/fv/03-doubt.jpg",
-    lines: ["信じたい。", "でも、確かめたい。"],
+    lines: ["信じたい。でも、", "確かめたい。"],
     focus: "center 36%",
   },
   {
@@ -50,19 +50,19 @@ const BEAT_MS = 3000;
 const reasons = [
   {
     title: "証拠が取れなければ0円",
-    body: "取れなかった調査費用は全額返金。条件は契約前に書面で示します。",
+    body: "調査を完了しても証拠が取れなかった場合、お預かりした調査費用は全額返金します。条件は契約前に書面で示します。",
   },
   {
     title: "女性の相談窓口",
-    body: `${tentOffice.counselorName}（女性）が対応。急かさず、話しづらいことも伺います。`,
+    body: "女性の相談員が対応します。急かさず、話しづらいこともそのまま伺います。",
   },
   {
     title: "秘密を守る",
-    body: "連絡の手段・時間帯はご希望どおり。無断で第三者へ伝えません。",
+    body: "連絡の手段や時間帯はご希望に合わせます。内容を無断で第三者へ伝えることはありません。",
   },
   {
     title: "追加料金の後出しなし",
-    body: "範囲と費用は見積りで事前提示。見積り外をあとから請求しません。",
+    body: "調査の範囲と費用は見積りで事前に示します。見積りにない費用をあとから請求しません。",
   },
 ];
 
@@ -71,7 +71,7 @@ const stats = [
   { value: "1万件+", label: "現場調査の実績", note: "提携調査チーム" },
   { value: "97.5%", label: "証拠を取れた割合", note: "提携調査会社" },
   { value: "30年", label: "調査の経験年数", note: "提携調査チーム" },
-  { value: "0円", label: "証拠なしの場合", note: "条件あり" },
+  { value: "0円", label: "証拠なしの場合", note: "返金条件あり" },
 ];
 
 /** お客様の声（匿名・要約。文言はミノガサン向けに作成） */
@@ -162,7 +162,7 @@ const faqs = [
   },
   {
     q: "男性でも相談できますか？",
-    a: "はい。男性からのご相談もお受けしています。相談窓口は女性スタッフも対応できます。",
+    a: "はい。男性からのご相談もお受けしています。ご希望があれば女性の相談員が対応します。",
   },
   {
     q: "関東以外でも頼めますか？",
@@ -304,7 +304,6 @@ export default function DetectivePage() {
 
         <div className="det-fv__story">
           <p className="det-fv__brand">{tentOffice.name}</p>
-          <p className="det-fv__women">女性の相談員が対応します</p>
           <div className="det-fv__line-wrap" aria-live="polite">
             <AnimatePresence mode="wait">
               <motion.p
@@ -348,7 +347,7 @@ export default function DetectivePage() {
               </span>
             </span>
             <span className="det-fv__offer-sub">
-              女性の相談員が対応します。まずは無料相談から。
+              {tentOffice.counselorLabel}が対応します。まずは無料相談から。
             </span>
           </h1>
           <div className="det-fv__dock-cta">
@@ -383,7 +382,7 @@ export default function DetectivePage() {
             ミノガサンが安心な理由
           </h2>
           <p className="det-block__lead">
-            不安をあおらず、事実と選択肢を残します。
+            初めてでも相談しやすいよう、費用・窓口・秘密・見積りをはっきりしています。
           </p>
           <ul className="det-reasons">
             {reasons.map((r) => (
@@ -402,7 +401,7 @@ export default function DetectivePage() {
             数字で見る、ミノガサン
           </h2>
           <p className="det-block__lead">
-            相談実績と、提携調査チームの調査実績を分けて掲載しています。
+            個人向けのご相談実績と、提携調査チームの調査実績です。
           </p>
           <ul className="det-stats">
             {stats.map((s) => (
@@ -428,9 +427,6 @@ export default function DetectivePage() {
           <h2 id="voice-title" className="det-block__title">
             お客様の声
           </h2>
-          <p className="det-block__lead">
-            ご相談いただいた方の声です。
-          </p>
           <ul className="det-voices">
             {voices.map((v) => (
               <li key={v.title}>
@@ -488,7 +484,7 @@ export default function DetectivePage() {
             ))}
           </ol>
           <p className="det-tiny">
-            相談窓口：{tentOffice.counselorName}（女性）／ご希望に応じて対応します
+            相談は{tentOffice.counselorLabel}が対応します。
           </p>
         </FadeIn>
       </section>

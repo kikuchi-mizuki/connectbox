@@ -8,7 +8,8 @@ export const tentOffice = {
   tagline: "浮気・不倫を見逃さん。ミノガサン探偵事務所",
   message:
     "小さな違和感も、怪しい動きも、見逃さない。あなたの隣で事実を確かめる場所でありたい。",
-  counselorName: "田中 瑞貴",
+  /** 公開面では実名を出さない */
+  counselorLabel: "女性の相談員",
   counselorRole: "ミノガサン探偵事務所 女性相談窓口",
   telDisplay: "080-8808-1739",
   email: "m-tanaka@t-cnct.com",

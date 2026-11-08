@@ -298,21 +298,12 @@
 }
 
 .det-fv__brand {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.75rem;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   color: rgba(255, 255, 255, 0.72);
   font-weight: 700;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
-}
-
-.det-fv__women {
-  margin: 0 0 0.7rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #9fd9cf;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
 }
 
 /* 改行はJSXの<br>で固定。帯＋影で写真上でも読める */
@@ -1085,11 +1076,6 @@
 
   .det-fv.is-offer .det-fv__brand {
     display: none;
-  }
-
-  .det-fv.is-offer .det-fv__women {
-    margin-bottom: 0.45rem;
-    font-size: 0.68rem;
   }
 
   .det-fv__line-wrap {
