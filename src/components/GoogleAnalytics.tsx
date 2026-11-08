@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
+  ensureGoogleAdsConfig,
   isEmailHref,
   isLineHref,
   isScheduleHref,
@@ -14,12 +15,16 @@ import {
 } from "../lib/ga";
 
 /**
- * 全ルート共通の GA4 計測。
+ * 全ルート共通の GA4 / Google広告 計測。
  * - page_view: ルート変更ごと（自動 page_view は index.html で抑止）
- * - line_click / schedule_click / email_click / tel_click: ドキュメント委譲
+ * - line_click / tel_click 等: ドキュメント委譲（cta_position・utm_term付き）
  */
 export default function GoogleAnalytics() {
   const location = useLocation();
+
+  useEffect(() => {
+    ensureGoogleAdsConfig();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -51,11 +56,14 @@ export default function GoogleAnalytics() {
       const pagePath = `${window.location.pathname}${window.location.search}`;
       const ctaText = (anchor.textContent ?? "").replace(/\s+/g, " ").trim().slice(0, 120);
       const ctaPosition = resolveCtaPosition(anchor);
+      const utmTerm =
+        new URLSearchParams(window.location.search).get("utm_term") ?? "";
       const params = {
         page_path: pagePath,
         cta_position: ctaPosition,
         cta_text: ctaText,
         link_url: linkUrl,
+        utm_term: utmTerm,
       };
 
       if (isLineHref(hrefAttr) || isLineHref(linkUrl)) {

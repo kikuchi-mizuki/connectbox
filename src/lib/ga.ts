@@ -1,4 +1,9 @@
-import { GA_MEASUREMENT_ID } from "../constants";
+import {
+  GA_MEASUREMENT_ID,
+  GOOGLE_ADS_CONV_LINE,
+  GOOGLE_ADS_CONV_TEL,
+  GOOGLE_ADS_ID,
+} from "../constants";
 
 function isGtagReady() {
   return typeof window !== "undefined" && typeof window.gtag === "function";
@@ -12,13 +17,39 @@ type ClickParams = {
   utm_term?: string;
 };
 
+function readUtmTerm(explicit?: string) {
+  if (explicit) return explicit;
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get("utm_term") ?? "";
+}
+
 function withUtm(params: ClickParams) {
-  const utm =
-    params.utm_term ??
-    (typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("utm_term") ?? ""
-      : "");
-  return utm ? { ...params, utm_term: utm } : params;
+  return {
+    ...params,
+    utm_term: readUtmTerm(params.utm_term),
+  };
+}
+
+/** Google 広告タグを一度だけ config */
+let adsConfigured = false;
+export function ensureGoogleAdsConfig() {
+  if (adsConfigured || !GOOGLE_ADS_ID || !isGtagReady()) return;
+  window.gtag("config", GOOGLE_ADS_ID);
+  adsConfigured = true;
+}
+
+function sendAdsConversion(
+  sendTo: string,
+  params: { cta_position: string; utm_term: string; link_url: string },
+) {
+  if (!sendTo || !isGtagReady()) return;
+  ensureGoogleAdsConfig();
+  window.gtag("event", "conversion", {
+    send_to: sendTo,
+    cta_position: params.cta_position,
+    utm_term: params.utm_term,
+    link_url: params.link_url,
+  });
 }
 
 /** SPA の page_view（index.html 側は send_page_view: false） */
@@ -41,8 +72,13 @@ export function trackLineClick(params: ClickParams) {
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
-    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
+    utm_term: p.utm_term,
     send_to: GA_MEASUREMENT_ID,
+  });
+  sendAdsConversion(GOOGLE_ADS_CONV_LINE, {
+    cta_position: p.cta_position,
+    utm_term: p.utm_term,
+    link_url: p.link_url,
   });
 }
 
@@ -55,7 +91,7 @@ export function trackScheduleClick(params: ClickParams) {
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
-    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
+    utm_term: p.utm_term,
     send_to: GA_MEASUREMENT_ID,
   });
 }
@@ -69,7 +105,7 @@ export function trackEmailClick(params: ClickParams) {
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
-    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
+    utm_term: p.utm_term,
     send_to: GA_MEASUREMENT_ID,
   });
 }
@@ -83,8 +119,13 @@ export function trackTelClick(params: ClickParams) {
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
-    ...(p.utm_term ? { utm_term: p.utm_term } : {}),
+    utm_term: p.utm_term,
     send_to: GA_MEASUREMENT_ID,
+  });
+  sendAdsConversion(GOOGLE_ADS_CONV_TEL, {
+    cta_position: p.cta_position,
+    utm_term: p.utm_term,
+    link_url: p.link_url,
   });
 }
 

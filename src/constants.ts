@@ -17,6 +17,17 @@ export const COMPANY_NAME = "株式会社T-connect";
 /** Google Analytics 4 測定 ID */
 export const GA_MEASUREMENT_ID = "G-DYNQ10WQV3";
 
+/**
+ * Google 広告（gtag）。未設定のときは GA4 イベントのみ送信。
+ * 例: AW-XXXXXXXXX
+ * コンバージョンラベル付き send_to は GOOGLE_ADS_CONV_* に設定。
+ */
+export const GOOGLE_ADS_ID = "";
+/** LINEクリック用（例: AW-XXXXXXXXX/YYYYY） */
+export const GOOGLE_ADS_CONV_LINE = "";
+/** 電話クリック用（例: AW-XXXXXXXXX/ZZZZZ） */
+export const GOOGLE_ADS_CONV_TEL = "";
+
 /** 正規ドメイン（canonical / OGP 用） @see https://www.t-cnct.com/ */
 export const SITE_URL = "https://www.t-cnct.com";
 

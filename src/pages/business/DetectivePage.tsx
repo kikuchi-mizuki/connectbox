@@ -10,13 +10,17 @@ import { detectiveSeo } from "../../data/detectiveSeo";
 import { tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
-const NOTE2 =
+const ZERO_NOTE =
   "※証拠が取れなかった場合、お預かりした調査費用は全額返金します。条件の詳細はご契約前に書面でご説明します。";
+
+/** 未定値を目立つ【】のまま表示 */
+function Ph({ children }: { children: string }) {
+  return <span className="det-ph">{children}</span>;
+}
 
 /**
  * 気持ちの流れ。
  * lines = 意図した改行位置（スマホで変な折り返しをしない）
- * src = 縦構図に切り出したFV専用画像（主題が大きく見える）
  */
 const storyBeats: ReadonlyArray<{
   src: string;
@@ -54,7 +58,7 @@ const reasons = [
   },
   {
     title: "女性の相談窓口",
-    body: "女性の相談員が対応します。急かさず、話しづらいこともそのまま伺います。",
+    body: "女性の相談員が、ご相談から報告まで担当します。急かさず、話しづらいこともそのまま伺います。",
   },
   {
     title: "秘密を守る",
@@ -67,11 +71,21 @@ const reasons = [
 ];
 
 const stats = [
-  { value: "3万件", label: "これまでのご相談", note: "探偵事業以外を含む" },
-  { value: "1万件+", label: "現場調査の実績", note: "提携調査チーム" },
-  { value: "97.5%", label: "証拠を取れた割合", note: "提携調査会社" },
-  { value: "30年", label: "調査の経験年数", note: "提携調査チーム" },
-  { value: "0円", label: "証拠なしの場合", note: "返金条件あり" },
+  {
+    value: "3万件",
+    label: "これまでのご相談（探偵事業以外を含む）",
+  },
+  { value: "1万件+", label: "現場調査の実績（提携調査チーム）" },
+  { value: "97.5%", label: "証拠を取れた割合" },
+  { value: "30年", label: "提携調査チームの調査歴" },
+  { value: "0円", label: "証拠なしの場合（返金条件あり）" },
+];
+
+const priceIncludes = [
+  "調査員2名",
+  "車両・機材",
+  "報告書・映像",
+  "報告面談",
 ];
 
 /** お客様の声（匿名・要約。文言はミノガサン向けに作成） */
@@ -142,7 +156,7 @@ const flow = [
 const faqs = [
   {
     q: "料金の目安は？",
-    a: `浮気調査は${tentOffice.minPriceLabel}〜（税別）です。証拠が取れなかった場合、お預かりした調査費用は全額返金します（条件は契約前に書面で明示）。見積りにない追加料金は請求しません。`,
+    a: `浮気調査は${tentOffice.minPricePh}円〜（経費込み・追加料金なし）です。証拠が取れなかった場合、お預かりした調査費用は全額返金します（条件は契約前に書面で明示）。正確な総額はLINEで無料でお伝えします。`,
   },
   {
     q: "相手に調査がバレませんか？",
@@ -166,7 +180,7 @@ const faqs = [
   },
   {
     q: "関東以外でも頼めますか？",
-    a: "全国に対応しています。関東以外で発生する交通費・宿泊費は実費をいただきます。",
+    a: "全国に対応しています。費用の内訳は見積りで事前に明示します。",
   },
   {
     q: "相談だけでもいいですか？",
@@ -185,7 +199,7 @@ function LineIcon() {
   );
 }
 
-function CtaPair({ position }: { position: "footer" }) {
+function CtaPair({ position }: { position: "footer" | "price" }) {
   return (
     <div className="det-cta-pair">
       <a
@@ -230,7 +244,6 @@ export default function DetectivePage() {
     ogSiteName: detectiveSeo.siteName,
   });
 
-  /* 案内ドックは最初から表示。実高を --det-dock-h に反映 */
   useEffect(() => {
     const dock = dockRef.current;
     const fv = fvRef.current;
@@ -261,7 +274,6 @@ export default function DetectivePage() {
       return;
     }
     if (paused) return;
-    // 最終ビートのあともループしてストーリーを回す
     const id = window.setInterval(() => {
       setBeat((i) => (i + 1) % storyBeats.length);
     }, BEAT_MS);
@@ -341,15 +353,20 @@ export default function DetectivePage() {
         <div ref={dockRef} className="det-fv__dock is-ready">
           <h1 className="det-fv__offer">
             <span className="det-fv__offer-main">
-              浮気調査 {tentOffice.minPriceLabel}〜（税別）
-              <span className="det-fv__offer-zero">
-                ／証拠なし<strong>0円</strong>
-              </span>
+              証拠が取れなければ<strong>0円</strong>
+            </span>
+            <span className="det-fv__offer-price">
+              浮気調査
+              <Ph>{tentOffice.minPricePh}</Ph>
+              円〜（経費込み・追加料金なし）
             </span>
             <span className="det-fv__offer-sub">
-              {tentOffice.counselorLabel}が対応します。まずは無料相談から。
+              女性の相談員が、ご相談から報告まで担当します
             </span>
           </h1>
+          <p className="det-fv__dock-pre">
+            正確な総額は、LINEで無料でお伝えします
+          </p>
           <div className="det-fv__dock-cta">
             <a
               className="det-btn det-btn--line"
@@ -369,7 +386,7 @@ export default function DetectivePage() {
               電話する
             </a>
           </div>
-          <p className="det-fv__dock-note">{NOTE2}</p>
+          <p className="det-fv__dock-note">{ZERO_NOTE}</p>
         </div>
       </section>
 
@@ -408,19 +425,111 @@ export default function DetectivePage() {
               <li key={s.label}>
                 <strong>{s.value}</strong>
                 <span>{s.label}</span>
-                <em>{s.note}</em>
               </li>
             ))}
           </ul>
           <p className="det-tiny">
-            ※97.5%：{tentOffice.successRateNote}
-            （{tentOffice.successRatePeriod}）
+            ※97.5%：
+            <Ph>{tentOffice.successSubjectPh}</Ph>
+            が
+            <Ph>{tentOffice.successPeriodPh}</Ph>
+            に完了した
+            <Ph>{tentOffice.successCountPh}</Ph>
+            件のうちの割合
           </p>
         </FadeIn>
       </section>
 
       <section
-        className="det-block det-block--ink"
+        className="det-block det-block--ink det-price"
+        id="det-price"
+        aria-labelledby="price-title"
+      >
+        <FadeIn className="det-block__inner">
+          <h2 id="price-title" className="det-block__title">
+            料金について
+          </h2>
+          <p className="det-block__lead">
+            最低価格と返金条件を先に示します。正確な総額は無料相談でお伝えします。
+          </p>
+
+          <div className="det-price__hero">
+            <p className="det-price__hero-main">
+              浮気調査{" "}
+              <Ph>{tentOffice.minPricePh}</Ph>
+              円〜（経費込み・追加料金なし）
+            </p>
+            <p className="det-price__hero-zero">
+              証拠が取れなければ<strong>全額返金</strong>
+            </p>
+            <p className="det-price__hero-note">{ZERO_NOTE}</p>
+          </div>
+
+          <h3 className="det-price__h3">総額の比較イメージ</h3>
+          <div className="det-price-bars" aria-label="総額比較">
+            <div className="det-price-bars__row">
+              <span className="det-price-bars__name">一般的な事務所</span>
+              <div className="det-price-bars__track">
+                <div
+                  className="det-price-bars__fill det-price-bars__fill--other"
+                  style={{ width: "92%" }}
+                >
+                  <Ph>{tentOffice.totalOtherPh}</Ph>
+                  万円＋経費別
+                </div>
+              </div>
+            </div>
+            <div className="det-price-bars__row">
+              <span className="det-price-bars__name">ミノガサン</span>
+              <div className="det-price-bars__track">
+                <div
+                  className="det-price-bars__fill det-price-bars__fill--ours"
+                  style={{ width: "70%" }}
+                >
+                  <Ph>{tentOffice.totalOursPh}</Ph>
+                  万円〜・経費込み
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="det-tiny">
+            ※比較の出典：
+            <Ph>{tentOffice.compareSourcePh}</Ph>
+            。表示は総額の見え方のイメージであり、個別の見積りを約束するものではありません。
+          </p>
+
+          <h3 className="det-price__h3">料金に含まれるもの</h3>
+          <ul className="det-price__includes">
+            {priceIncludes.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p className="det-price__includes-note">追加料金なし</p>
+
+          <div className="det-price__box">
+            <h3>まずは相手の身元だけ</h3>
+            <p>
+              <strong>{tentOffice.identityCheckPrice}</strong>
+              から始められます。本調査に進むかは、結果を見てから決められます。
+            </p>
+          </div>
+
+          <div className="det-price__box det-price__box--soft">
+            <h3>慰謝料の一般的な目安</h3>
+            <p>
+              一般的には<strong>50万〜300万円</strong>とされることがあります。
+            </p>
+            <p className="det-price__box-note">
+              ※慰謝料の受け取りを約束するものではありません。金額は事案により異なり、弁護士等へのご相談が必要です。
+            </p>
+          </div>
+
+          <CtaPair position="price" />
+        </FadeIn>
+      </section>
+
+      <section
+        className="det-block det-block--dark"
         aria-labelledby="voice-title"
       >
         <FadeIn className="det-block__inner">
@@ -442,7 +551,7 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--dark" aria-labelledby="give-title">
+      <section className="det-block det-block--ink" aria-labelledby="give-title">
         <FadeIn className="det-block__inner">
           <h2 id="give-title" className="det-block__title">
             調査後にお渡しするもの
@@ -464,7 +573,7 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--ink" aria-labelledby="flow-title">
+      <section className="det-block det-block--dark" aria-labelledby="flow-title">
         <FadeIn className="det-block__inner">
           <h2 id="flow-title" className="det-block__title">
             ご相談から報告までの流れ

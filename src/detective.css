@@ -425,15 +425,26 @@
 
 .det-fv__offer-main {
   font-family: var(--det-serif);
-  font-size: clamp(1.02rem, 3.7vw, 1.22rem);
+  font-size: clamp(1.08rem, 4vw, 1.32rem);
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1.35;
 }
 
-.det-fv__offer-zero strong {
+.det-fv__offer-main strong {
   color: #7dcdc0;
-  font-size: 1.15em;
+  font-size: 1.18em;
+}
+
+.det-fv__offer-price {
+  font-family: var(--det-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.45;
+  max-width: 28em;
+  margin-inline: auto;
 }
 
 .det-fv__offer-sub {
@@ -443,8 +454,17 @@
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.78);
   line-height: 1.45;
-  max-width: 24em;
+  max-width: 26em;
   margin-inline: auto;
+}
+
+.det-fv__dock-pre {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #9fd9cf;
+  text-align: center;
 }
 
 .det-fv__dock-cta {
@@ -453,6 +473,25 @@
   gap: 0.4rem;
   max-width: 340px;
   margin: 0 auto;
+}
+
+/* 未定値プレースホルダ（差し替え漏れ防止） */
+.det-ph {
+  display: inline;
+  padding: 0.05em 0.28em;
+  margin-inline: 0.08em;
+  border-radius: 0.2rem;
+  background: rgba(255, 196, 72, 0.22);
+  color: #ffd27a;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.det-block--light .det-ph,
+.det-price__box .det-ph {
+  background: rgba(180, 120, 0, 0.14);
+  color: #8a5a00;
 }
 
 .det-fv__dock-cta .det-btn {
@@ -603,14 +642,157 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
-.det-stats em {
-  display: block;
-  margin-top: 0.2rem;
-  font-style: normal;
-  font-size: 0.52rem;
-  line-height: 1.3;
+/* 料金セクション */
+.det-price__hero {
+  margin: 0 0 1.5rem;
+  padding: 1.1rem 1.05rem;
+  border-left: 2px solid #7dcdc0;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.det-price__hero-main {
+  margin: 0 0 0.4rem;
+  font-family: var(--det-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+}
+
+.det-price__hero-zero {
+  margin: 0 0 0.45rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.det-price__hero-zero strong {
   color: #7dcdc0;
-  letter-spacing: 0.02em;
+}
+
+.det-price__hero-note {
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.det-price__h3 {
+  margin: 1.35rem 0 0.7rem;
+  font-family: var(--det-serif);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.det-price-bars {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.det-price-bars__row {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.det-price-bars__name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.04em;
+}
+
+.det-price-bars__track {
+  height: 2.1rem;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.det-price-bars__fill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-inline: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #0d0f14;
+}
+
+.det-price-bars__fill--other {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.det-price-bars__fill--ours {
+  background: #7dcdc0;
+}
+
+.det-price__includes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.det-price__includes li {
+  padding: 0.7rem 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid rgba(125, 205, 192, 0.55);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.det-price__includes-note {
+  margin: 0.65rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #7dcdc0;
+}
+
+.det-price__box {
+  margin: 1.25rem 0;
+  padding: 1rem 1.05rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(125, 205, 192, 0.35);
+}
+
+.det-price__box--soft {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.det-price__box h3 {
+  margin: 0 0 0.4rem;
+  font-family: var(--det-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.det-price__box p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.det-price__box strong {
+  color: #7dcdc0;
+  font-size: 1.05em;
+}
+
+.det-price__box-note {
+  margin-top: 0.55rem !important;
+  font-size: 0.68rem !important;
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.det-price .det-cta-pair {
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 520px) {
