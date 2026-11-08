@@ -24,11 +24,10 @@ export const tentOffice = {
   hourlyRate: "25,000円",
   /** 一般的な事務所の総額イメージ（同条件の人件費目安） */
   marketTotalRange: "40〜50万円",
-  compareSource:
-    "調査員2名・1時間2万〜2.5万円（東京都調査業協会の調査で最も多い価格帯）をもとにした人件費の目安。経費の扱いは事務所により異なります。",
+  compareSource: "業界で多い時間あたりの料金をもとにした総額の目安です。",
 
   identityCheckPrice: "10万円",
-  identityCheckNote: "税込・調査員2名・1日（最大8時間）・報告書つき",
+  identityCheckNote: "税込・報告書つき",
 
   licenseNumber: "30260207",
   licenseLabel: "探偵業届出番号：東京都公安委員会 第30260207号",
