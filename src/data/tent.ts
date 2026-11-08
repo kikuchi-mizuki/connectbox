@@ -18,12 +18,9 @@ export const tentOffice = {
   postalCode: company.postalCode,
   /** 浮気調査の最低価格（税別） */
   minPriceLabel: "10万円",
-  /**
-   * 探偵業届出番号は虚偽掲載を避けるため、公開番号が確定するまで
-   * 「届出済み／番号は契約前書面で確認」と表記する。
-   */
-  licenseLabel: "探偵業法に基づき届出済み（東京都公安委員会）",
-  licenseNote: "届出番号はご契約前の書面にてご確認いただけます。",
+  licenseNumber: "30260207",
+  licenseLabel: "探偵業届出番号：東京都公安委員会 第30260207号",
+  licenseNote: "探偵業の業務の適正化に関する法律に基づき届出済みです。",
   /**
    * 97.5%は提携調査会社の実績。期間・件数の確定値が揃い次第、
    * successRatePeriod を差し替えて注記を完成させる。
