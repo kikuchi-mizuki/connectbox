@@ -620,6 +620,10 @@
   gap: 0.4rem;
 }
 
+.det-stats--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .det-stats li {
   text-align: center;
   padding: 0.85rem 0.25rem;
@@ -643,39 +647,62 @@
 }
 
 /* 料金セクション */
-.det-price__hero {
-  margin: 0 0 1.5rem;
-  padding: 1.1rem 1.05rem;
-  border-left: 2px solid #7dcdc0;
-  background: rgba(255, 255, 255, 0.04);
+.det-price__plans {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
 }
 
-.det-price__hero-main {
-  margin: 0 0 0.4rem;
+@media (min-width: 640px) {
+  .det-price__plans {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.det-price__plan {
+  padding: 1rem 1.05rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 2px solid #7dcdc0;
+}
+
+.det-price__plan h3 {
+  margin: 0 0 0.25rem;
   font-family: var(--det-serif);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  letter-spacing: 0.03em;
-  line-height: 1.45;
 }
 
-.det-price__hero-zero {
+.det-price__plan-catch {
+  margin: 0 0 0.55rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.det-price__plan-price {
   margin: 0 0 0.45rem;
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
 }
 
-.det-price__hero-zero strong {
+.det-price__plan-price strong {
+  font-family: var(--det-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
   color: #7dcdc0;
 }
 
-.det-price__hero-note {
+.det-price__plan-price span {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.det-price__plan-body {
   margin: 0;
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .det-price__h3 {
@@ -796,12 +823,9 @@
 }
 
 @media (max-width: 520px) {
-  .det-stats {
+  .det-stats,
+  .det-stats--4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .det-stats li:last-child {
-    grid-column: 1 / -1;
   }
 
   .det-stats strong {

@@ -1,6 +1,6 @@
 import { company } from "./company";
 
-/** ミノガサン探偵事務所（見逃さん） */
+/** ミノガサン探偵事務所（見逃さん）— ご説明資料の数値に準拠 */
 export const tentOffice = {
   name: "ミノガサン探偵事務所",
   nameEn: "MINOGASAN",
@@ -13,27 +13,36 @@ export const tentOffice = {
   counselorRole: "ミノガサン探偵事務所 女性相談窓口",
   telDisplay: "080-8808-1739",
   email: "m-tanaka@t-cnct.com",
-  /** 面談・登記住所（会社情報と同一） */
   address: company.address,
   postalCode: company.postalCode,
-  /** 未定値は画面上で【】のまま目立つ表示にする */
-  minPricePh: "【最低価格】",
-  totalOtherPh: "【総額】",
-  totalOursPh: "【総額】",
-  compareSourcePh: "【比較の出典】",
-  successSubjectPh: "【集計の主体】",
-  successPeriodPh: "【期間】",
-  successCountPh: "【件数】",
-  /** 確定済み届出番号 */
+
+  /** 浮気・不倫調査（調査員2名・20時間・税込） */
+  flatPlanTotal: "44万円",
+  successDeposit: "15.4万円",
+  successOnEvidence: "50.6万円",
+  successTotalRange: "15.4〜66万円",
+  hourlyRate: "25,000円",
+  /** 一般的な事務所の総額イメージ（同条件の人件費目安） */
+  marketTotalRange: "40〜50万円",
+  compareSource:
+    "調査員2名・1時間2万〜2.5万円（東京都調査業協会の調査で最も多い価格帯）をもとにした人件費の目安。経費の扱いは事務所により異なります。",
+
+  identityCheckPrice: "10万円",
+  identityCheckNote: "税込・調査員2名・1日（最大8時間）・報告書つき",
+
   licenseNumber: "30260207",
   licenseLabel: "探偵業届出番号：東京都公安委員会 第30260207号",
   licenseNote: "探偵業の業務の適正化に関する法律に基づき届出済みです。",
-  /** 原稿にある身元確認のみの料金 */
-  identityCheckPrice: "10万円",
+
+  successRateNote:
+    "ご依頼に対して、証拠を確保できた割合です（提携調査チームの実績）。",
+
   privacyLabel: "プライバシーポリシー",
   privacyHref: "#privacy",
   privacyBody:
     "ご相談・調査に関する個人情報は、相談対応・調査・ご報告の目的以外に利用しません。ご本人の同意なく第三者へ提供しません。開示・訂正・削除のご要望は、上記メールまたはお電話にて受け付けます。",
+
+  /** 資料「ご相談から報告までの流れ」より */
   cancelPolicy:
-    "調査開始後の中止は可能です。中止時点までに発生した調査費用・実費、および返金の扱いはご契約前の書面でご説明します。「証拠が取れなければ全額返金」は、調査を完了しても証拠が取れなかった場合の条件であり、途中解約とは別です。",
+    "やめることができます。調査開始前は、事務手数料1.1万円を除いて返金。調査開始後は、実施した時間分を精算して返金します。費用の扱いの詳細は、ご契約前に書面でご説明します。",
 } as const;
