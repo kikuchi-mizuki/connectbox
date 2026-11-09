@@ -5,7 +5,7 @@ export const LINE_URL = "https://lin.ee/RiVp6pb";
  * false のあいだは本番ルートを閉じ、sitemap / プリレンダ対象からも外す。
  * 開発サーバー（vite）では常に閲覧可。再開するときは true に戻す。
  */
-export const DETECTIVE_PAGE_PUBLIC = false;
+export const DETECTIVE_PAGE_PUBLIC = true;
 
 /** 開発中、または本番公開時に /detective を表示する */
 export const DETECTIVE_PAGE_ENABLED =
