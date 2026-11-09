@@ -11,7 +11,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 
 /** 0円訴求の注釈（成功報酬の話はここに集約） */
 const ZERO_NOTE =
-  "※証拠が取れなかった場合の「0円」は、成功報酬プランの成功報酬が対象です（最初にお預かりする費用はあります）。条件はご契約前に書面でご説明します。";
+  "※「成功報酬0円」は、成功報酬プランの成功報酬が対象です（最初にお預かりする費用はあります）。条件はご契約前に書面でご説明します。";
 
 const reasons = [
   {
@@ -26,16 +26,16 @@ const reasons = [
   },
   {
     title: "経験のある調査チーム",
-    body: "提携調査チームの経験は約30年。進め方の不安も、相談の段階で一緒に整理します。",
+    body: "提携調査会社の創業から約30年。進め方の不安も、相談の段階で一緒に整理します。",
     icon: "team" as const,
   },
 ];
 
 const stats = [
   { value: "女性", label: "相談から報告まで" },
-  { value: "30年", label: "調査チームの経験" },
-  { value: "97.5%", label: "証拠を確保できた割合" },
-  { value: "0円", label: "証拠が取れなければ" },
+  { value: "30年", label: "創業からの年数" },
+  { value: "1万件以上", label: "調査実績" },
+  { value: "0円", label: "成功報酬（条件あり）" },
 ];
 
 const voices = [
@@ -315,7 +315,7 @@ export default function DetectivePage() {
               帰りが遅くなった夜から、ここへ。
             </span>
             <span className="det-fv__answer">
-              証拠が取れなければ、<strong>0円</strong>。
+              証拠が取れなければ、<strong>成功報酬0円</strong>
             </span>
           </h1>
           <a
@@ -329,7 +329,7 @@ export default function DetectivePage() {
             LINEで無料相談
           </a>
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-promise">0円の約束</a>
+            <a href="#det-promise">成功報酬0円</a>
             <a href="#det-price">料金を見る</a>
             <a href="#det-flow">進め方</a>
           </nav>
@@ -343,10 +343,10 @@ export default function DetectivePage() {
       >
         <FadeIn className="det-block__inner">
           <p className="det-promise__zero" aria-hidden="true">
-            0円
+            成功報酬0円
           </p>
           <h2 id="promise-title" className="det-block__title">
-            証拠が取れなければ、成功報酬はいただきません
+            証拠が取れなければ、成功報酬0円
           </h2>
           <p className="det-tiny">{ZERO_NOTE}</p>
           <a className="det-promise__link" href="#det-price">
@@ -412,7 +412,7 @@ export default function DetectivePage() {
       <section className="det-block det-block--mint" aria-labelledby="stats-title">
         <FadeIn className="det-block__inner" delay={0.06}>
           <h2 id="stats-title" className="det-block__title">
-            数字で見る、ミノガサン
+            提携調査チームの実績
           </h2>
           <ul className="det-stats det-stats--4">
             {stats.map((s) => (
@@ -422,7 +422,11 @@ export default function DetectivePage() {
               </li>
             ))}
           </ul>
-          <p className="det-tiny">※97.5%：{tentOffice.successRateNote}</p>
+          <p className="det-tiny">
+            {tentOffice.partnerYearsNote}
+            <br />
+            {tentOffice.partnerCasesNote}
+          </p>
         </FadeIn>
       </section>
 

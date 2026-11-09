@@ -33,8 +33,8 @@ export const tentOffice = {
   licenseLabel: "探偵業届出番号：東京都公安委員会 第30260207号",
   licenseNote: "探偵業の業務の適正化に関する法律に基づき届出済みです。",
 
-  successRateNote:
-    "ご依頼に対して、証拠を確保できた割合です（提携調査チームの実績）。",
+  partnerYearsNote: "※提携調査会社の創業からの年数。",
+  partnerCasesNote: "※提携調査会社の累計の調査件数です。",
 
   privacyLabel: "プライバシーポリシー",
   privacyHref: "#privacy",
