@@ -16,11 +16,11 @@ export type SitePageEntry = {
     | "never";
 };
 
+/** /detective は DETECTIVE_PAGE_PUBLIC が true のときだけ公開対象に戻す */
 export const PUBLIC_SITE_PATHS = [
   "/",
   "/company",
   "/connect-box",
   "/connect-box/back-office",
   "/connect-box/ryohi-one",
-  "/detective",
 ] as const;

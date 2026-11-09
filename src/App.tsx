@@ -3,6 +3,7 @@ import DetectiveLayout from "./components/DetectiveLayout";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import HpLayout from "./components/HpLayout";
 import LpLayout from "./components/LpLayout";
+import { DETECTIVE_PAGE_PUBLIC } from "./constants";
 import CompanyPage from "./pages/CompanyPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -27,9 +28,13 @@ export function AppRoutes() {
           <Route path="/company" element={<CompanyPage />} />
         </Route>
 
-        <Route element={<DetectiveLayout />}>
-          <Route path="/detective" element={<DetectivePage />} />
-        </Route>
+        {DETECTIVE_PAGE_PUBLIC ? (
+          <Route element={<DetectiveLayout />}>
+            <Route path="/detective" element={<DetectivePage />} />
+          </Route>
+        ) : (
+          <Route path="/detective" element={<Navigate to="/" replace />} />
+        )}
 
         <Route path="/connect-box/:slug" element={<LpLayout />}>
           <Route index element={<LpPage />} />
@@ -44,7 +49,15 @@ export function AppRoutes() {
         <Route path="/incubation" element={<Navigate to="/" replace />} />
         <Route path="/business/jewelry" element={<Navigate to="/" replace />} />
         <Route path="/business/incubation" element={<Navigate to="/" replace />} />
-        <Route path="/business/detective" element={<Navigate to="/detective" replace />} />
+        <Route
+          path="/business/detective"
+          element={
+            <Navigate
+              to={DETECTIVE_PAGE_PUBLIC ? "/detective" : "/"}
+              replace
+            />
+          }
+        />
         <Route path="/lp/:slug" element={<LegacyConnectBoxServiceRedirect />} />
         <Route path="/services/:slug" element={<LegacyConnectBoxServiceRedirect />} />
 
