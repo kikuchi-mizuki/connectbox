@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
 import {
   DETECTIVE_LINE_URL,
@@ -268,6 +269,10 @@ function CtaPair({ position }: { position: "footer" | "price" }) {
 }
 
 export default function DetectivePage() {
+  const reduce = useReducedMotion();
+  const featuredVoice = voices[0];
+  const otherVoices = voices.slice(1);
+
   usePageMeta({
     title: detectiveSeo.title,
     description: detectiveSeo.description,
@@ -323,9 +328,11 @@ export default function DetectivePage() {
             <LineIcon />
             LINEで無料相談
           </a>
-          <a className="det-fv__hint" href="#det-promise">
-            料金・進め方を見る
-          </a>
+          <nav className="det-jump" aria-label="ページ内リンク">
+            <a href="#det-promise">0円の約束</a>
+            <a href="#det-price">料金を見る</a>
+            <a href="#det-flow">進め方</a>
+          </nav>
         </div>
       </section>
 
@@ -335,12 +342,12 @@ export default function DetectivePage() {
         aria-labelledby="promise-title"
       >
         <FadeIn className="det-block__inner">
-          <h2 id="promise-title" className="det-block__title">
-            証拠が取れなければ、0円
-          </h2>
-          <p className="det-block__lead">
-            成功報酬プランでは、証拠が取れなかった場合の成功報酬はいただきません。
+          <p className="det-promise__zero" aria-hidden="true">
+            0円
           </p>
+          <h2 id="promise-title" className="det-block__title">
+            証拠が取れなければ、成功報酬はいただきません
+          </h2>
           <p className="det-tiny">{ZERO_NOTE}</p>
           <a className="det-promise__link" href="#det-price">
             料金・プランを見る
@@ -349,10 +356,10 @@ export default function DetectivePage() {
       </section>
 
       <section
-        className="det-block det-block--dark det-human"
+        className="det-block det-block--mint det-human"
         aria-labelledby="human-title"
       >
-        <FadeIn className="det-block__inner">
+        <FadeIn className="det-block__inner" delay={0.05}>
           <div className="det-human__accent" aria-hidden="true">
             <img
               src="/detective/people/counselor-gen-a.jpg"
@@ -374,10 +381,18 @@ export default function DetectivePage() {
         className="det-block det-block--ink"
         aria-labelledby="reason-title"
       >
-        <FadeIn className="det-block__inner">
+        <FadeIn className="det-block__inner" delay={0.08}>
           <h2 id="reason-title" className="det-block__title">
             はじめてでも、安心な理由
           </h2>
+          <figure className="det-reason-scene">
+            <img
+              src="/detective/scene-consult-bright.jpg"
+              alt=""
+              loading="lazy"
+            />
+            <figcaption>落ち着いて話せる相談の場を、大切にしています。</figcaption>
+          </figure>
           <ul className="det-reasons">
             {reasons.map((r) => (
               <li key={r.title} className="has-icon">
@@ -394,8 +409,8 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--dark" aria-labelledby="stats-title">
-        <FadeIn className="det-block__inner">
+      <section className="det-block det-block--mint" aria-labelledby="stats-title">
+        <FadeIn className="det-block__inner" delay={0.06}>
           <h2 id="stats-title" className="det-block__title">
             数字で見る、ミノガサン
           </h2>
@@ -416,7 +431,7 @@ export default function DetectivePage() {
         id="det-price"
         aria-labelledby="price-title"
       >
-        <FadeIn className="det-block__inner">
+        <FadeIn className="det-block__inner" delay={0.04}>
           <h2 id="price-title" className="det-block__title">
             料金について
           </h2>
@@ -427,34 +442,46 @@ export default function DetectivePage() {
           <div className="det-price-compare">
             <p className="det-price-compare__badge">総額で比べる</p>
             <h3 className="det-price-compare__title">
-              他社は、あとから費用が上乗せされやすい
+              他社より、最後の金額が分かりやすい
             </h3>
             <p className="det-price-compare__lead">
-              他社は調査費に加え、車両・交通・待機などの経費が別になり、総額が増えやすいです。目安は{tentOffice.marketTotalRange}＋経費別。ミノガサンのおまかせプランは{tentOffice.flatPlanTotal}・経費込みです。
+              他社は「基本料金」のほかに追加費用が乗りやすく、最終的に高くなりがちです。ミノガサンのおまかせプランは{tentOffice.flatPlanTotal}にまとまっているので、最初から総額が見えます。
             </p>
             <div className="det-price-bars" aria-label="他社との総額比較">
               <div className="det-price-bars__row">
-                <span className="det-price-bars__name">他社の目安（あとから上乗せ）</span>
+                <span className="det-price-bars__name">他社にありがちな総額</span>
                 <div className="det-price-bars__track">
-                  <div
+                  <motion.div
                     className="det-price-bars__fill det-price-bars__fill--other"
-                    style={{ width: "100%" }}
+                    initial={reduce ? false : { scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ width: "100%", transformOrigin: "left center" }}
                   >
-                    {tentOffice.marketTotalRange}＋経費別
-                  </div>
+                    {tentOffice.marketTotalRange}＋追加費用
+                  </motion.div>
                 </div>
               </div>
               <div className="det-price-bars__row">
                 <span className="det-price-bars__name">
-                  おまかせプラン <em>経費込み</em>
+                  ミノガサン <em>おまかせプラン</em>
                 </span>
                 <div className="det-price-bars__track">
-                  <div
+                  <motion.div
                     className="det-price-bars__fill det-price-bars__fill--ours"
-                    style={{ width: "62%" }}
+                    initial={reduce ? false : { scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{
+                      duration: 0.85,
+                      delay: 0.12,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    style={{ width: "62%", transformOrigin: "left center" }}
                   >
                     {tentOffice.flatPlanTotal}で完結
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -524,8 +551,13 @@ export default function DetectivePage() {
           <h2 id="voice-title" className="det-block__title">
             お客様の声
           </h2>
+          <blockquote className="det-voice-feature">
+            <p className="det-voice-feature__quote">“{featuredVoice.title}”</p>
+            <p className="det-voice-feature__body">{featuredVoice.body}</p>
+            <footer>{featuredVoice.who}</footer>
+          </blockquote>
           <ul className="det-voices">
-            {voices.map((v) => (
+            {otherVoices.map((v) => (
               <li key={v.title}>
                 <p className="det-voices__who">{v.who}</p>
                 <h3>{v.title}</h3>
@@ -558,8 +590,12 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--dark" aria-labelledby="flow-title">
-        <FadeIn className="det-block__inner">
+      <section
+        className="det-block det-block--mint"
+        id="det-flow"
+        aria-labelledby="flow-title"
+      >
+        <FadeIn className="det-block__inner" delay={0.06}>
           <h2 id="flow-title" className="det-block__title">
             ご相談から報告までの流れ
           </h2>
