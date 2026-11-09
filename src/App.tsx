@@ -3,7 +3,7 @@ import DetectiveLayout from "./components/DetectiveLayout";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import HpLayout from "./components/HpLayout";
 import LpLayout from "./components/LpLayout";
-import { DETECTIVE_PAGE_PUBLIC } from "./constants";
+import { DETECTIVE_PAGE_ENABLED } from "./constants";
 import CompanyPage from "./pages/CompanyPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -28,7 +28,7 @@ export function AppRoutes() {
           <Route path="/company" element={<CompanyPage />} />
         </Route>
 
-        {DETECTIVE_PAGE_PUBLIC ? (
+        {DETECTIVE_PAGE_ENABLED ? (
           <Route element={<DetectiveLayout />}>
             <Route path="/detective" element={<DetectivePage />} />
           </Route>
@@ -53,7 +53,7 @@ export function AppRoutes() {
           path="/business/detective"
           element={
             <Navigate
-              to={DETECTIVE_PAGE_PUBLIC ? "/detective" : "/"}
+              to={DETECTIVE_PAGE_ENABLED ? "/detective" : "/"}
               replace
             />
           }

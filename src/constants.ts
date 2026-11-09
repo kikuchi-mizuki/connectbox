@@ -1,11 +1,15 @@
 export const LINE_URL = "https://lin.ee/RiVp6pb";
 
 /**
- * 探偵LP（/detective）の公開スイッチ。
- * false のあいだはルートを閉じ、sitemap / プリレンダ対象からも外す。
- * 再開するときは true に戻す。
+ * 探偵LP（/detective）の本番公開スイッチ。
+ * false のあいだは本番ルートを閉じ、sitemap / プリレンダ対象からも外す。
+ * 開発サーバー（vite）では常に閲覧可。再開するときは true に戻す。
  */
 export const DETECTIVE_PAGE_PUBLIC = false;
+
+/** 開発中、または本番公開時に /detective を表示する */
+export const DETECTIVE_PAGE_ENABLED =
+  DETECTIVE_PAGE_PUBLIC || import.meta.env.DEV;
 
 /** 探偵事務所（ミノガサン）専用 LINE（広告専用URLに差し替える場合はここを変更） */
 export const DETECTIVE_LINE_URL = "https://lin.ee/qr4Ccoc";

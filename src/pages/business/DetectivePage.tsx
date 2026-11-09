@@ -10,9 +10,9 @@ import { detectiveSeo } from "../../data/detectiveSeo";
 import { tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
-/** 0円訴求の注釈（成功報酬の話はここに集約） */
+/** 0円訴求の注釈（取れなければ0円の話はここに集約） */
 const ZERO_NOTE =
-  "※「成功報酬0円」は、成功報酬プランの成功報酬が対象です（最初にお預かりする費用はあります）。条件はご契約前に書面でご説明します。";
+  "※「証拠が取れなければ0円」は、成功報酬プランの成功報酬が対象です（最初にお預かりする費用はあります）。条件はご契約前に書面でご説明します。";
 
 const reasons = [
   {
@@ -36,24 +36,25 @@ const stats = [
   { value: "女性", label: "相談から報告まで" },
   { value: "30年", label: "創業からの年数" },
   { value: "1万件以上", label: "調査実績" },
-  { value: "0円", label: "成功報酬（条件あり）" },
+  { value: "0円", label: "取れなければ（条件あり）" },
 ];
 
+/** 提携調査会社の公開口コミを要約（原文転載ではない） */
 const voices = [
   {
+    who: "50代・女性",
+    title: "似た事例を聞くだけで、気持ちが少し楽になりました",
+    body: "初めて探偵を利用する不安がありましたが、同じような悩みの進め方を聞けて安心できました。調査の前後も話しやすく、終始落ち着いて進められました。",
+  },
+  {
     who: "40代・女性",
-    title: "話しづらいことも、受け止めてもらえました",
-    body: "女性の窓口だと聞いて連絡しました。急かされず整理でき、報告も丁寧でした。",
+    title: "調査後のフォローまで、親身に寄り添ってもらえました",
+    body: "証拠が取れたあとの向き合い方についても助言があり、困ったときにすぐ相談できました。最後まで心配してもらえたのが心強かったです。",
   },
   {
     who: "30代・男性",
-    title: "白と分かり、気持ちが楽になりました",
-    body: "費用の見通しを先に聞けたので安心でした。結果が白で、話し合うきっかけになりました。",
-  },
-  {
-    who: "50代・女性",
-    title: "報告書が、次の判断材料になりました",
-    body: "日時と行動が分かりやすく、弁護士に相談するときも迷いませんでした。",
+    title: "急な依頼にも、丁寧な説明で納得できました",
+    body: "即日の調査をお願いしましたが、細やかに対応してもらえました。結果はつらかったものの、報告の仕方に納得できました。",
   },
 ];
 
@@ -201,11 +202,11 @@ function FlowGlyph({ name }: { name: FlowIcon }) {
 const faqs = [
   {
     q: "いくらかかりますか？",
-    a: `おまかせプランは${tentOffice.flatPlanTotal}（税込・経費込み）。最初の一歩プランは${tentOffice.identityCheckPrice}、成功報酬プランは${tentOffice.successDeposit}〜です。正確な総額はLINEで無料でお伝えします。`,
+    a: `最低費用は${tentOffice.minPrice}〜（最初の一歩プラン）。おまかせプランは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）、成功報酬プランは${tentOffice.successDeposit}〜です。正確な総額はLINEで無料でお伝えします。`,
   },
   {
     q: "証拠が取れなかったら？",
-    a: "成功報酬プランでは、成功報酬はいただきません。最初にお預かりする費用はあります。おまかせプランは、結果が白でも総額は変わりません。条件はご契約前に書面でご説明します。",
+    a: "成功報酬プランでは、証拠が取れなければ成功報酬は0円です。最初にお預かりする費用はあります。おまかせプランは、結果が白でも総額は変わりません。条件はご契約前に書面でご説明します。",
   },
   {
     q: "相手にバレませんか？",
@@ -352,7 +353,7 @@ export default function DetectivePage() {
             LINEで無料相談
           </a>
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-promise">成功報酬0円</a>
+            <a href="#det-promise">取れなければ0円</a>
             <a href="#det-price">料金を見る</a>
             <a href="#det-flow">進め方</a>
           </nav>
@@ -366,10 +367,10 @@ export default function DetectivePage() {
       >
         <FadeIn className="det-block__inner">
           <p className="det-promise__zero" aria-hidden="true">
-            成功報酬0円
+            0円
           </p>
           <h2 id="promise-title" className="det-block__title">
-            証拠が取れなければ、成功報酬0円
+            証拠が取れなければ、0円
           </h2>
           <p className="det-tiny">{ZERO_NOTE}</p>
           <a className="det-promise__link" href="#det-price">
@@ -463,7 +464,7 @@ export default function DetectivePage() {
             料金について
           </h2>
           <p className="det-block__lead">
-            他社の見え方を知ったうえで、3つのプランから選べます。
+            {tentOffice.minPriceNote}。他社の見え方を知ったうえで、3つのプランから選べます。
           </p>
 
           <div className="det-price-compare">
@@ -472,7 +473,7 @@ export default function DetectivePage() {
               他社より、最後の金額が分かりやすい
             </h3>
             <p className="det-price-compare__lead">
-              他社は「基本料金」のほかに追加費用が乗りやすく、最終的に高くなりがちです。ミノガサンのおまかせプランは{tentOffice.flatPlanTotal}にまとまっているので、最初から総額が見えます。
+              他社は「基本料金」のほかに追加費用が乗りやすく、最終的に高くなりがちです。ミノガサンのおまかせプランは{tentOffice.flatPlanTotal}（{tentOffice.flatPlanTaxNote}）にまとまっているので、最初から総額が見えます。
             </p>
             <div
               ref={priceBarsRef}
@@ -499,7 +500,7 @@ export default function DetectivePage() {
                     className="det-price-bars__fill det-price-bars__fill--ours"
                     style={{ ["--det-bar-w" as string]: "62%" }}
                   >
-                    {tentOffice.flatPlanTotal}で完結
+                    {tentOffice.flatPlanTotal}（{tentOffice.flatPlanTaxNote}）
                   </div>
                 </div>
               </div>
@@ -516,10 +517,10 @@ export default function DetectivePage() {
               <p className="det-price__plan-catch">大きな調査の前に、相手を確かめる</p>
               <p className="det-price__plan-price">
                 <strong>{tentOffice.identityCheckPrice}</strong>
-                <span>税込・報告書つき</span>
+                <span>{tentOffice.identityCheckNote}</span>
               </p>
               <p className="det-price__plan-body">
-                相手の名前・住所・勤務先を確かめたい方へ。
+                相手の名前・住所・勤務先を確かめたい方へ。報告書つき。
               </p>
             </article>
             <article className="det-price__plan det-price__plan--featured">
@@ -528,10 +529,10 @@ export default function DetectivePage() {
               <p className="det-price__plan-catch">総額が、最初から見える</p>
               <p className="det-price__plan-price">
                 <strong>{tentOffice.flatPlanTotal}</strong>
-                <span>経費込み・税込</span>
+                <span>{tentOffice.flatPlanTaxNote}</span>
               </p>
               <p className="det-price__plan-body">
-                調査員2名・移動・撮影・報告書まで経費込み。白でも黒でも、答えとして受け取りたい方に。
+                調査員2名・移動・撮影・報告書まで。白でも黒でも、答えとして受け取りたい方に。
               </p>
             </article>
             <article className="det-price__plan">
@@ -585,7 +586,7 @@ export default function DetectivePage() {
             ))}
           </ul>
           <p className="det-tiny">
-            ※個人が特定されないよう、内容は要約しています。
+            ※提携調査会社が公開しているお客様の声をもとに、個人が特定されないよう要約しています。ミノガサン探偵事務所でのご利用感想ではありません。
           </p>
         </FadeIn>
       </section>
