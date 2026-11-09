@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
 import {
   DETECTIVE_LINE_URL,
@@ -272,6 +273,8 @@ export default function DetectivePage() {
   const reduce = useReducedMotion();
   const featuredVoice = voices[0];
   const otherVoices = voices.slice(1);
+  const priceBarsRef = useRef<HTMLDivElement>(null);
+  const [barsVisible, setBarsVisible] = useState(false);
 
   usePageMeta({
     title: detectiveSeo.title,
@@ -283,6 +286,26 @@ export default function DetectivePage() {
     ogImage: detectiveSeo.ogImage,
     ogSiteName: detectiveSeo.siteName,
   });
+
+  useEffect(() => {
+    if (reduce) {
+      setBarsVisible(true);
+      return;
+    }
+    const el = priceBarsRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setBarsVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25, rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduce]);
 
   return (
     <main className="det-main">
@@ -451,20 +474,20 @@ export default function DetectivePage() {
             <p className="det-price-compare__lead">
               他社は「基本料金」のほかに追加費用が乗りやすく、最終的に高くなりがちです。ミノガサンのおまかせプランは{tentOffice.flatPlanTotal}にまとまっているので、最初から総額が見えます。
             </p>
-            <div className="det-price-bars" aria-label="他社との総額比較">
+            <div
+              ref={priceBarsRef}
+              className={`det-price-bars${barsVisible ? " is-visible" : ""}`}
+              aria-label="他社との総額比較"
+            >
               <div className="det-price-bars__row">
                 <span className="det-price-bars__name">他社にありがちな総額</span>
                 <div className="det-price-bars__track">
-                  <motion.div
+                  <div
                     className="det-price-bars__fill det-price-bars__fill--other"
-                    initial={reduce ? false : { scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ width: "100%", transformOrigin: "left center" }}
+                    style={{ ["--det-bar-w" as string]: "100%" }}
                   >
                     {tentOffice.marketTotalRange}＋追加費用
-                  </motion.div>
+                  </div>
                 </div>
               </div>
               <div className="det-price-bars__row">
@@ -472,20 +495,12 @@ export default function DetectivePage() {
                   ミノガサン <em>おまかせプラン</em>
                 </span>
                 <div className="det-price-bars__track">
-                  <motion.div
+                  <div
                     className="det-price-bars__fill det-price-bars__fill--ours"
-                    initial={reduce ? false : { scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{
-                      duration: 0.85,
-                      delay: 0.12,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    style={{ width: "62%", transformOrigin: "left center" }}
+                    style={{ ["--det-bar-w" as string]: "62%" }}
                   >
                     {tentOffice.flatPlanTotal}で完結
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>

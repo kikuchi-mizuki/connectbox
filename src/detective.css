@@ -836,13 +836,15 @@
 
 .det-price-bars__track {
   height: 2.35rem;
-  background: rgba(27, 42, 65, 0.06);
+  background: rgba(27, 42, 65, 0.08);
   overflow: hidden;
   border-radius: 0.35rem;
 }
 
 .det-price-bars__fill {
+  --det-bar-w: 100%;
   height: 100%;
+  width: 0;
   display: flex;
   align-items: center;
   padding-inline: 0.65rem;
@@ -850,11 +852,38 @@
   font-weight: 700;
   white-space: nowrap;
   color: #fff;
-  will-change: transform;
+  opacity: 0;
+}
+
+.det-price-bars.is-visible .det-price-bars__fill {
+  opacity: 1;
+  animation: det-bar-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.det-price-bars.is-visible .det-price-bars__fill--ours {
+  animation-delay: 0.12s;
+}
+
+@keyframes det-bar-grow {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--det-bar-w);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .det-price-bars__fill,
+  .det-price-bars.is-visible .det-price-bars__fill {
+    width: var(--det-bar-w);
+    opacity: 1;
+    animation: none;
+  }
 }
 
 .det-price-bars__fill--other {
-  background: rgba(27, 42, 65, 0.38);
+  background: rgba(27, 42, 65, 0.45);
   color: #fff;
 }
 
