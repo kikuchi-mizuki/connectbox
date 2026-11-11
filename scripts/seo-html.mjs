@@ -75,7 +75,27 @@ export function applyRouteMeta(html, shell, canonical) {
   next = replaceMetaTag(next, "name", "twitter:description", description);
   next = replaceMetaTag(next, "name", "twitter:image", ogImage);
   next = upsertLink(next, "canonical", canonical);
+  if (shell.clarityProjectId) {
+    next = injectClarity(next, shell.clarityProjectId);
+  }
   return next;
+}
+
+/** Microsoft Clarity（ページ専用。既存があれば差し替え） */
+export function injectClarity(html, projectId) {
+  const id = escapeAttr(projectId);
+  const tag = `<script id="ms-clarity" type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "${id}");
+</script>`;
+  const re = /<script\s[^>]*?id=["']ms-clarity["'][^>]*>[\s\S]*?<\/script>/i;
+  if (re.test(html)) {
+    return html.replace(re, tag);
+  }
+  return html.replace(/<\/head>/i, `    ${tag}\n  </head>`);
 }
 
 /** #root をネストした div も含めて安全に差し替える */

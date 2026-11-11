@@ -14,6 +14,9 @@ export const DETECTIVE_PAGE_ENABLED =
 /** 探偵事務所（ミノガサン）専用 LINE（広告専用URLに差し替える場合はここを変更） */
 export const DETECTIVE_LINE_URL = "https://lin.ee/qr4Ccoc";
 
+/** Microsoft Clarity（/detective のみ） */
+export const DETECTIVE_CLARITY_ID = "zbvmrpjlf9";
+
 /** 探偵事業の相談フォーム */
 export const DETECTIVE_FORM_URL = "https://forms.gle/LhsYL7s2JSHEeoHi6";
 

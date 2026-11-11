@@ -76,6 +76,7 @@ export const PUBLIC_SITE_PAGES = [
     siteName: "ミノガサン探偵事務所",
     ogImage: `${SITE_URL}/detective/scene-consult-bright.jpg`,
     stripOrganizationJsonLd: true,
+    clarityProjectId: "zbvmrpjlf9",
   },
 ];
 
