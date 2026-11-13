@@ -10,14 +10,15 @@ import { detectiveSeo } from "../../data/detectiveSeo";
 import { tentOffice } from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
-/** 0円訴求の注釈（取れなければ0円の話はここに集約） */
-const ZERO_NOTE =
-  "※「証拠が取れなければ0円」は、成功報酬プランの成功報酬が対象です（最初にお預かりする費用はあります）。条件はご契約前に書面でご説明します。";
+/** 第一訴求まわり（ページ全体で同じ言い方に揃える） */
+const PRIMARY_CLAIM = "証拠が取れなければ、調査費用は0円";
+const PRIMARY_NOTE =
+  "※「調査費用は0円」は、すべてのプランが対象です。条件の詳細は、ご契約前に書面でご説明します。";
 
 const reasons = [
   {
-    title: "女性が、相談から報告まで担当",
-    body: "話しづらいことも、女性の相談員が最初から最後まで伺います。",
+    title: "同性の相談員が、相談から報告まで担当",
+    body: "話しづらいことも、ご希望の同性の相談員が最初から最後まで伺います。",
     icon: "talk" as const,
   },
   {
@@ -33,10 +34,10 @@ const reasons = [
 ];
 
 const stats = [
-  { value: "女性", label: "相談から報告まで" },
+  { value: "同性", label: "相談員に相談可" },
   { value: "30年", label: "創業からの年数" },
   { value: "1万件以上", label: "調査実績" },
-  { value: "0円", label: "取れなければ（条件あり）" },
+  { value: "0円", label: "取れなければ（全プラン）" },
 ];
 
 /** 提携調査会社の公開口コミを要約（原文転載ではない） */
@@ -80,7 +81,7 @@ const flow = [
   {
     n: "01",
     title: "無料相談",
-    body: "いまのお気持ちを、女性の担当が伺います。",
+    body: "いまのお気持ちを、ご希望の同性の担当が伺います。",
     icon: "consult" as const,
   },
   {
@@ -206,7 +207,7 @@ const faqs = [
   },
   {
     q: "証拠が取れなかったら？",
-    a: "成功報酬プランでは、証拠が取れなければ成功報酬は0円です。最初にお預かりする費用はあります。おまかせプランは、結果が白でも総額は変わりません。条件はご契約前に書面でご説明します。",
+    a: `${PRIMARY_CLAIM}。すべてのプランが対象です。くわしい条件は、ご契約前に書面でご説明します。`,
   },
   {
     q: "相手にバレませんか？",
@@ -225,8 +226,8 @@ const faqs = [
     a: "疑いが晴れることも、ひとつの答えです。この先の関係を、報告面談で一緒に整理します。",
   },
   {
-    q: "男性でも相談できますか？",
-    a: "はい。男性からのご相談もお受けしています。ご希望があれば女性の相談員が対応します。",
+    q: "同性の相談員に相談できますか？",
+    a: "はい。ご希望に合わせて、同性の相談員が対応します。男性・女性どちらからもご相談いただけます。",
   },
   {
     q: "相談だけでもいいですか？",
@@ -334,14 +335,17 @@ export default function DetectivePage() {
         <div className="det-fv__panel">
           <p className="det-fv__brand">{tentOffice.name}</p>
           <p className="det-fv__category">浮気・不倫調査</p>
+          <p className="det-fv__empathy">
+            事実がほしい。でも、空振りの費用は怖い。
+          </p>
           <h1 className="det-fv__copy">
-            <span className="det-fv__empathy">
-              帰りが遅くなった夜から、ここへ。
-            </span>
-            <span className="det-fv__answer">
-              証拠が取れなければ、<strong>成功報酬0円</strong>
+            <span className="det-fv__condition">証拠が取れなければ、</span>
+            <span className="det-fv__hook">
+              調査費用は
+              <strong>0円</strong>
             </span>
           </h1>
+          <p className="det-fv__support">すべてのプランが対象です。</p>
           <a
             className="det-btn det-btn--line det-fv__cta"
             href={DETECTIVE_LINE_URL}
@@ -353,8 +357,8 @@ export default function DetectivePage() {
             LINEで無料相談
           </a>
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-promise">取れなければ0円</a>
-            <a href="#det-price">料金を見る</a>
+            <a href="#det-promise">お約束</a>
+            <a href="#det-price">料金</a>
             <a href="#det-flow">進め方</a>
           </nav>
         </div>
@@ -366,13 +370,13 @@ export default function DetectivePage() {
         aria-labelledby="promise-title"
       >
         <FadeIn className="det-block__inner">
-          <p className="det-promise__zero" aria-hidden="true">
-            0円
-          </p>
           <h2 id="promise-title" className="det-block__title">
-            証拠が取れなければ、0円
+            {PRIMARY_CLAIM}
           </h2>
-          <p className="det-tiny">{ZERO_NOTE}</p>
+          <p className="det-block__lead det-promise__lead">
+            料金の不安を抱えたまま、動けなくていい。空振りを心配して相談をためらう必要はありません。
+          </p>
+          <p className="det-tiny">{PRIMARY_NOTE}</p>
           <a className="det-promise__link" href="#det-price">
             料金・プランを見る
           </a>
@@ -380,24 +384,26 @@ export default function DetectivePage() {
       </section>
 
       <section
-        className="det-block det-block--mint det-human"
+        className="det-block det-block--mint"
         aria-labelledby="human-title"
       >
         <FadeIn className="det-block__inner" delay={0.05}>
-          <div className="det-human__accent" aria-hidden="true">
-            <img
-              src="/detective/people/counselor-gen-a.jpg"
-              alt=""
-              className="det-human__face"
-              loading="lazy"
-            />
-          </div>
           <h2 id="human-title" className="det-block__title">
-            話しづらいことも、女性に話せます
+            話しづらいことも、同性の相談員に話せます
           </h2>
           <p className="det-block__lead">
-            相談から報告まで、女性の相談員が担当します。無理に契約を急かしません。
+            相談から報告まで、ご希望の同性の相談員が担当します。無理に契約を急かしません。
           </p>
+          <figure className="det-reason-scene">
+            <img
+              src="/detective/scene-consult-bright.jpg"
+              alt=""
+              loading="lazy"
+            />
+            <figcaption>
+              落ち着いて話せる相談の場で、同性の担当が伺います。
+            </figcaption>
+          </figure>
         </FadeIn>
       </section>
 
@@ -409,14 +415,6 @@ export default function DetectivePage() {
           <h2 id="reason-title" className="det-block__title">
             はじめてでも、安心な理由
           </h2>
-          <figure className="det-reason-scene">
-            <img
-              src="/detective/scene-consult-bright.jpg"
-              alt=""
-              loading="lazy"
-            />
-            <figcaption>落ち着いて話せる相談の場を、大切にしています。</figcaption>
-          </figure>
           <ul className="det-reasons">
             {reasons.map((r) => (
               <li key={r.title} className="has-icon">
@@ -464,7 +462,7 @@ export default function DetectivePage() {
             料金について
           </h2>
           <p className="det-block__lead">
-            {tentOffice.minPriceNote}。他社の見え方を知ったうえで、3つのプランから選べます。
+            {PRIMARY_CLAIM}。{tentOffice.minPriceNote}。3つのプランから選べます。
           </p>
 
           <div className="det-price-compare">
@@ -543,11 +541,11 @@ export default function DetectivePage() {
                 <span>〜</span>
               </p>
               <p className="det-price__plan-body">
-                証拠が取れたら追加あり。取れなければ成功報酬は0円です。
+                証拠が取れた場合のみ追加あり。最初の負担を抑えて進めたい方へ。
               </p>
             </article>
           </div>
-          <p className="det-tiny">{ZERO_NOTE}</p>
+          <p className="det-tiny">{PRIMARY_NOTE}</p>
 
           <div className="det-price__box det-price__box--soft">
             <h3>慰謝料の一般的な目安</h3>

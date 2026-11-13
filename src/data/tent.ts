@@ -9,8 +9,8 @@ export const tentOffice = {
   message:
     "小さな違和感も、怪しい動きも、見逃さない。あなたの隣で事実を確かめる場所でありたい。",
   /** 公開面では実名を出さない */
-  counselorLabel: "女性の相談員",
-  counselorRole: "ミノガサン探偵事務所 女性相談窓口",
+  counselorLabel: "同性の相談員",
+  counselorRole: "ミノガサン探偵事務所 相談窓口",
   telDisplay: "080-8808-1739",
   email: "m-tanaka@t-cnct.com",
   address: company.address,
