@@ -17,21 +17,19 @@ export const tentOffice = {
   postalCode: company.postalCode,
 
   /** 浮気・不倫調査（調査員2名・おまかせプラン） */
-  flatPlanTotal: "50万円",
-  flatPlanTaxNote: "税別",
+  flatPlanTotal: "55万円",
+  flatPlanTaxNote: "税込",
   /** 最低費用（最初の一歩プラン） */
   minPrice: "10万円",
-  minPriceNote: "最低費用 10万円〜",
+  minPriceNote: "最低費用 10万円〜（税込）",
   successDeposit: "15.4万円",
   successOnEvidence: "50.6万円",
   successTotalRange: "15.4〜66万円",
+  successTaxNote: "〜（税込）",
   hourlyRate: "25,000円",
-  /** 一般的な事務所の総額イメージ（同条件の人件費目安） */
-  marketTotalRange: "40〜50万円",
-  compareSource: "業界で多い時間あたりの料金をもとにした総額の目安です。",
 
   identityCheckPrice: "10万円",
-  identityCheckNote: "〜",
+  identityCheckNote: "〜（税込）",
 
   licenseNumber: "30260207",
   licenseLabel: "探偵業届出番号：東京都公安委員会 第30260207号",

@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 import FadeIn from "../../components/FadeIn";
 import {
   DETECTIVE_LINE_URL,
@@ -40,22 +38,47 @@ const stats = [
   { value: "0円", label: "取れなければ（全プラン）" },
 ];
 
-/** 提携調査会社の公開口コミを要約（原文転載ではない） */
+const priceCompareRows = [
+  {
+    item: "料金の決まり方",
+    general: "調査員の人数 × 調査時間で計算",
+    ours: `プランごとの定額（おまかせプラン${tentOffice.flatPlanTotal}・${tentOffice.flatPlanTaxNote}）`,
+  },
+  {
+    item: "車両費・機材費・報告書代",
+    general: "事務所によって別料金",
+    ours: "すべて込み",
+  },
+  {
+    item: "調査が延びたとき",
+    general: "延びた時間分が追加",
+    ours: "お見積り以外の追加料金なし",
+  },
+  {
+    item: "証拠が取れなかったとき",
+    general: "調査した時間分の費用がかかる",
+    ours: "全プラン0円（当社規定による）",
+  },
+  {
+    item: "総額がわかるタイミング",
+    general: "調査が終わってから",
+    ours: "ご契約の前",
+  },
+] as const;
+
+/** 提携調査会社のGoogleクチコミから抜粋 */
 const voices = [
   {
-    who: "50代・女性",
-    title: "似た事例を聞くだけで、気持ちが少し楽になりました",
-    body: "初めて探偵を利用する不安がありましたが、同じような悩みの進め方を聞けて安心できました。調査の前後も話しやすく、終始落ち着いて進められました。",
+    title: "勇気を出して相談して本当に良かった",
+    body: "「正直、最初は『探偵事務所』と聞くだけで緊張していましたが、扉を開けた瞬間にその不安はすぐに消えました。ご報告も丁寧で、状況を細かく説明してくださったおかげで、心の整理が着き、今では次の人生に前向きに進む決意ができています。」",
   },
   {
-    who: "40代・女性",
-    title: "調査後のフォローまで、親身に寄り添ってもらえました",
-    body: "証拠が取れたあとの向き合い方についても助言があり、困ったときにすぐ相談できました。最後まで心配してもらえたのが心強かったです。",
+    title: "費用の見通しがしやすかった",
+    body: "「調査実施日が未確定の中、配偶者の行動パターンに関しての相談に乗っていただき、不貞当日の証拠取りまで無事終えることができました。費用の見通しがしやすく、最終的な支払額に関しての不安は有りませんでした。」",
   },
   {
-    who: "30代・男性",
-    title: "急な依頼にも、丁寧な説明で納得できました",
-    body: "即日の調査をお願いしましたが、細やかに対応してもらえました。結果はつらかったものの、報告の仕方に納得できました。",
+    title: "優しい言葉に何度も救われた",
+    body: "「『不安なことがあればいつでも連絡してください』と言ってくださり、その優しい言葉に何度も救われました。調査もとても丁寧で、依頼して本当によかったと感じています。」",
   },
 ];
 
@@ -203,7 +226,7 @@ function FlowGlyph({ name }: { name: FlowIcon }) {
 const faqs = [
   {
     q: "いくらかかりますか？",
-    a: `最低費用は${tentOffice.minPrice}〜（最初の一歩プラン）。おまかせプランは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）、成功報酬プランは${tentOffice.successDeposit}〜です。正確な総額はLINEで無料でお伝えします。`,
+    a: `最低費用は${tentOffice.minPrice}〜（税込・最初の一歩プラン）。おまかせプランは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）、成功報酬プランは${tentOffice.successDeposit}〜（税込）です。正確な総額はLINEで無料でお伝えします。`,
   },
   {
     q: "証拠が取れなかったら？",
@@ -272,11 +295,8 @@ function CtaPair({ position }: { position: "footer" | "price" }) {
 }
 
 export default function DetectivePage() {
-  const reduce = useReducedMotion();
   const featuredVoice = voices[0];
   const otherVoices = voices.slice(1);
-  const priceBarsRef = useRef<HTMLDivElement>(null);
-  const [barsVisible, setBarsVisible] = useState(false);
 
   usePageMeta({
     title: detectiveSeo.title,
@@ -288,26 +308,6 @@ export default function DetectivePage() {
     ogImage: detectiveSeo.ogImage,
     ogSiteName: detectiveSeo.siteName,
   });
-
-  useEffect(() => {
-    if (reduce) {
-      setBarsVisible(true);
-      return;
-    }
-    const el = priceBarsRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setBarsVisible(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.25, rootMargin: "0px 0px -8% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [reduce]);
 
   return (
     <main className="det-main">
@@ -466,45 +466,38 @@ export default function DetectivePage() {
           </p>
 
           <div className="det-price-compare">
-            <p className="det-price-compare__badge">総額で比べる</p>
             <h3 className="det-price-compare__title">
-              他社より、最後の金額が分かりやすい
+              最後の金額が、最初に分かる
             </h3>
             <p className="det-price-compare__lead">
-              他社は「基本料金」のほかに追加費用が乗りやすく、最終的に高くなりがちです。ミノガサンのおまかせプランは{tentOffice.flatPlanTotal}（{tentOffice.flatPlanTaxNote}）にまとまっているので、最初から総額が見えます。
+              お見積り以外の追加料金はいただきません（関東以外の交通費・宿泊費は実費）。
             </p>
-            <div
-              ref={priceBarsRef}
-              className={`det-price-bars${barsVisible ? " is-visible" : ""}`}
-              aria-label="他社との総額比較"
-            >
-              <div className="det-price-bars__row">
-                <span className="det-price-bars__name">他社にありがちな総額</span>
-                <div className="det-price-bars__track">
-                  <div
-                    className="det-price-bars__fill det-price-bars__fill--other"
-                    style={{ ["--det-bar-w" as string]: "100%" }}
-                  >
-                    {tentOffice.marketTotalRange}＋追加費用
+            <h4 className="det-price-cards__title">
+              料金の仕組みを、比べてみてください
+            </h4>
+            <ul className="det-price-cards">
+              {priceCompareRows.map((row) => (
+                <li key={row.item} className="det-price-cards__row">
+                  <p className="det-price-cards__item">{row.item}</p>
+                  <div className="det-price-cards__cols">
+                    <div className="det-price-cards__col">
+                      <span className="det-price-cards__label">
+                        時間料金制の一般的な例
+                      </span>
+                      <p>{row.general}</p>
+                    </div>
+                    <div className="det-price-cards__col det-price-cards__col--ours">
+                      <span className="det-price-cards__label">
+                        ミノガサン探偵事務所
+                      </span>
+                      <p>{row.ours}</p>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="det-price-bars__row">
-                <span className="det-price-bars__name">
-                  ミノガサン <em>おまかせプラン</em>
-                </span>
-                <div className="det-price-bars__track">
-                  <div
-                    className="det-price-bars__fill det-price-bars__fill--ours"
-                    style={{ ["--det-bar-w" as string]: "62%" }}
-                  >
-                    {tentOffice.flatPlanTotal}（{tentOffice.flatPlanTaxNote}）
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="det-tiny" style={{ marginTop: "0.7rem" }}>
-              ※{tentOffice.compareSource}関東以外の遠方費用は実費です。
+                </li>
+              ))}
+            </ul>
+            <p className="det-tiny det-price-cards__note">
+              ※「時間料金制の一般的な例」は、調査員の人数と時間で料金を計算する料金体系を説明したもので、特定の事務所を示すものではありません。関東以外の交通費・宿泊費は実費です。
             </p>
           </div>
 
@@ -538,7 +531,7 @@ export default function DetectivePage() {
               <p className="det-price__plan-catch">最初の負担を抑えたい方に</p>
               <p className="det-price__plan-price">
                 <strong>{tentOffice.successDeposit}</strong>
-                <span>〜</span>
+                <span>{tentOffice.successTaxNote}</span>
               </p>
               <p className="det-price__plan-body">
                 証拠が取れた場合のみ追加あり。最初の負担を抑えて進めたい方へ。
@@ -572,19 +565,17 @@ export default function DetectivePage() {
           <blockquote className="det-voice-feature">
             <p className="det-voice-feature__quote">“{featuredVoice.title}”</p>
             <p className="det-voice-feature__body">{featuredVoice.body}</p>
-            <footer>{featuredVoice.who}</footer>
           </blockquote>
           <ul className="det-voices">
             {otherVoices.map((v) => (
               <li key={v.title}>
-                <p className="det-voices__who">{v.who}</p>
                 <h3>{v.title}</h3>
                 <p>{v.body}</p>
               </li>
             ))}
           </ul>
           <p className="det-tiny">
-            ※提携調査会社が公開しているお客様の声をもとに、個人が特定されないよう要約しています。ミノガサン探偵事務所でのご利用感想ではありません。
+            ※提携調査会社に寄せられた口コミ（Googleクチコミ）から一部を抜粋しています。
           </p>
         </FadeIn>
       </section>

@@ -850,6 +850,93 @@
   color: var(--det-ink-soft);
 }
 
+.det-price-cards__title {
+  margin: 0 0 0.7rem;
+  font-family: var(--det-serif);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--det-navy);
+  text-align: left;
+}
+
+.det-price-cards {
+  list-style: none;
+  margin: 0 0 0.7rem;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.det-price-cards__row {
+  margin: 0;
+  padding: 0.75rem 0.8rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(27, 42, 65, 0.1);
+  background: #fff;
+}
+
+.det-price-cards__item {
+  margin: 0 0 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--det-navy);
+}
+
+.det-price-cards__cols {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.det-price-cards__col {
+  padding: 0.55rem 0.6rem;
+  border-radius: 0.45rem;
+  background: rgba(27, 42, 65, 0.04);
+}
+
+.det-price-cards__col--ours {
+  background: rgba(47, 111, 104, 0.1);
+  border: 1px solid rgba(47, 111, 104, 0.18);
+}
+
+.det-price-cards__label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--det-muted);
+}
+
+.det-price-cards__col--ours .det-price-cards__label {
+  color: var(--det-teal);
+}
+
+.det-price-cards__col p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--det-ink);
+}
+
+.det-price-cards__col--ours p {
+  font-weight: 600;
+  color: var(--det-navy);
+}
+
+.det-price-cards__note {
+  margin: 0;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .det-price-cards__cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+}
+
 .det-price-bars {
   display: grid;
   gap: 0.85rem;
