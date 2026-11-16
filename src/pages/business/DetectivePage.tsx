@@ -38,31 +38,22 @@ const stats = [
   { value: "0円", label: "取れなければ（全プラン）" },
 ];
 
+/** 比較はファクト列挙ではなく、ユーザーメリットで書く */
 const priceCompareRows = [
   {
-    item: "料金の決まり方",
-    general: "調査員の人数 × 調査時間で計算",
-    ours: `プランごとの定額（おまかせプラン${tentOffice.flatPlanTotal}・${tentOffice.flatPlanTaxNote}）`,
+    item: "あとから金額が増えにくい",
+    general: "人数×時間で増えるので、終わってみないと総額がわからない",
+    ours: `定額だから、最初に決めた金額で進められる（おまかせ${tentOffice.flatPlanTotal}・${tentOffice.flatPlanTaxNote}）`,
   },
   {
-    item: "車両費・機材費・報告書代",
-    general: "事務所によって別料金",
-    ours: "すべて込み",
+    item: "空振りでも損しにくい",
+    general: "証拠がなくても、動いた時間分は請求されやすい",
+    ours: "証拠が取れなければ調査費用は0円。踏み出すハードルを下げられる",
   },
   {
-    item: "調査が延びたとき",
-    general: "延びた時間分が追加",
-    ours: "お見積り以外の追加料金なし",
-  },
-  {
-    item: "証拠が取れなかったとき",
-    general: "調査した時間分の費用がかかる",
-    ours: "全プラン0円（当社規定による）",
-  },
-  {
-    item: "総額がわかるタイミング",
-    general: "調査が終わってから",
-    ours: "ご契約の前",
+    item: "納得してから依頼できる",
+    general: "調査後に請求額を知ることになりやすい",
+    ours: "ご契約前に総額が見えるので、不安を残したまま進めなくてよい",
   },
 ] as const;
 
@@ -357,38 +348,20 @@ export default function DetectivePage() {
             LINEで無料相談
           </a>
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-promise">お約束</a>
             <a href="#det-price">料金</a>
+            <a href="#det-voice">お客様の声</a>
             <a href="#det-flow">進め方</a>
           </nav>
         </div>
       </section>
 
       <section
-        className="det-block det-block--ink det-promise"
-        id="det-promise"
-        aria-labelledby="promise-title"
+        className="det-block det-block--ink"
+        id="det-trust"
+        aria-labelledby="trust-title"
       >
-        <FadeIn className="det-block__inner">
-          <h2 id="promise-title" className="det-block__title">
-            {PRIMARY_CLAIM}
-          </h2>
-          <p className="det-block__lead det-promise__lead">
-            料金の不安を抱えたまま、動けなくていい。空振りを心配して相談をためらう必要はありません。
-          </p>
-          <p className="det-tiny">{PRIMARY_NOTE}</p>
-          <a className="det-promise__link" href="#det-price">
-            料金・プランを見る
-          </a>
-        </FadeIn>
-      </section>
-
-      <section
-        className="det-block det-block--mint"
-        aria-labelledby="human-title"
-      >
-        <FadeIn className="det-block__inner" delay={0.05}>
-          <h2 id="human-title" className="det-block__title">
+        <FadeIn className="det-block__inner" delay={0.04}>
+          <h2 id="trust-title" className="det-block__title">
             話しづらいことも、同性の相談員に話せます
           </h2>
           <p className="det-block__lead">
@@ -404,17 +377,6 @@ export default function DetectivePage() {
               落ち着いて話せる相談の場で、同性の担当が伺います。
             </figcaption>
           </figure>
-        </FadeIn>
-      </section>
-
-      <section
-        className="det-block det-block--ink"
-        aria-labelledby="reason-title"
-      >
-        <FadeIn className="det-block__inner" delay={0.08}>
-          <h2 id="reason-title" className="det-block__title">
-            はじめてでも、安心な理由
-          </h2>
           <ul className="det-reasons">
             {reasons.map((r) => (
               <li key={r.title} className="has-icon">
@@ -428,15 +390,7 @@ export default function DetectivePage() {
               </li>
             ))}
           </ul>
-        </FadeIn>
-      </section>
-
-      <section className="det-block det-block--mint" aria-labelledby="stats-title">
-        <FadeIn className="det-block__inner" delay={0.06}>
-          <h2 id="stats-title" className="det-block__title">
-            提携調査チームの実績
-          </h2>
-          <ul className="det-stats det-stats--4">
+          <ul className="det-stats det-stats--4 det-stats--compact">
             {stats.map((s) => (
               <li key={s.label}>
                 <strong>{s.value}</strong>
@@ -449,11 +403,14 @@ export default function DetectivePage() {
             <br />
             {tentOffice.partnerCasesNote}
           </p>
+          <a className="det-promise__link" href="#det-price">
+            料金・プランを見る
+          </a>
         </FadeIn>
       </section>
 
       <section
-        className="det-block det-block--ink det-price"
+        className="det-block det-block--mint det-price"
         id="det-price"
         aria-labelledby="price-title"
       >
@@ -464,42 +421,9 @@ export default function DetectivePage() {
           <p className="det-block__lead">
             {PRIMARY_CLAIM}。{tentOffice.minPriceNote}。3つのプランから選べます。
           </p>
-
-          <div className="det-price-compare">
-            <h3 className="det-price-compare__title">
-              最後の金額が、最初に分かる
-            </h3>
-            <p className="det-price-compare__lead">
-              お見積り以外の追加料金はいただきません（関東以外の交通費・宿泊費は実費）。
-            </p>
-            <h4 className="det-price-cards__title">
-              料金の仕組みを、比べてみてください
-            </h4>
-            <ul className="det-price-cards">
-              {priceCompareRows.map((row) => (
-                <li key={row.item} className="det-price-cards__row">
-                  <p className="det-price-cards__item">{row.item}</p>
-                  <div className="det-price-cards__cols">
-                    <div className="det-price-cards__col">
-                      <span className="det-price-cards__label">
-                        時間料金制の一般的な例
-                      </span>
-                      <p>{row.general}</p>
-                    </div>
-                    <div className="det-price-cards__col det-price-cards__col--ours">
-                      <span className="det-price-cards__label">
-                        ミノガサン探偵事務所
-                      </span>
-                      <p>{row.ours}</p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <p className="det-tiny det-price-cards__note">
-              ※「時間料金制の一般的な例」は、調査員の人数と時間で料金を計算する料金体系を説明したもので、特定の事務所を示すものではありません。関東以外の交通費・宿泊費は実費です。
-            </p>
-          </div>
+          <p className="det-price-compare__lead det-price-compare__lead--solo">
+            最後の金額が、最初に分かる。お見積り以外の追加料金はいただきません（関東以外の交通費・宿泊費は実費）。
+          </p>
 
           <h3 className="det-price__h3">選べる3つのプラン</h3>
           <div className="det-price__plans">
@@ -539,6 +463,37 @@ export default function DetectivePage() {
             </article>
           </div>
           <p className="det-tiny">{PRIMARY_NOTE}</p>
+          <CtaPair position="price" />
+
+          <div className="det-price-compare">
+            <h3 className="det-price-compare__title">
+              料金で、不安を残さないために
+            </h3>
+            <ul className="det-price-cards">
+              {priceCompareRows.map((row) => (
+                <li key={row.item} className="det-price-cards__row">
+                  <p className="det-price-cards__item">{row.item}</p>
+                  <div className="det-price-cards__cols">
+                    <div className="det-price-cards__col">
+                      <span className="det-price-cards__label">
+                        時間料金制の一般的な例
+                      </span>
+                      <p>{row.general}</p>
+                    </div>
+                    <div className="det-price-cards__col det-price-cards__col--ours">
+                      <span className="det-price-cards__label">
+                        ミノガサン探偵事務所
+                      </span>
+                      <p>{row.ours}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="det-tiny det-price-cards__note">
+              ※「時間料金制の一般的な例」は、調査員の人数と時間で料金を計算する料金体系を説明したもので、特定の事務所を示すものではありません。関東以外の交通費・宿泊費は実費です。
+            </p>
+          </div>
 
           <div className="det-price__box det-price__box--soft">
             <h3>慰謝料の一般的な目安</h3>
@@ -549,13 +504,12 @@ export default function DetectivePage() {
               ※受け取りを約束するものではありません。
             </p>
           </div>
-
-          <CtaPair position="price" />
         </FadeIn>
       </section>
 
       <section
         className="det-block det-block--dark"
+        id="det-voice"
         aria-labelledby="voice-title"
       >
         <FadeIn className="det-block__inner">
