@@ -94,7 +94,7 @@ const delivers = [
 const flow = [
   {
     n: "01",
-    title: "無料相談",
+    title: "LINE・電話で相談",
     body: "いまのお気持ちを、ご希望の同性の担当が伺います。",
     icon: "consult" as const,
   },
@@ -216,8 +216,12 @@ function FlowGlyph({ name }: { name: FlowIcon }) {
 
 const faqs = [
   {
+    q: "相談だけでもいいですか？",
+    a: "はい。ご相談とお見積りは、ご契約まで無料です。契約を急かすことはありません。",
+  },
+  {
     q: "いくらかかりますか？",
-    a: `最低費用は${tentOffice.minPrice}〜（税込・最初の一歩プラン）。おまかせプランは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）、成功報酬プランは${tentOffice.successDeposit}〜（税込）です。正確な総額はLINEで無料でお伝えします。`,
+    a: `まずはLINEか電話で、必要な範囲だけお見積りします。入口の最初の一歩プランは${tentOffice.minPrice}〜（税込）。本調査のおまかせプランは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）で総額が見えます。成功報酬プランは${tentOffice.successDeposit}〜（税込）です。`,
   },
   {
     q: "証拠が取れなかったら？",
@@ -243,10 +247,6 @@ const faqs = [
     q: "同性の相談員に相談できますか？",
     a: "はい。ご希望に合わせて、同性の相談員が対応します。男性・女性どちらからもご相談いただけます。",
   },
-  {
-    q: "相談だけでもいいですか？",
-    a: "はい。ご相談とお見積りは、ご契約まで無料です。",
-  },
 ];
 
 function LineIcon() {
@@ -261,6 +261,15 @@ function LineIcon() {
 }
 
 function CtaPair({ position }: { position: "footer" | "price" }) {
+  const lineLabel =
+    position === "price" ? "料金をLINEで聞く" : "LINEで相談する";
+  const telLabel =
+    position === "price" ? "電話で料金を聞く" : "電話で相談する";
+  const hint =
+    position === "price"
+      ? "見積もりの相談だけでも構いません。"
+      : "送るだけ・話すだけでも大丈夫です。契約を急かしません。";
+
   return (
     <div className="det-cta-pair">
       <a
@@ -271,16 +280,17 @@ function CtaPair({ position }: { position: "footer" | "price" }) {
         data-cta-position={position}
       >
         <LineIcon />
-        LINEで無料相談する
+        {lineLabel}
       </a>
       <a
         className="det-btn det-btn--tel det-btn--lg"
         href={`tel:${DETECTIVE_TEL}`}
         data-cta-position={position}
       >
-        電話で相談する
+        {telLabel}
         <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
       </a>
+      <p className="det-cta-pair__hint">{hint}</p>
     </div>
   );
 }
@@ -325,7 +335,7 @@ export default function DetectivePage() {
 
         <div className="det-fv__panel">
           <p className="det-fv__brand">{tentOffice.name}</p>
-          <p className="det-fv__category">浮気・不倫調査</p>
+          <p className="det-fv__category">浮気・不倫調査専門</p>
           <p className="det-fv__empathy">
             事実がほしい。でも、空振りの費用は怖い。
           </p>
@@ -336,19 +346,33 @@ export default function DetectivePage() {
               <strong>0円</strong>
             </span>
           </h1>
-          <p className="det-fv__support">すべてのプランが対象です。</p>
-          <a
-            className="det-btn det-btn--line det-fv__cta"
-            href={DETECTIVE_LINE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cta-position="fv"
-          >
-            <LineIcon />
-            LINEで無料相談
-          </a>
+          <p className="det-fv__resolve">見逃さない。疑いを、事実に変える。</p>
+          <p className="det-fv__support">すべてのプランが対象です。相談だけでも大丈夫。</p>
+          <div className="det-fv__ctas">
+            <a
+              className="det-btn det-btn--line det-fv__cta"
+              href={DETECTIVE_LINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta-position="fv"
+            >
+              <LineIcon />
+              LINEで相談する
+            </a>
+            <a
+              className="det-btn det-btn--tel det-fv__cta"
+              href={`tel:${DETECTIVE_TEL}`}
+              data-cta-position="fv"
+            >
+              電話で相談する
+              <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
+            </a>
+          </div>
+          <p className="det-fv__reassure">
+            送るだけでもOK。契約を急かしません。
+          </p>
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-price">料金</a>
+            <a href="#det-price">料金の見通し</a>
             <a href="#det-voice">お客様の声</a>
             <a href="#det-flow">進め方</a>
           </nav>
@@ -361,23 +385,16 @@ export default function DetectivePage() {
         aria-labelledby="trust-title"
       >
         <FadeIn className="det-block__inner" delay={0.04}>
+          <p className="det-block__eyebrow">まず、ひとりで抱えなくていい</p>
           <h2 id="trust-title" className="det-block__title">
-            話しづらいことも、同性の相談員に話せます
+            話しづらいことも、
+            <br />
+            同性の相談員に話せます
           </h2>
           <p className="det-block__lead">
-            相談から報告まで、ご希望の同性の相談員が担当します。無理に契約を急かしません。
+            相談から報告まで同じ担当がつきます。契約を急かさず、いまの不安から一緒に整理します。
           </p>
-          <figure className="det-reason-scene">
-            <img
-              src="/detective/scene-consult-bright.jpg"
-              alt=""
-              loading="lazy"
-            />
-            <figcaption>
-              落ち着いて話せる相談の場で、同性の担当が伺います。
-            </figcaption>
-          </figure>
-          <ul className="det-reasons">
+          <ul className="det-reasons det-reasons--compact">
             {reasons.map((r) => (
               <li key={r.title} className="has-icon">
                 <span className="det-reasons__icon">
@@ -403,9 +420,6 @@ export default function DetectivePage() {
             <br />
             {tentOffice.partnerCasesNote}
           </p>
-          <a className="det-promise__link" href="#det-price">
-            料金・プランを見る
-          </a>
         </FadeIn>
       </section>
 
@@ -415,19 +429,78 @@ export default function DetectivePage() {
         aria-labelledby="price-title"
       >
         <FadeIn className="det-block__inner" delay={0.04}>
+          <p className="det-block__eyebrow">お金の不安から、先に軽くする</p>
           <h2 id="price-title" className="det-block__title">
-            料金について
+            いきなり高額で、
+            <br />
+            決めなくて大丈夫です
           </h2>
           <p className="det-block__lead">
-            {PRIMARY_CLAIM}。{tentOffice.minPriceNote}。3つのプランから選べます。
-          </p>
-          <p className="det-price-compare__lead det-price-compare__lead--solo">
-            最後の金額が、最初に分かる。お見積り以外の追加料金はいただきません（関東以外の交通費・宿泊費は実費）。
+            まずはLINEか電話で状況を整理し、必要な範囲だけお見積りします。
           </p>
 
-          <h3 className="det-price__h3">選べる3つのプラン</h3>
+          <ol className="det-price-steps" aria-label="料金の進め方">
+            <li>
+              <span className="det-price-steps__n">1</span>
+              <div>
+                <strong>LINE・電話で相談（契約なし）</strong>
+                <p>相談だけでもOK。いまの状況を整理し、必要な範囲だけ見積もります。</p>
+              </div>
+            </li>
+            <li>
+              <span className="det-price-steps__n">2</span>
+              <div>
+                <strong>最初の一歩 {tentOffice.minPrice}〜</strong>
+                <p>大きな調査の前に、相手を確かめる入口プランです。</p>
+              </div>
+            </li>
+            <li>
+              <span className="det-price-steps__n">3</span>
+              <div>
+                <strong>
+                  本調査は定額 {tentOffice.flatPlanTotal}（{tentOffice.flatPlanTaxNote}）
+                </strong>
+                <p>追加なしで、最後の金額が最初に見えるおまかせプランです。</p>
+              </div>
+            </li>
+          </ol>
+
+          <ul className="det-assure" aria-label="料金の安心ポイント">
+            <li>
+              <strong>{PRIMARY_CLAIM}</strong>
+              <span>空振りの不安を減らせます（全プラン対象）</span>
+            </li>
+            <li>
+              <strong>追加料金なし</strong>
+              <span>お見積り以外はいただきません</span>
+            </li>
+            <li>
+              <strong>契約前に総額</strong>
+              <span>納得してから進められます</span>
+            </li>
+          </ul>
+          <p className="det-tiny det-assure__note">
+            ※関東以外の交通費・宿泊費は実費です。{PRIMARY_NOTE.replace(/^※/, "")}
+          </p>
+
+          <aside className="det-voice-teaser" aria-label="お客様の声（抜粋）">
+            <p className="det-voice-teaser__quote">
+              “{featuredVoice.title}”
+            </p>
+            <p className="det-voice-teaser__body">
+              探偵事務所と聞いて緊張していたが、相談して不安が消えた——そんな声があります。
+            </p>
+            <a className="det-promise__link" href="#det-voice">
+              お客様の声を読む
+            </a>
+          </aside>
+
+          <CtaPair position="price" />
+
+          <h3 className="det-price__h3">プランの詳細</h3>
           <div className="det-price__plans">
-            <article className="det-price__plan">
+            <article className="det-price__plan det-price__plan--featured">
+              <p className="det-price__plan-badge">はじめやすい</p>
               <h3>最初の一歩プラン</h3>
               <p className="det-price__plan-catch">大きな調査の前に、相手を確かめる</p>
               <p className="det-price__plan-price">
@@ -438,10 +511,12 @@ export default function DetectivePage() {
                 相手の名前・住所・勤務先を確かめたい方へ。報告書つき。
               </p>
             </article>
-            <article className="det-price__plan det-price__plan--featured">
-              <p className="det-price__plan-badge">おすすめ</p>
+            <article className="det-price__plan">
+              <p className="det-price__plan-badge det-price__plan-badge--soft">
+                総額が見える
+              </p>
               <h3>おまかせプラン</h3>
-              <p className="det-price__plan-catch">総額が、最初から見える</p>
+              <p className="det-price__plan-catch">本調査の定額。最後の金額が最初に分かる</p>
               <p className="det-price__plan-price">
                 <strong>{tentOffice.flatPlanTotal}</strong>
                 <span>{tentOffice.flatPlanTaxNote}</span>
@@ -462,8 +537,6 @@ export default function DetectivePage() {
               </p>
             </article>
           </div>
-          <p className="det-tiny">{PRIMARY_NOTE}</p>
-          <CtaPair position="price" />
 
           <div className="det-price-compare">
             <h3 className="det-price-compare__title">
@@ -498,7 +571,7 @@ export default function DetectivePage() {
           <div className="det-price__box det-price__box--soft">
             <h3>慰謝料の一般的な目安</h3>
             <p>
-              証拠がそろったあとの話ですが、一般的には50万〜300万円とされることがあります。
+              証拠がそろったあとの話ですが、一般的には50万〜300万円とされることがあります。調査費用を、その後の判断材料への投資として考える方もいます。
             </p>
             <p className="det-price__box-note">
               ※受け取りを約束するものではありません。
@@ -513,8 +586,9 @@ export default function DetectivePage() {
         aria-labelledby="voice-title"
       >
         <FadeIn className="det-block__inner">
+          <p className="det-block__eyebrow">同じ不安から、一歩出た人の声</p>
           <h2 id="voice-title" className="det-block__title">
-            お客様の声
+            相談して、不安が消えた
           </h2>
           <blockquote className="det-voice-feature">
             <p className="det-voice-feature__quote">“{featuredVoice.title}”</p>
@@ -534,9 +608,9 @@ export default function DetectivePage() {
         </FadeIn>
       </section>
 
-      <section className="det-block det-block--ink" aria-labelledby="give-title">
+      <section className="det-block det-block--light" aria-labelledby="give-title">
         <FadeIn className="det-block__inner">
-          <h2 id="give-title" className="det-block__title">
+          <h2 id="give-title" className="det-block__title det-block__title--dark">
             調査後にお渡しするもの
           </h2>
           <ul className="det-give">
@@ -559,8 +633,11 @@ export default function DetectivePage() {
         aria-labelledby="flow-title"
       >
         <FadeIn className="det-block__inner" delay={0.06}>
+          <p className="det-block__eyebrow">依頼する前に、全体が見える</p>
           <h2 id="flow-title" className="det-block__title">
-            ご相談から報告までの流れ
+            相談から報告まで、
+            <br />
+            5つのステップ
           </h2>
           <ol className="det-flow-list">
             {flow.map((s) => (
@@ -602,9 +679,14 @@ export default function DetectivePage() {
         aria-labelledby="final-title"
       >
         <FadeIn className="det-final__inner">
-          <h2 id="final-title">まずは、いまのお気持ちを聞かせてください。</h2>
+          <p className="det-final__eyebrow">ひとりで決めなくていい</p>
+          <h2 id="final-title">
+            まずは、いまの気持ちを
+            <br />
+            LINEか電話で聞かせてください
+          </h2>
           <p className="det-final__lead">
-            ご契約を急ぐ必要はありません。相談だけでも構いません。
+            匿名でかまいません。依頼するかどうかは、お話のあとで決められます。
           </p>
           <CtaPair position="footer" />
         </FadeIn>

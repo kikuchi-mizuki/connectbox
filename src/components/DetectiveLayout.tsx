@@ -35,7 +35,7 @@ export default function DetectiveLayout() {
     link.id = id;
     link.rel = "stylesheet";
     link.href =
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@500;600&display=swap";
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@400;500;600&display=swap";
     document.head.appendChild(link);
   }, []);
 
@@ -92,7 +92,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
               data-cta-position="header"
             >
               <LineIcon />
-              <span className="det-header__line-label">LINEで無料相談</span>
+              <span className="det-header__line-label">LINE</span>
             </a>
             <a
               className="det-btn det-btn--tel"
@@ -119,14 +119,14 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           data-cta-position="sticky"
         >
           <LineIcon />
-          LINEで無料相談
+          LINEで相談する
         </a>
         <a
           className="det-sticky__tel"
           href={`tel:${DETECTIVE_TEL}`}
           data-cta-position="sticky"
         >
-          電話
+          電話で相談する
           <span>{DETECTIVE_TEL_DISPLAY}</span>
         </a>
       </div>
