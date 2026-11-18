@@ -17,7 +17,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 /** 第一訴求まわり（ページ全体で同じ言い方に揃える） */
 const PRIMARY_CLAIM = "証拠が取れなければ、調査費用は0円";
 const PRIMARY_NOTE =
-  "※0円保証は浮気・不倫調査の各プランが対象です。他調査はお見積り時に条件をご説明します。詳細はご契約前に書面でご説明します。";
+  "※0円保証は浮気・不倫調査の各プランが対象です。他調査はお見積り時にご説明します。条件はご契約前に書面でご説明します。";
 
 function getDetectiveJsonLd(faqs: { q: string; a: string }[]) {
   return [
@@ -268,7 +268,11 @@ const faqs = [
   },
   {
     q: "証拠が取れなかったら？",
-    a: `${PRIMARY_CLAIM}。浮気・不倫調査の各プランが対象です。他調査の条件はお見積り時にご説明します。くわしくはご契約前に書面でご説明します。`,
+    a: `${PRIMARY_CLAIM}。浮気・不倫調査の各プランが対象です。他調査はお見積り時にご説明します。条件はご契約前に書面でご説明します。`,
+  },
+  {
+    q: "探偵と興信所は違いますか？",
+    a: "呼び方の違いはありますが、浮気調査や人探しなど、調査の依頼先として探される点は共通です。当事務所は探偵業の届出を行い、興信所をお探しの方の費用・調査のご相談にも対応しています。",
   },
   {
     q: "相手にバレませんか？",
@@ -496,7 +500,7 @@ export default function DetectivePage() {
         aria-labelledby="price-title"
       >
         <FadeIn className="det-block__inner" delay={0.04}>
-          <p className="det-block__eyebrow">お金の不安から、先に軽くする</p>
+          <p className="det-block__eyebrow">探偵・興信所の費用</p>
           <h2 id="price-title" className="det-block__title">
             いきなり高額で、
             <br />
@@ -563,7 +567,9 @@ export default function DetectivePage() {
             </li>
           </ul>
           <p className="det-tiny det-assure__note">
-            ※関東以外の交通費・宿泊費は実費。{PRIMARY_NOTE.replace(/^※/, "")}
+            ※関東以外の交通費・宿泊費は実費です。
+            <br />
+            {PRIMARY_NOTE.replace(/^※/, "")}
           </p>
 
           <CtaPair position="price" />
