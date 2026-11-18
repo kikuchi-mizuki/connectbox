@@ -356,6 +356,7 @@ export default function DetectivePage() {
     description: detectiveSeo.description,
     keywords: detectiveSeo.keywords,
     path: detectiveSeo.path,
+    noindex: true,
     ogTitle: detectiveSeo.title,
     ogDescription: detectiveSeo.description,
     ogImage: detectiveSeo.ogImage,

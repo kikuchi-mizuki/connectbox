@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
+import ConnectBoxContactCards from "../components/ConnectBoxContactCards";
 import FadeIn from "../components/FadeIn";
 import MessageSection from "../components/MessageSection";
 import ValueSection from "../components/ValueSection";
-import { Link } from "react-router-dom";
-import { CONNECT_BOX_EMAIL } from "../constants";
 import { company, companyMission } from "../data/company";
 import { usePageMeta } from "../hooks/usePageMeta";
 
@@ -18,16 +18,18 @@ const overview = [
     label: "所在地",
     value: `${company.postalCode} ${company.address}`,
   },
-  { label: "事業内容", value: company.business },
+  { label: "主事業", value: company.businessPrimary },
+  { label: "その他", value: company.businessOther },
 ];
 
 export default function CompanyPage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "会社情報｜株式会社T-connect",
+    title: "会社情報｜株式会社T-connect（ティーコネクト）",
     description:
-      "株式会社T-connectの会社情報。所在地・代表者・事業内容（Connect BoxのBPO・コンサルティングなど）。",
-    keywords: "株式会社T-connect,T-connect,会社情報,会社概要,Connect Box,コネクトボックス",
+      "株式会社T-connect（ティーコネクト）の会社概要。代表・所在地（東京都新宿区）・主事業Connect Box（BPO・コンサルティング）。お問い合わせはLINE・オンライン相談・メールで。",
+    keywords:
+      "株式会社T-connect,ティーコネクト,会社情報,会社概要,所在地,代表取締役,Connect Box,コネクトボックス,公式",
     path: "/company",
   });
 
@@ -47,16 +49,16 @@ export default function CompanyPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="hero__brand">Company</p>
+            <p className="hero__brand">株式会社T-connect</p>
             <h1 className="hero__title">会社情報</h1>
-            <p className="hero__lead">{companyMission.tagline}</p>
+            <p className="hero__lead">
+              {companyMission.tagline}
+              <br />
+              主事業は Connect Box（BPO・コンサルティング）です。
+            </p>
           </motion.div>
         </div>
       </section>
-
-      <ValueSection id="company-value" />
-
-      <MessageSection />
 
       <section className="section section--muted top-company" aria-labelledby="overview-title">
         <FadeIn className="section__inner top-company__inner">
@@ -65,6 +67,9 @@ export default function CompanyPage() {
             <h2 className="section__title" id="overview-title">
               会社概要
             </h2>
+            <p className="top-section-head__lead">
+              株式会社T-connect（ティーコネクト）の基本情報です。
+            </p>
           </header>
           <dl className="company-dl">
             {overview.map((row) => (
@@ -74,17 +79,26 @@ export default function CompanyPage() {
               </div>
             ))}
           </dl>
-          <p className="company-contact" data-cta-position="content">
-            お問い合わせ（Connect Box）：{" "}
-            <a
-              href={`mailto:${CONNECT_BOX_EMAIL}`}
-              data-cta-position="content"
-            >
-              {CONNECT_BOX_EMAIL}
-            </a>
-            {" / "}
-            <Link to="/connect-box">サービス詳細へ</Link>
+          <p className="section__more-link">
+            <Link to="/connect-box">主事業 Connect Box の詳細 →</Link>
           </p>
+        </FadeIn>
+      </section>
+
+      <ValueSection id="company-value" />
+
+      <MessageSection />
+
+      <section className="section top-cta" aria-labelledby="company-contact-title">
+        <FadeIn className="section__inner top-cta__inner">
+          <p className="section__label">Contact</p>
+          <h2 className="section__title top-section-title" id="company-contact-title">
+            お問い合わせ
+          </h2>
+          <p className="top-cta__lead">
+            Connect Box へのご相談は、ご都合のよい方法でご連絡ください。
+          </p>
+          <ConnectBoxContactCards ctaPosition="company" />
         </FadeIn>
       </section>
     </main>

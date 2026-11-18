@@ -1,28 +1,16 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import ConnectBoxContactCards from "../../components/ConnectBoxContactCards";
 import FadeIn from "../../components/FadeIn";
 import ConnectBoxLeadForm from "../../components/ConnectBoxLeadForm";
-import {
-  CONNECT_BOX_EMAIL,
-  CONNECT_BOX_LINE_URL,
-  CONNECT_BOX_MEETING_URL,
-} from "../../constants";
 import {
   connectBoxBrand,
   connectBoxCases,
   connectBoxCatalog,
-  connectBoxContacts,
   connectBoxPrice,
 } from "../../data/connectBox";
 import { usePageMeta } from "../../hooks/usePageMeta";
-
-const contactHrefs = {
-  line: CONNECT_BOX_LINE_URL,
-  meeting: CONNECT_BOX_MEETING_URL,
-  email: `mailto:${CONNECT_BOX_EMAIL}`,
-  download: "#download",
-} as const;
 
 function scrollToContact(smooth: boolean) {
   document.getElementById("final-cta")?.scrollIntoView({
@@ -159,46 +147,52 @@ export default function ConnectBoxPage() {
             <br />
             課題に合わせて組み合わせできます。
           </p>
-          <ul className="cb-service-grid">
-            {connectBoxCatalog.map((item) => {
-              const inner = (
-                <>
-                  <span className="cb-service-item__n">{item.n}</span>
-                  <span className="cb-service-item__body">
-                    <strong>{item.name}</strong>
-                    {item.note ? (
-                      <span className="cb-service-item__note">{item.note}</span>
-                    ) : null}
-                    {item.status === "coming_soon" ? (
-                      <span className="biz-card__badge">リリース前</span>
-                    ) : null}
-                  </span>
-                  {item.path ? (
+          <ul className="cb-service-grid cb-service-grid--featured">
+            {connectBoxCatalog
+              .filter((item) => item.path)
+              .map((item) => (
+                <li key={item.n}>
+                  <Link
+                    className="cb-service-item cb-service-item--link cb-service-item--featured"
+                    to={item.path!}
+                  >
+                    <span className="cb-service-item__n">{item.n}</span>
+                    <span className="cb-service-item__body">
+                      <strong>{item.name}</strong>
+                      {item.note ? (
+                        <span className="cb-service-item__note">{item.note}</span>
+                      ) : null}
+                      {item.status === "coming_soon" ? (
+                        <span className="biz-card__badge">リリース前</span>
+                      ) : null}
+                    </span>
                     <span className="cb-service-item__more">
                       {item.status === "coming_soon" ? "事前案内" : "詳しく"}
                     </span>
-                  ) : null}
-                </>
-              );
-
-              return (
-                <li key={item.n}>
-                  {item.path ? (
-                    <Link className="cb-service-item cb-service-item--link" to={item.path}>
-                      {inner}
-                    </Link>
-                  ) : (
-                    <div className="cb-service-item">{inner}</div>
-                  )}
+                  </Link>
                 </li>
-              );
-            })}
+              ))}
           </ul>
-          <p className="cb-services-featured">
-            まずは本命の{" "}
-            <Link to="/connect-box/back-office">バックオフィス代行</Link>
-            からご相談ください。その他の領域も、同じ窓口で組み合わせ可能です。
-          </p>
+          <ul
+            className="cb-service-grid cb-service-grid--secondary"
+            aria-label="その他の支援"
+          >
+            {connectBoxCatalog
+              .filter((item) => !item.path)
+              .map((item) => (
+                <li key={item.n}>
+                  <div className="cb-service-item cb-service-item--secondary">
+                    <span className="cb-service-item__n">{item.n}</span>
+                    <span className="cb-service-item__body">
+                      <strong>{item.name}</strong>
+                      {item.note ? (
+                        <span className="cb-service-item__note">{item.note}</span>
+                      ) : null}
+                    </span>
+                  </div>
+                </li>
+              ))}
+          </ul>
         </FadeIn>
       </section>
 
@@ -288,33 +282,17 @@ export default function ConnectBoxPage() {
             </span>
           </p>
           <p>ご都合のよい方法でご連絡ください。</p>
-          <div className="cb-contact-grid" data-cta-position="footer">
-            {connectBoxContacts.map((c) => (
-              <a
-                key={c.id}
-                className={`cb-contact-card cb-contact-card--${c.id}`}
-                href={contactHrefs[c.hrefKey]}
-                data-cta-position="footer"
-                {...(c.hrefKey === "email" || c.hrefKey === "download"
-                  ? {}
-                  : { target: "_blank", rel: "noopener noreferrer" })}
-                onClick={
-                  c.hrefKey === "download"
-                    ? (e) => {
-                        e.preventDefault();
-                        document.getElementById("download")?.scrollIntoView({
-                          behavior: reduce ? "auto" : "smooth",
-                          block: "start",
-                        });
-                      }
-                    : undefined
-                }
-              >
-                <span className="cb-contact-card__title">{c.title}</span>
-                <span className="cb-contact-card__sub">{c.sub}</span>
-              </a>
-            ))}
-          </div>
+          <ConnectBoxContactCards
+            includeDownload
+            ctaPosition="footer"
+            onDownloadClick={(e) => {
+              e.preventDefault();
+              document.getElementById("download")?.scrollIntoView({
+                behavior: reduce ? "auto" : "smooth",
+                block: "start",
+              });
+            }}
+          />
         </FadeIn>
       </section>
 

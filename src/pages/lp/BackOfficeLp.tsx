@@ -1,13 +1,13 @@
 import { motion, useReducedMotion } from "framer-motion";
-import CtaButton from "../../components/CtaButton";
+import ConnectBoxContactCards from "../../components/ConnectBoxContactCards";
 import FadeIn from "../../components/FadeIn";
-import { CONNECT_BOX_LINE_URL, SITE_URL } from "../../constants";
+import { SITE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 const PAGE_PATH = "/connect-box/back-office";
 const PAGE_TITLE = "事務代行・バックオフィス業務代行｜Connect Box";
 const PAGE_DESCRIPTION =
-  "事務代行・バックオフィス代行ならConnect Box（コネクトボックス）。経理・総務・人事・営業事務の負担を、採用せずに減らす。まずは15分、LINEで相談。";
+  "事務代行・バックオフィス代行ならConnect Box（コネクトボックス）。経理・総務・人事・営業事務の負担を、採用せずに減らす。LINE・オンライン相談・メールで受付。";
 
 function getBackOfficeServiceJsonLd() {
   return {
@@ -98,7 +98,7 @@ const cases = [
 const steps = [
   {
     title: "ご相談",
-    body: "困っている点を伺います。LINEでもOKです。",
+    body: "困っている点を伺います。LINE・オンライン・メールでOKです。",
     image:
       "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
   },
@@ -191,7 +191,13 @@ export default function BackOfficeLp() {
               採用せずに、必要な事務代行だけ外に出せます。
             </p>
             <div className="cta-row">
-              <CtaButton className="btn--large btn--pulse" ctaPosition="hero" />
+              <a
+                className="btn btn--primary btn--large"
+                href="#final-cta"
+                data-cta-position="hero"
+              >
+                相談方法を見る
+              </a>
             </div>
           </motion.div>
         </div>
@@ -351,28 +357,15 @@ export default function BackOfficeLp() {
         </FadeIn>
       </section>
 
-      <section className="final-cta" id="final-cta" aria-labelledby="cta-title">
-        <FadeIn className="final-cta__inner">
+      <section className="final-cta final-cta--contacts" id="final-cta" aria-labelledby="cta-title">
+        <FadeIn className="final-cta__inner final-cta__inner--wide">
           <h2 id="cta-title">
             まずは、御社の課題を
             <br />
             お聞かせください
           </h2>
-          <p>15分ほどで、対象になりそうな業務があるかを一緒に整理します。</p>
-          <div className="cta-row">
-            <CtaButton className="btn--large btn--pulse" ctaPosition="footer" />
-          </div>
-          <p className="mail-hint">
-            友だち追加：{" "}
-            <a
-              href={CONNECT_BOX_LINE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cta-position="footer"
-            >
-              lin.ee/w0pvsAp
-            </a>
-          </p>
+          <p>ご都合のよい方法でご連絡ください。15分ほどで、対象業務を一緒に整理します。</p>
+          <ConnectBoxContactCards ctaPosition="footer" />
         </FadeIn>
       </section>
     </main>

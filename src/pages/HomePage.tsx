@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import ConnectBoxContactCards from "../components/ConnectBoxContactCards";
 import FadeIn from "../components/FadeIn";
 import { businesses } from "../data/businesses";
 import { brandStory, company, companyMission } from "../data/company";
-import { getOrganizationJsonLd } from "../data/organizationJsonLd";
 import { usePageMeta } from "../hooks/usePageMeta";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -48,28 +47,13 @@ function VerticalTitle({ text, reduce }: { text: string; reduce: boolean | null 
 export default function HomePage() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "株式会社T-connect（T-connect）｜公式サイト",
+    title: "株式会社T-connect（ティーコネクト）｜公式サイト",
     description:
-      "株式会社T-connect（ティーコネクト）の公式ホームページ。Connect Box（コネクトボックス）のBPO・コンサルティングを中心に、人と人との縁を紡ぐ事業を展開。東京都新宿区。",
+      "株式会社T-connect（ティーコネクト）の公式サイト。主事業Connect Box（コネクトボックス）でBPO・バックオフィス代行・コンサルティングを提供。東京都新宿区西新宿。",
     keywords:
-      "株式会社T-connect,T-connect,ティーコネクト,公式サイト,Connect Box,コネクトボックス,BPO,バックオフィス代行",
+      "株式会社T-connect,T-connect,ティーコネクト,ティーコネクト 公式,株式会社ティーコネクト,公式サイト,Connect Box,コネクトボックス,BPO,バックオフィス代行",
     path: "/",
   });
-
-  useEffect(() => {
-    const id = "org-jsonld";
-    let script = document.getElementById(id) as HTMLScriptElement | null;
-    if (!script) {
-      script = document.createElement("script");
-      script.id = id;
-      script.type = "application/ld+json";
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(getOrganizationJsonLd());
-    return () => {
-      script?.remove();
-    };
-  }, []);
 
   return (
     <main className="top-page">
@@ -92,16 +76,27 @@ export default function HomePage() {
             transition={{ duration: 1.15, ease, delay: 0.25 }}
           />
         </div>
-        <motion.a
-          className="top-hero__scroll"
-          href="#brand"
-          initial={reduce ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.9, delay: 1.55, ease }}
-        >
-          <span className="top-hero__scroll-line" aria-hidden="true" />
-          <span>Scroll</span>
-        </motion.a>
+        <div className="top-hero__bottom">
+          <motion.p
+            className="top-hero__identity"
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2, ease }}
+          >
+            株式会社T-connect（ティーコネクト）公式サイト
+            <span>主事業：Connect Box（BPO・コンサルティング）</span>
+          </motion.p>
+          <motion.a
+            className="top-hero__scroll"
+            href="#brand"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9, delay: 1.55, ease }}
+          >
+            <span className="top-hero__scroll-line" aria-hidden="true" />
+            <span>Scroll</span>
+          </motion.a>
+        </div>
       </section>
 
       <section className="top-brand" id="brand" aria-labelledby="brand-title">
@@ -136,17 +131,17 @@ export default function HomePage() {
         <FadeIn className="section__inner top-cta__inner">
           <p className="section__label">Connect Box</p>
           <h2 className="section__title top-section-title" id="top-cta-title">
-            企業の課題は、ひとつの窓口で。
+            主事業は、ひとつの窓口で。
           </h2>
           <p className="top-cta__lead">
-            バックオフィス代行を中心に、必要な支援だけを組み合わせて相談できます。
+            Connect Box（コネクトボックス）で、バックオフィス代行を中心に必要な支援だけを組み合わせます。
           </p>
           <div className="top-cta__actions">
             <Link className="btn btn--primary btn--large" to="/connect-box">
               Connect Boxを見る
             </Link>
-            <Link className="btn btn--secondary btn--large" to="/connect-box/back-office">
-              バックオフィス代行の詳細
+            <Link className="btn btn--secondary btn--large" to="/company">
+              会社情報を見る
             </Link>
           </div>
         </FadeIn>
@@ -160,9 +155,9 @@ export default function HomePage() {
               事業紹介
             </h2>
             <p className="top-section-head__lead">
-              人と企業の「困った」と「これから」に向き合う。
+              主軸は Connect Box。
               <br />
-              それぞれ異なる領域から、人と人とのつながりに価値を生み出す事業です。
+              ほか、関連事業も展開しています。
             </p>
           </header>
           <div className="biz-grid biz-grid--top">
@@ -224,13 +219,30 @@ export default function HomePage() {
               </dd>
             </div>
             <div>
-              <dt>事業内容</dt>
-              <dd>{company.business}</dd>
+              <dt>主事業</dt>
+              <dd>{company.businessPrimary}</dd>
+            </div>
+            <div>
+              <dt>その他</dt>
+              <dd>{company.businessOther}</dd>
             </div>
           </dl>
           <p className="section__more-link">
             <Link to="/company">会社情報の詳細を見る →</Link>
           </p>
+        </FadeIn>
+      </section>
+
+      <section className="section top-cta top-cta--contact" aria-labelledby="top-contact-title">
+        <FadeIn className="section__inner top-cta__inner">
+          <p className="section__label">Contact</p>
+          <h2 className="section__title top-section-title" id="top-contact-title">
+            お問い合わせ
+          </h2>
+          <p className="top-cta__lead">
+            ご都合のよい方法でご連絡ください。
+          </p>
+          <ConnectBoxContactCards ctaPosition="home" />
         </FadeIn>
       </section>
     </main>

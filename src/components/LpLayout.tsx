@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { COMPANY_NAME } from "../constants";
 import { getService } from "../data/services";
-import CtaButton from "./CtaButton";
 import "../lp.css";
 
 export default function LpLayout() {
@@ -54,9 +53,13 @@ export default function LpLayout() {
             <Link className="lp-header__back" to="/connect-box">
               Connect Boxへ
             </Link>
-            <CtaButton className="header-cta btn--compact" ctaPosition="header">
-              15分で相談
-            </CtaButton>
+            <a
+              className="btn btn--primary btn--compact header-cta"
+              href="#final-cta"
+              data-cta-position="header"
+            >
+              相談方法を見る
+            </a>
           </div>
         </div>
       </header>
@@ -67,9 +70,13 @@ export default function LpLayout() {
         className={`sticky-cta${showStickyCta ? " sticky-cta--visible" : ""}`}
         aria-hidden={!showStickyCta}
       >
-        <CtaButton className="btn--large sticky-cta__btn" ctaPosition="sticky">
-          まずは15分、LINEで相談する
-        </CtaButton>
+        <a
+          className="btn btn--primary btn--large sticky-cta__btn"
+          href="#final-cta"
+          data-cta-position="sticky"
+        >
+          相談方法を見る
+        </a>
       </div>
 
       <footer className="lp-footer">

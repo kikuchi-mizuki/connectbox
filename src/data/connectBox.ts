@@ -19,22 +19,25 @@ export type ConnectBoxCatalogItem = {
   status?: "coming_soon";
 };
 
-/** 支援サービス一覧（資料の12項目） */
+/**
+ * 支援サービス一覧（12項目）。
+ * 詳細ページありを先頭、その他を続けて通し番号。
+ */
 export const connectBoxCatalog: ConnectBoxCatalogItem[] = [
   { n: "01", name: "バックオフィス業務代行", path: "/connect-box/back-office" },
-  { n: "02", name: "人事コンサル" },
-  { n: "03", name: "採用コンサル" },
-  { n: "04", name: "研修", note: "入社研修から幹部研修まで" },
-  { n: "05", name: "営業コンサル" },
-  { n: "06", name: "組織コンサル" },
-  { n: "07", name: "経営戦略" },
   {
-    n: "08",
+    n: "02",
     name: "旅費One",
     note: "旅費規定アプリにて経費削減",
     path: "/connect-box/ryohi-one",
     status: "coming_soon",
   },
+  { n: "03", name: "人事コンサル" },
+  { n: "04", name: "採用コンサル" },
+  { n: "05", name: "研修", note: "入社研修から幹部研修まで" },
+  { n: "06", name: "営業コンサル" },
+  { n: "07", name: "組織コンサル" },
+  { n: "08", name: "経営戦略" },
   { n: "09", name: "WEB制作・デザイン" },
   { n: "10", name: "SEO・AIO対策" },
   { n: "11", name: "システム・アプリ開発", note: "保守も可" },

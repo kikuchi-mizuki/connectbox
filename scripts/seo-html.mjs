@@ -56,13 +56,12 @@ export function applyRouteMeta(html, shell, canonical) {
   next = upsertTitle(next, title);
   next = replaceMetaTag(next, "name", "description", description);
   next = replaceMetaTag(next, "name", "keywords", keywords);
-  next = replaceMetaTag(
-    next,
-    "name",
-    "robots",
-    "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  );
-  next = replaceMetaTag(next, "name", "googlebot", "index, follow");
+  const robotsContent = shell.noindex
+    ? "noindex, nofollow"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+  const googlebotContent = shell.noindex ? "noindex, nofollow" : "index, follow";
+  next = replaceMetaTag(next, "name", "robots", robotsContent);
+  next = replaceMetaTag(next, "name", "googlebot", googlebotContent);
   next = replaceMetaTag(next, "property", "og:title", title);
   next = replaceMetaTag(next, "property", "og:description", description);
   next = replaceMetaTag(next, "property", "og:url", canonical);

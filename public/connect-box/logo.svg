@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 70" fill="none" role="img" aria-label="Connect Box.">
+  <title>Connect Box.</title>
+  <!-- Wordmark: Connect (navy) + Box. (orange), rounded bold sans -->
+  <text
+    x="4"
+    y="52"
+    font-family="Outfit, 'Zen Kaku Gothic New', 'Hiragino Sans', system-ui, sans-serif"
+    font-size="52"
+    font-weight="700"
+    letter-spacing="-0.5"
+  >
+    <tspan fill="#384888">Connect</tspan>
+    <tspan dx="10" fill="#E09038">Box.</tspan>
+  </text>
+</svg>

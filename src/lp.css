@@ -1500,6 +1500,20 @@
   z-index: 1;
 }
 
+.lt-download__inner--wide {
+  max-width: min(68rem, 100%);
+  margin-inline: auto;
+}
+
+.lt-download .lt-contact-grid {
+  margin-top: 0.25rem;
+  text-align: left;
+}
+
+.lt-download .cb-contact-card {
+  box-shadow: none;
+}
+
 .lt-download h2 {
   margin: 0 0 0.75rem;
   font-size: clamp(1.3rem, 3.5vw, 1.9rem);

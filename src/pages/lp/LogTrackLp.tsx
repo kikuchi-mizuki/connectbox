@@ -1,8 +1,31 @@
 import { motion, useReducedMotion } from "framer-motion";
-import CtaButton from "../../components/CtaButton";
+import ConnectBoxContactCards from "../../components/ConnectBoxContactCards";
 import FadeIn from "../../components/FadeIn";
-import { CONNECT_BOX_LINE_URL } from "../../constants";
+import { SITE_URL } from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
+
+const PAGE_PATH = "/connect-box/ryohi-one";
+const PAGE_TITLE = "旅費One｜旅費管理（リリース前）｜Connect Box";
+const PAGE_DESCRIPTION =
+  "Connect Boxの旅費One（リリース前）。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。事前のご相談を受付中。";
+
+function getRyohiOneServiceJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "旅費One",
+    alternateName: ["旅費ワン", "旅費管理", "出張管理"],
+    description: PAGE_DESCRIPTION,
+    url: `${SITE_URL}${PAGE_PATH}`,
+    provider: {
+      "@type": "Organization",
+      name: "株式会社T-connect",
+      url: `${SITE_URL}/`,
+    },
+    areaServed: "JP",
+    serviceType: "旅費管理クラウド（リリース前）",
+  };
+}
 
 const chips = ["リリース前", "自動で記録", "日当が見える", "報告書まで"];
 
@@ -47,7 +70,7 @@ const flow = [
 const faqs = [
   {
     q: "いま申し込めますか？",
-    a: "旅費Oneは現在リリース準備中です。公開前のご相談・ご要望はLINEで受け付けています。リリース時期が近づきましたらご案内します。",
+    a: "旅費Oneは現在リリース準備中です。公開前のご相談・ご要望はLINE・オンライン相談・メールで受け付けています。リリース時期が近づきましたらご案内します。",
   },
   {
     q: "旅費Oneは、何のサービスですか？",
@@ -70,16 +93,24 @@ const faqs = [
 export default function LogTrackLp() {
   const reduce = useReducedMotion();
   usePageMeta({
-    title: "旅費One｜旅費管理（リリース前）｜Connect Box",
-    description:
-      "Connect Boxの旅費One（リリース前）。旅費管理をひとつに。出張の移動をGPSで自動記録し、日当計算・出張報告書までつなげる。事前のご相談を受付中。",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     keywords:
       "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス,リリース前",
-    path: "/connect-box/ryohi-one",
+    path: PAGE_PATH,
+    ogTitle: PAGE_TITLE,
+    ogDescription: PAGE_DESCRIPTION,
   });
 
   return (
     <main className="lt-page">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getRyohiOneServiceJsonLd()),
+        }}
+      />
       <section className="lt-hero" id="page-hero" aria-label="メインビジュアル">
         <div className="lt-hero__media" aria-hidden="true">
           <img
@@ -114,9 +145,13 @@ export default function LogTrackLp() {
               ))}
             </ul>
             <div className="lt-hero__cta">
-              <CtaButton className="btn--large" ctaPosition="hero">
-                事前相談をする
-              </CtaButton>
+              <a
+                className="btn btn--primary btn--large"
+                href="#final-cta"
+                data-cta-position="hero"
+              >
+                相談方法を見る
+              </a>
             </div>
           </motion.div>
         </div>
@@ -239,7 +274,7 @@ export default function LogTrackLp() {
         </FadeIn>
       </section>
 
-      <section className="lt-download" id="final-cta">
+      <section className="lt-download lt-download--contacts" id="final-cta">
         <div className="lt-download__media" aria-hidden="true">
           <img
             src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=2400&q=80"
@@ -247,30 +282,19 @@ export default function LogTrackLp() {
           />
           <div className="lt-download__shade" />
         </div>
-        <FadeIn className="lt-download__inner">
+        <FadeIn className="lt-download__inner lt-download__inner--wide">
           <h2>
             リリース前のご相談も、
             <br />
             歓迎しています
           </h2>
           <p>
-            移動の多さ、日当の有無、報告書の作り方をLINEでお聞かせください。
-            公開に向けたご要望も伺えます。
+            移動の多さや日当・報告書の作り方など、ご都合のよい方法でお聞かせください。
           </p>
-          <CtaButton className="btn--large btn--pulse" ctaPosition="footer">
-            事前相談をする
-          </CtaButton>
-          <p className="mail-hint">
-            LINE：{" "}
-            <a
-              href={CONNECT_BOX_LINE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cta-position="footer"
-            >
-              lin.ee/w0pvsAp
-            </a>
-          </p>
+          <ConnectBoxContactCards
+            className="lt-contact-grid"
+            ctaPosition="footer"
+          />
         </FadeIn>
       </section>
     </main>
