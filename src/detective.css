@@ -435,6 +435,16 @@
   margin-top: 0;
 }
 
+.det-fv__note {
+  margin: 0.35rem 0 0;
+  max-width: 20em;
+  font-size: 0.68rem;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  color: var(--det-muted);
+  text-wrap: balance;
+}
+
 .det-fv__reassure {
   margin: 0.45rem 0 0;
   font-size: 0.74rem;

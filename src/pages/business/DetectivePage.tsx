@@ -17,7 +17,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 /** 第一訴求まわり（ページ全体で同じ言い方に揃える） */
 const PRIMARY_CLAIM = "証拠が取れなければ、調査費用は0円";
 const PRIMARY_NOTE =
-  "※0円保証は浮気・不倫調査の各プランが対象です。他調査はお見積り時にご説明します。条件はご契約前に書面でご説明します。";
+  "※すべての調査が対象です。条件はご契約前に書面でご説明します。";
 
 function getDetectiveJsonLd(faqs: { q: string; a: string }[]) {
   return [
@@ -93,7 +93,7 @@ const stats = [
   { value: "同性", label: "相談員に相談可" },
   { value: "30年", label: "創業からの年数" },
   { value: "1万件以上", label: "調査実績" },
-  { value: "0円", label: "取れなければ（浮気調査）" },
+  { value: "0円", label: "取れなければ（全調査）" },
 ];
 
 /** 提携調査会社のGoogleクチコミから抜粋 */
@@ -268,7 +268,7 @@ const faqs = [
   },
   {
     q: "証拠が取れなかったら？",
-    a: `${PRIMARY_CLAIM}。浮気・不倫調査の各プランが対象です。他調査はお見積り時にご説明します。条件はご契約前に書面でご説明します。`,
+    a: `${PRIMARY_CLAIM}。すべての調査が対象です。条件はご契約前に書面でご説明します。`,
   },
   {
     q: "探偵と興信所は違いますか？",
@@ -411,6 +411,7 @@ export default function DetectivePage() {
               <strong>0円</strong>
             </span>
           </h1>
+          <p className="det-fv__note">{PRIMARY_NOTE}</p>
           <div className="det-fv__ctas">
             <a
               className="det-btn det-btn--line det-fv__cta"
@@ -555,7 +556,7 @@ export default function DetectivePage() {
           <ul className="det-assure" aria-label="料金の安心ポイント">
             <li>
               <strong>{PRIMARY_CLAIM}</strong>
-              <span>浮気・不倫調査の各プランが対象</span>
+              <span>すべての調査が対象です</span>
             </li>
             <li>
               <strong>追加料金なし</strong>
@@ -569,7 +570,7 @@ export default function DetectivePage() {
           <p className="det-tiny det-assure__note">
             ※関東以外の交通費・宿泊費は実費です。
             <br />
-            {PRIMARY_NOTE.replace(/^※/, "")}
+            {PRIMARY_NOTE}
           </p>
 
           <CtaPair position="price" />
