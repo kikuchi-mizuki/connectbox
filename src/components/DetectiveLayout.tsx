@@ -6,7 +6,7 @@ import {
   DETECTIVE_TEL,
   DETECTIVE_TEL_DISPLAY,
 } from "../constants";
-import { tentOffice } from "../data/tent";
+import { detectiveBrand, tentOffice } from "../data/tent";
 import "../detective.css";
 
 function LineIcon() {
@@ -37,6 +37,28 @@ export default function DetectiveLayout() {
     link.href =
       "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@400;500;600&display=swap";
     document.head.appendChild(link);
+  }, []);
+
+  useEffect(() => {
+    const links: HTMLLinkElement[] = [];
+    const specs: { rel: string; href: string; sizes?: string; type?: string }[] = [
+      { rel: "icon", href: detectiveBrand.favicon32, sizes: "32x32", type: "image/png" },
+      { rel: "icon", href: detectiveBrand.favicon192, sizes: "192x192", type: "image/png" },
+      { rel: "apple-touch-icon", href: detectiveBrand.favicon180 },
+    ];
+    for (const spec of specs) {
+      const el = document.createElement("link");
+      el.setAttribute("data-det-favicon", "1");
+      el.rel = spec.rel;
+      el.href = spec.href;
+      if (spec.sizes) el.sizes = spec.sizes;
+      if (spec.type) el.type = spec.type;
+      document.head.appendChild(el);
+      links.push(el);
+    }
+    return () => {
+      links.forEach((el) => el.remove());
+    };
   }, []);
 
   useEffect(() => {
@@ -80,8 +102,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       <header className="det-header">
         <div className="det-header__inner">
           <a className="det-header__brand" href="#det-hero">
-            <span className="det-header__mark">{tentOffice.nameEn}</span>
-            <strong>{tentOffice.name}</strong>
+            <img
+              className="det-header__logo"
+              src={detectiveBrand.horizontalBlack}
+              alt={tentOffice.name}
+              width={200}
+              height={40}
+            />
           </a>
           <div className="det-header__actions">
             <a
@@ -133,6 +160,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 
       <footer className="det-footer">
         <div className="det-footer__inner">
+          <img
+            className="det-footer__logo"
+            src={detectiveBrand.horizontalBlack}
+            alt={tentOffice.name}
+            width={180}
+            height={36}
+          />
           <p className="det-footer__org">
             株式会社T-connect {tentOffice.name}
           </p>

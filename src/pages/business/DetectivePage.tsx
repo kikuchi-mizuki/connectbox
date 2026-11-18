@@ -3,30 +3,88 @@ import {
   DETECTIVE_LINE_URL,
   DETECTIVE_TEL,
   DETECTIVE_TEL_DISPLAY,
+  SITE_URL,
 } from "../../constants";
 import { detectiveSeo } from "../../data/detectiveSeo";
-import { tentOffice } from "../../data/tent";
+import {
+  detectiveBrand,
+  detectiveMainService,
+  detectiveOtherServices,
+  tentOffice,
+} from "../../data/tent";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 /** 第一訴求まわり（ページ全体で同じ言い方に揃える） */
 const PRIMARY_CLAIM = "証拠が取れなければ、調査費用は0円";
 const PRIMARY_NOTE =
-  "※「調査費用は0円」は、すべてのプランが対象です。条件の詳細は、ご契約前に書面でご説明します。";
+  "※0円保証は浮気・不倫調査の各プランが対象です。他調査はお見積り時に条件をご説明します。詳細はご契約前に書面でご説明します。";
+
+function getDetectiveJsonLd(faqs: { q: string; a: string }[]) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      name: tentOffice.name,
+      description: detectiveSeo.description,
+      url: detectiveSeo.canonical,
+      telephone: DETECTIVE_TEL_DISPLAY,
+      image: detectiveSeo.ogImage,
+      logo: `${SITE_URL}${detectiveBrand.horizontalBlack}`,
+      areaServed: "JP",
+      priceRange: "¥¥¥",
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "調査メニュー",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            position: 1,
+            name: detectiveMainService.name,
+            description: detectiveMainService.bullets.join("／"),
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "JPY",
+              description: `${detectiveMainService.priceLabel}（${detectiveMainService.priceNote}）`,
+            },
+          },
+          ...detectiveOtherServices.map((item, index) => ({
+            "@type": "Offer",
+            position: index + 2,
+            name: item.name,
+            description: `${item.blurb}（お見積り）`,
+          })),
+        ],
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: f.a,
+        },
+      })),
+    },
+  ];
+}
 
 const reasons = [
   {
-    title: "同性の相談員が、相談から報告まで担当",
-    body: "話しづらいことも、ご希望の同性の相談員が最初から最後まで伺います。",
+    title: "同性の相談員が最初から最後まで",
+    body: "話しづらいことも、ご希望の同性の担当が伺います。",
     icon: "talk" as const,
   },
   {
     title: "秘密を守ります",
-    body: "連絡の手段や時間帯はご希望に合わせます。内容を無断で他人に伝えません。",
+    body: "連絡手段・時間帯はご希望に合わせます。",
     icon: "lock" as const,
   },
   {
     title: "経験のある調査チーム",
-    body: "提携調査会社の創業から約30年。進め方の不安も、相談の段階で一緒に整理します。",
+    body: "提携調査会社の創業から約30年。",
     icon: "team" as const,
   },
 ];
@@ -35,41 +93,22 @@ const stats = [
   { value: "同性", label: "相談員に相談可" },
   { value: "30年", label: "創業からの年数" },
   { value: "1万件以上", label: "調査実績" },
-  { value: "0円", label: "取れなければ（全プラン）" },
+  { value: "0円", label: "取れなければ（浮気調査）" },
 ];
-
-/** 比較はファクト列挙ではなく、ユーザーメリットで書く */
-const priceCompareRows = [
-  {
-    item: "あとから金額が増えにくい",
-    general: "人数×時間で増えるので、終わってみないと総額がわからない",
-    ours: `定額だから、最初に決めた金額で進められる（おまかせ${tentOffice.flatPlanTotal}・${tentOffice.flatPlanTaxNote}）`,
-  },
-  {
-    item: "空振りでも損しにくい",
-    general: "証拠がなくても、動いた時間分は請求されやすい",
-    ours: "証拠が取れなければ調査費用は0円。踏み出すハードルを下げられる",
-  },
-  {
-    item: "納得してから依頼できる",
-    general: "調査後に請求額を知ることになりやすい",
-    ours: "ご契約前に総額が見えるので、不安を残したまま進めなくてよい",
-  },
-] as const;
 
 /** 提携調査会社のGoogleクチコミから抜粋 */
 const voices = [
   {
     title: "勇気を出して相談して本当に良かった",
-    body: "「正直、最初は『探偵事務所』と聞くだけで緊張していましたが、扉を開けた瞬間にその不安はすぐに消えました。ご報告も丁寧で、状況を細かく説明してくださったおかげで、心の整理が着き、今では次の人生に前向きに進む決意ができています。」",
+    body: "「探偵事務所と聞くだけで緊張していましたが、不安はすぐに消えました。報告も丁寧で、次の人生に前向きに進む決意ができています。」",
   },
   {
     title: "費用の見通しがしやすかった",
-    body: "「調査実施日が未確定の中、配偶者の行動パターンに関しての相談に乗っていただき、不貞当日の証拠取りまで無事終えることができました。費用の見通しがしやすく、最終的な支払額に関しての不安は有りませんでした。」",
+    body: "「相談から証拠取りまで任せられました。費用の見通しがしやすく、支払額の不安はありませんでした。」",
   },
   {
     title: "優しい言葉に何度も救われた",
-    body: "「『不安なことがあればいつでも連絡してください』と言ってくださり、その優しい言葉に何度も救われました。調査もとても丁寧で、依頼して本当によかったと感じています。」",
+    body: "「いつでも連絡してください、という言葉に何度も救われました。依頼して本当によかったです。」",
   },
 ];
 
@@ -77,17 +116,17 @@ const delivers = [
   {
     src: "/detective/scene-report.jpg",
     title: "調査報告書",
-    body: "いつ・どこで・何があったかを時系列でまとめます。",
+    body: "日時と行動を時系列でまとめます。",
   },
   {
     src: "/detective/scene-2.jpg",
     title: "調査映像・写真",
-    body: "現場の記録を、あとから見返せる形でお渡しします。",
+    body: "あとから見返せる記録をお渡しします。",
   },
   {
     src: "/detective/scene-consult.jpg",
     title: "報告面談",
-    body: "結果の意味と、この先の選択肢を一緒に整理します。",
+    body: "結果と、この先の選択肢を整理します。",
   },
 ];
 
@@ -95,31 +134,31 @@ const flow = [
   {
     n: "01",
     title: "LINE・電話で相談",
-    body: "いまのお気持ちを、ご希望の同性の担当が伺います。",
+    body: "同性の担当が伺います。",
     icon: "consult" as const,
   },
   {
     n: "02",
     title: "お見積り",
-    body: "調査の内容と、お支払い総額を先に明示します。",
+    body: "内容と総額を先に明示。",
     icon: "estimate" as const,
   },
   {
     n: "03",
     title: "ご契約",
-    body: "大切なお約束を書面で確認してから進めます。",
+    body: "書面確認のうえ開始。",
     icon: "contract" as const,
   },
   {
     n: "04",
     title: "調査",
-    body: "途中の様子も、ご連絡します。",
+    body: "進捗もご連絡します。",
     icon: "search" as const,
   },
   {
     n: "05",
     title: "ご報告",
-    body: "報告書・映像・説明で、事実をお渡しします。",
+    body: "報告書・映像で事実をお渡し。",
     icon: "report" as const,
   },
 ];
@@ -221,11 +260,15 @@ const faqs = [
   },
   {
     q: "いくらかかりますか？",
-    a: `まずはLINEか電話で、必要な範囲だけお見積りします。入口の最初の一歩プランは${tentOffice.minPrice}〜（税込）。本調査のおまかせプランは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）で総額が見えます。成功報酬プランは${tentOffice.successDeposit}〜（税込）です。`,
+    a: `まずはLINEか電話で、必要な範囲だけお見積りします。浮気調査の入口は${tentOffice.minPrice}〜（税込）、おまかせは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）。人探し・素行・ストーカーなどもご相談いただけます。`,
+  },
+  {
+    q: "浮気以外の調査もお願いできますか？",
+    a: "はい。メインは浮気・不倫調査ですが、ストーカー調査、盗聴・盗撮調査、婚前・素行調査、人探し・所在調査にも対応しています。料金はLINEか電話でお見積りします。",
   },
   {
     q: "証拠が取れなかったら？",
-    a: `${PRIMARY_CLAIM}。すべてのプランが対象です。くわしい条件は、ご契約前に書面でご説明します。`,
+    a: `${PRIMARY_CLAIM}。浮気・不倫調査の各プランが対象です。他調査の条件はお見積り時にご説明します。くわしくはご契約前に書面でご説明します。`,
   },
   {
     q: "相手にバレませんか？",
@@ -246,6 +289,10 @@ const faqs = [
   {
     q: "同性の相談員に相談できますか？",
     a: "はい。ご希望に合わせて、同性の相談員が対応します。男性・女性どちらからもご相談いただけます。",
+  },
+  {
+    q: "慰謝料はどのくらいですか？",
+    a: "一般的には50万〜300万円とされることがありますが、ケースにより異なります。受け取りを約束するものではありません。",
   },
 ];
 
@@ -298,6 +345,7 @@ function CtaPair({ position }: { position: "footer" | "price" }) {
 export default function DetectivePage() {
   const featuredVoice = voices[0];
   const otherVoices = voices.slice(1);
+  const jsonLd = getDetectiveJsonLd(faqs);
 
   usePageMeta({
     title: detectiveSeo.title,
@@ -312,6 +360,11 @@ export default function DetectivePage() {
 
   return (
     <main className="det-main">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="det-fv" id="det-hero" aria-label="ファーストビュー">
         <div className="det-fv__media" aria-hidden="true">
           <img
@@ -334,10 +387,18 @@ export default function DetectivePage() {
         </div>
 
         <div className="det-fv__panel">
-          <p className="det-fv__brand">{tentOffice.name}</p>
-          <p className="det-fv__category">浮気・不倫調査専門</p>
+          <img
+            className="det-fv__logo"
+            src={detectiveBrand.verticalBlack}
+            alt={tentOffice.name}
+            width={220}
+            height={220}
+          />
+          <p className="det-fv__category">浮気・不倫調査</p>
           <p className="det-fv__empathy">
-            事実がほしい。でも、空振りの費用は怖い。
+            事実がほしい。
+            <br />
+            でも、空振りの費用は怖い。
           </p>
           <h1 className="det-fv__copy">
             <span className="det-fv__condition">証拠が取れなければ、</span>
@@ -346,8 +407,6 @@ export default function DetectivePage() {
               <strong>0円</strong>
             </span>
           </h1>
-          <p className="det-fv__resolve">見逃さない。疑いを、事実に変える。</p>
-          <p className="det-fv__support">すべてのプランが対象です。相談だけでも大丈夫。</p>
           <div className="det-fv__ctas">
             <a
               className="det-btn det-btn--line det-fv__cta"
@@ -369,12 +428,13 @@ export default function DetectivePage() {
             </a>
           </div>
           <p className="det-fv__reassure">
-            送るだけでもOK。契約を急かしません。
+            相談だけでもOK。
+            <br className="det-br-narrow" />
+            契約を急かしません。
           </p>
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-price">料金の見通し</a>
+            <a href="#det-price">料金プラン</a>
             <a href="#det-voice">お客様の声</a>
-            <a href="#det-flow">進め方</a>
           </nav>
         </div>
       </section>
@@ -385,6 +445,13 @@ export default function DetectivePage() {
         aria-labelledby="trust-title"
       >
         <FadeIn className="det-block__inner" delay={0.04}>
+          <figure className="det-block__visual">
+            <img
+              src="/detective/scene-consult-bright.jpg"
+              alt=""
+              loading="lazy"
+            />
+          </figure>
           <p className="det-block__eyebrow">まず、ひとりで抱えなくていい</p>
           <h2 id="trust-title" className="det-block__title">
             話しづらいことも、
@@ -392,7 +459,9 @@ export default function DetectivePage() {
             同性の相談員に話せます
           </h2>
           <p className="det-block__lead">
-            相談から報告まで同じ担当がつきます。契約を急かさず、いまの不安から一緒に整理します。
+            相談から報告まで同じ担当。
+            <br />
+            契約を急かさず、不安から整理します。
           </p>
           <ul className="det-reasons det-reasons--compact">
             {reasons.map((r) => (
@@ -416,9 +485,7 @@ export default function DetectivePage() {
             ))}
           </ul>
           <p className="det-tiny">
-            {tentOffice.partnerYearsNote}
-            <br />
-            {tentOffice.partnerCasesNote}
+            ※年数・件数は提携調査会社の創業・累計実績です。
           </p>
         </FadeIn>
       </section>
@@ -436,39 +503,55 @@ export default function DetectivePage() {
             決めなくて大丈夫です
           </h2>
           <p className="det-block__lead">
-            まずはLINEか電話で状況を整理し、必要な範囲だけお見積りします。
+            浮気・不倫調査の料金プランです。
+            <br />
+            相談だけでお見積りできます。
           </p>
 
-          <ol className="det-price-steps" aria-label="料金の進め方">
-            <li>
-              <span className="det-price-steps__n">1</span>
-              <div>
-                <strong>LINE・電話で相談（契約なし）</strong>
-                <p>相談だけでもOK。いまの状況を整理し、必要な範囲だけ見積もります。</p>
-              </div>
-            </li>
-            <li>
-              <span className="det-price-steps__n">2</span>
-              <div>
-                <strong>最初の一歩 {tentOffice.minPrice}〜</strong>
-                <p>大きな調査の前に、相手を確かめる入口プランです。</p>
-              </div>
-            </li>
-            <li>
-              <span className="det-price-steps__n">3</span>
-              <div>
-                <strong>
-                  本調査は定額 {tentOffice.flatPlanTotal}（{tentOffice.flatPlanTaxNote}）
-                </strong>
-                <p>追加なしで、最後の金額が最初に見えるおまかせプランです。</p>
-              </div>
-            </li>
-          </ol>
+          <div className="det-price__plans">
+            <article className="det-price__plan det-price__plan--featured">
+              <p className="det-price__plan-badge">はじめやすい</p>
+              <h3>最初の一歩プラン</h3>
+              <p className="det-price__plan-catch">大きな調査の前に、相手を確かめる</p>
+              <p className="det-price__plan-price">
+                <strong>{tentOffice.identityCheckPrice}</strong>
+                <span>{tentOffice.identityCheckNote}</span>
+              </p>
+              <p className="det-price__plan-body">
+                名前・住所・勤務先の確認。報告書つき。
+              </p>
+            </article>
+            <article className="det-price__plan">
+              <p className="det-price__plan-badge det-price__plan-badge--soft">
+                総額が見える
+              </p>
+              <h3>おまかせプラン</h3>
+              <p className="det-price__plan-catch">本調査の定額</p>
+              <p className="det-price__plan-price">
+                <strong>{tentOffice.flatPlanTotal}</strong>
+                <span>{tentOffice.flatPlanTaxNote}</span>
+              </p>
+              <p className="det-price__plan-body">
+                調査員2名・移動・撮影・報告書まで。
+              </p>
+            </article>
+            <article className="det-price__plan">
+              <h3>成功報酬プラン</h3>
+              <p className="det-price__plan-catch">最初の負担を抑えたい方に</p>
+              <p className="det-price__plan-price">
+                <strong>{tentOffice.successDeposit}</strong>
+                <span>{tentOffice.successTaxNote}</span>
+              </p>
+              <p className="det-price__plan-body">
+                証拠が取れた場合のみ追加あり。
+              </p>
+            </article>
+          </div>
 
           <ul className="det-assure" aria-label="料金の安心ポイント">
             <li>
               <strong>{PRIMARY_CLAIM}</strong>
-              <span>空振りの不安を減らせます（全プラン対象）</span>
+              <span>浮気・不倫調査の各プランが対象</span>
             </li>
             <li>
               <strong>追加料金なし</strong>
@@ -480,102 +563,40 @@ export default function DetectivePage() {
             </li>
           </ul>
           <p className="det-tiny det-assure__note">
-            ※関東以外の交通費・宿泊費は実費です。{PRIMARY_NOTE.replace(/^※/, "")}
+            ※関東以外の交通費・宿泊費は実費。{PRIMARY_NOTE.replace(/^※/, "")}
           </p>
-
-          <aside className="det-voice-teaser" aria-label="お客様の声（抜粋）">
-            <p className="det-voice-teaser__quote">
-              “{featuredVoice.title}”
-            </p>
-            <p className="det-voice-teaser__body">
-              探偵事務所と聞いて緊張していたが、相談して不安が消えた——そんな声があります。
-            </p>
-            <a className="det-promise__link" href="#det-voice">
-              お客様の声を読む
-            </a>
-          </aside>
 
           <CtaPair position="price" />
 
-          <h3 className="det-price__h3">プランの詳細</h3>
-          <div className="det-price__plans">
-            <article className="det-price__plan det-price__plan--featured">
-              <p className="det-price__plan-badge">はじめやすい</p>
-              <h3>最初の一歩プラン</h3>
-              <p className="det-price__plan-catch">大きな調査の前に、相手を確かめる</p>
-              <p className="det-price__plan-price">
-                <strong>{tentOffice.identityCheckPrice}</strong>
-                <span>{tentOffice.identityCheckNote}</span>
-              </p>
-              <p className="det-price__plan-body">
-                相手の名前・住所・勤務先を確かめたい方へ。報告書つき。
-              </p>
-            </article>
-            <article className="det-price__plan">
-              <p className="det-price__plan-badge det-price__plan-badge--soft">
-                総額が見える
-              </p>
-              <h3>おまかせプラン</h3>
-              <p className="det-price__plan-catch">本調査の定額。最後の金額が最初に分かる</p>
-              <p className="det-price__plan-price">
-                <strong>{tentOffice.flatPlanTotal}</strong>
-                <span>{tentOffice.flatPlanTaxNote}</span>
-              </p>
-              <p className="det-price__plan-body">
-                調査員2名・移動・撮影・報告書まで。白でも黒でも、答えとして受け取りたい方に。
-              </p>
-            </article>
-            <article className="det-price__plan">
-              <h3>成功報酬プラン</h3>
-              <p className="det-price__plan-catch">最初の負担を抑えたい方に</p>
-              <p className="det-price__plan-price">
-                <strong>{tentOffice.successDeposit}</strong>
-                <span>{tentOffice.successTaxNote}</span>
-              </p>
-              <p className="det-price__plan-body">
-                証拠が取れた場合のみ追加あり。最初の負担を抑えて進めたい方へ。
-              </p>
-            </article>
-          </div>
-
-          <div className="det-price-compare">
-            <h3 className="det-price-compare__title">
-              料金で、不安を残さないために
+          <div className="det-survey" id="det-survey">
+            <p className="det-survey__eyebrow">メイン以外のご相談</p>
+            <h3 className="det-survey__title">
+              浮気以外も、
+              <br />
+              ご相談いただけます
             </h3>
-            <ul className="det-price-cards">
-              {priceCompareRows.map((row) => (
-                <li key={row.item} className="det-price-cards__row">
-                  <p className="det-price-cards__item">{row.item}</p>
-                  <div className="det-price-cards__cols">
-                    <div className="det-price-cards__col">
-                      <span className="det-price-cards__label">
-                        時間料金制の一般的な例
-                      </span>
-                      <p>{row.general}</p>
-                    </div>
-                    <div className="det-price-cards__col det-price-cards__col--ours">
-                      <span className="det-price-cards__label">
-                        ミノガサン探偵事務所
-                      </span>
-                      <p>{row.ours}</p>
-                    </div>
+            <p className="det-survey__lead">
+              他の調査はLINEか電話で
+              <br />
+              お見積りします。
+            </p>
+            <ul className="det-survey__list det-survey__list--secondary">
+              {detectiveOtherServices.map((item) => (
+                <li key={item.id} className="det-survey__item det-survey__item--secondary">
+                  <img
+                    className="det-survey__mark"
+                    src={detectiveBrand.markBlack}
+                    alt=""
+                    width={18}
+                    height={18}
+                  />
+                  <div>
+                    <h4 className="det-survey__name">{item.name}</h4>
+                    <p className="det-survey__blurb">{item.blurb}</p>
                   </div>
                 </li>
               ))}
             </ul>
-            <p className="det-tiny det-price-cards__note">
-              ※「時間料金制の一般的な例」は、調査員の人数と時間で料金を計算する料金体系を説明したもので、特定の事務所を示すものではありません。関東以外の交通費・宿泊費は実費です。
-            </p>
-          </div>
-
-          <div className="det-price__box det-price__box--soft">
-            <h3>慰謝料の一般的な目安</h3>
-            <p>
-              証拠がそろったあとの話ですが、一般的には50万〜300万円とされることがあります。調査費用を、その後の判断材料への投資として考える方もいます。
-            </p>
-            <p className="det-price__box-note">
-              ※受け取りを約束するものではありません。
-            </p>
           </div>
         </FadeIn>
       </section>
@@ -633,11 +654,9 @@ export default function DetectivePage() {
         aria-labelledby="flow-title"
       >
         <FadeIn className="det-block__inner" delay={0.06}>
-          <p className="det-block__eyebrow">依頼する前に、全体が見える</p>
+          <p className="det-block__eyebrow">全体の流れ</p>
           <h2 id="flow-title" className="det-block__title">
-            相談から報告まで、
-            <br />
-            5つのステップ
+            相談から報告まで
           </h2>
           <ol className="det-flow-list">
             {flow.map((s) => (
@@ -686,7 +705,9 @@ export default function DetectivePage() {
             LINEか電話で聞かせてください
           </h2>
           <p className="det-final__lead">
-            匿名でかまいません。依頼するかどうかは、お話のあとで決められます。
+            匿名でかまいません。
+            <br />
+            依頼するかどうかは、お話のあとで決められます。
           </p>
           <CtaPair position="footer" />
         </FadeIn>
