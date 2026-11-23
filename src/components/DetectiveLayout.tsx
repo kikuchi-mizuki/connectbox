@@ -98,8 +98,8 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   }, [pathname]);
 
   return (
-    <div className="det">
-      <header className="det-header">
+    <div className="det det--sight">
+      <header className="det-header det-header--sight">
         <div className="det-header__inner">
           <a className="det-header__brand" href="#det-hero">
             <img
@@ -146,14 +146,14 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           data-cta-position="sticky"
         >
           <LineIcon />
-          LINEで相談する
+          LINEで概算見積り
         </a>
         <a
           className="det-sticky__tel"
           href={`tel:${DETECTIVE_TEL}`}
           data-cta-position="sticky"
         >
-          電話で相談する
+          電話で概算見積り
           <span>{DETECTIVE_TEL_DISPLAY}</span>
         </a>
       </div>
