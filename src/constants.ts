@@ -20,6 +20,18 @@ export const DETECTIVE_CLARITY_ID = "zbvmrpjlf9";
 /** 探偵事業の相談フォーム（同一LP内アンカー） */
 export const DETECTIVE_FORM_URL = "/detective#det-contact";
 
+/**
+ * Googleフォーム送信先（迷惑メール対策・速度のため FormSubmit から移行）。
+ * 回答通知は Googleフォーム側のメール通知設定で届く。
+ */
+export const DETECTIVE_GOOGLE_FORM_ACTION =
+  "https://docs.google.com/forms/d/e/1FAIpQLSfNZ9vd3mLl-asB10DHAk9S4dEhVJl__Oq88w_R4I6pSDFfUA/formResponse";
+export const DETECTIVE_GOOGLE_FORM_ENTRIES = {
+  name: "entry.2042912595",
+  contact: "entry.1249970994",
+  message: "entry.552276852",
+} as const;
+
 /** 探偵事務所の電話（表示用ハイフンなし） */
 export const DETECTIVE_TEL = "08088081739";
 export const DETECTIVE_TEL_DISPLAY = "080-8808-1739";

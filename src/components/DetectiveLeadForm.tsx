@@ -1,8 +1,12 @@
 import { useState, type FormEvent } from "react";
-import { DETECTIVE_EMAIL } from "../constants";
+import {
+  DETECTIVE_EMAIL,
+  DETECTIVE_GOOGLE_FORM_ACTION,
+  DETECTIVE_GOOGLE_FORM_ENTRIES,
+} from "../constants";
 import { trackGenerateLead } from "../lib/ga";
 
-type Status = "idle" | "submitting" | "success" | "error" | "activate";
+type Status = "idle" | "submitting" | "success" | "error";
 
 function looksLikeContact(value: string) {
   const v = value.trim();
@@ -10,12 +14,6 @@ function looksLikeContact(value: string) {
   if (v.includes("@")) return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   const digits = v.replace(/[^\d]/g, "");
   return digits.length >= 10 && digits.length <= 15;
-}
-
-function isFormSubmitSuccess(payload: unknown) {
-  if (!payload || typeof payload !== "object") return false;
-  const success = (payload as { success?: unknown }).success;
-  return success === true || success === "true";
 }
 
 export default function DetectiveLeadForm() {
@@ -29,7 +27,6 @@ export default function DetectiveLeadForm() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // FormSubmit公式 honeypot
     if (String(data.get("_honey") ?? "").trim()) {
       setStatus("success");
       return;
@@ -47,49 +44,22 @@ export default function DetectiveLeadForm() {
     setStatus("submitting");
     setErrorMessage("");
 
-    const replyEmail = contact.includes("@") ? contact : undefined;
-    const pageUrl =
-      typeof window !== "undefined" ? window.location.href : "";
+    const body = new FormData();
+    body.append(DETECTIVE_GOOGLE_FORM_ENTRIES.name, "（匿名）");
+    body.append(DETECTIVE_GOOGLE_FORM_ENTRIES.contact, contact);
+    body.append(
+      DETECTIVE_GOOGLE_FORM_ENTRIES.message,
+      message || "（未記入）",
+    );
 
     try {
-      const res = await fetch(
-        `https://formsubmit.co/ajax/${encodeURIComponent(DETECTIVE_EMAIL)}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            _subject: "【ミノガサン】無料相談（LPフォーム）",
-            _template: "table",
-            _captcha: "false",
-            _honey: "",
-            name: "探偵LP無料相談",
-            email: replyEmail || DETECTIVE_EMAIL,
-            種別: "探偵LP・無料相談フォーム",
-            連絡先: contact,
-            ご相談内容: message || "（未記入）",
-            ページ: pageUrl,
-            contact,
-            message: message || "(blank)",
-          }),
-        },
-      );
-
-      const payload = (await res.json().catch(() => null)) as {
-        success?: string | boolean;
-        message?: string;
-      } | null;
-
-      if (!res.ok || !isFormSubmitSuccess(payload)) {
-        const msg = payload?.message ?? "";
-        if (/activat/i.test(msg)) {
-          setStatus("activate");
-          return;
-        }
-        throw new Error(msg || `submit_failed_${res.status}`);
-      }
+      // Googleフォームは CORS でレスポンスを読めないため no-cors。
+      // 送信自体は届く（FormSubmitより速く、迷惑メールにも入りにくい）。
+      await fetch(DETECTIVE_GOOGLE_FORM_ACTION, {
+        method: "POST",
+        mode: "no-cors",
+        body,
+      });
 
       trackGenerateLead({
         lead_source: "detective_form",
@@ -101,21 +71,9 @@ export default function DetectiveLeadForm() {
     } catch {
       setStatus("error");
       setErrorMessage(
-        "送信に失敗しました。時間をおいて再度お試しいただくか、LINE・電話でご連絡ください。",
+        `送信に失敗しました。時間をおいて再度お試しいただくか、LINE・電話、または ${DETECTIVE_EMAIL} へご連絡ください。`,
       );
     }
-  }
-
-  if (status === "activate") {
-    return (
-      <div className="det-contact-form det-contact-form--done" role="status">
-        <p className="det-contact-form__done-title">確認メールを送信しました</p>
-        <p className="det-contact-form__done-body">
-          {DETECTIVE_EMAIL} 宛に FormSubmit
-          から「Activate Form」メールが届いています。迷惑メールも含めて確認し、リンクを開いてください。有効化後、同じ内容をもう一度送信してください。
-        </p>
-      </div>
-    );
   }
 
   if (status === "success") {
