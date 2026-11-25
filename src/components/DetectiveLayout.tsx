@@ -136,7 +136,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 
       <div
         className={`det-sticky${showSticky ? " is-visible" : ""}`}
-        aria-hidden={!showSticky}
+        {...(showSticky ? {} : { "aria-hidden": true as const })}
       >
         <a
           className="det-sticky__line"

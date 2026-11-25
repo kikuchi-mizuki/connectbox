@@ -3464,6 +3464,20 @@ a.det-price__plan--link:focus-visible {
   color: var(--det-ink-soft);
 }
 
+.det-contact-form__privacy {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--det-muted);
+  text-align: center;
+}
+
+.det-contact-form__privacy a {
+  color: var(--det-navy);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* Blocks on dark surface */
 .det-main--sight .det-block__eyebrow {
   color: var(--det-red);
