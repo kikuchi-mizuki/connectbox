@@ -17,8 +17,8 @@ export const DETECTIVE_LINE_URL = "https://lin.ee/qr4Ccoc";
 /** Microsoft Clarity（/detective のみ） */
 export const DETECTIVE_CLARITY_ID = "zbvmrpjlf9";
 
-/** 探偵事業の相談フォーム */
-export const DETECTIVE_FORM_URL = "https://forms.gle/LhsYL7s2JSHEeoHi6";
+/** 探偵事業の相談フォーム（同一LP内アンカー） */
+export const DETECTIVE_FORM_URL = "/detective#det-contact";
 
 /** 探偵事務所の電話（表示用ハイフンなし） */
 export const DETECTIVE_TEL = "08088081739";

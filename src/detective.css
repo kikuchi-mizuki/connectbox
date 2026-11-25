@@ -95,6 +95,13 @@
   line-height: 1.2;
 }
 
+.det a.det-btn--form,
+.det-btn--form {
+  background: #fff;
+  color: var(--det-navy);
+  border-color: rgba(26, 29, 36, 0.28);
+}
+
 .det a.det-sticky__line,
 .det a.det-sticky__tel {
   color: #fff;
@@ -466,10 +473,59 @@
   width: min(100%, 22rem);
   margin-bottom: 1.05rem;
   padding-top: 0.15rem;
+  justify-items: center;
+}
+
+.det-fv__stats {
+  list-style: none;
+  margin: 0;
+  padding: 0.7rem 0.35rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  border: 1px solid rgba(31, 36, 48, 0.12);
+  background: #fff;
+}
+
+.det-fv__stats li {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem 0.4rem;
+}
+
+.det-fv__stats li + li {
+  border-left: 1px solid rgba(31, 36, 48, 0.1);
+}
+
+.det-fv__stats strong {
+  font-family: var(--det-serif);
+  font-size: clamp(1.45rem, 6.2vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: var(--det-navy);
+}
+
+.det-fv__stats span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--det-red);
+}
+
+.det-fv__stats-note {
+  margin: 0;
+  max-width: 22em;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: var(--det-muted);
+  text-align: center;
 }
 
 .det-fv__support {
-  margin: 0;
+  margin: 0.15rem 0 0;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -573,7 +629,8 @@
 #det-trust,
 #det-price,
 #det-voice,
-#det-flow {
+#det-flow,
+#det-contact {
   scroll-margin-top: calc(var(--det-header-h) + env(safe-area-inset-top, 0px) + 0.75rem);
 }
 
@@ -3254,6 +3311,157 @@ a.det-price__plan--link:focus-visible {
 
 .det-final--sight .det-cta-pair__hint {
   color: rgba(255, 255, 255, 0.65);
+}
+
+.det-final--sight .det-btn--form {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--det-navy);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+/* —— Contact form（同一ページ・最小項目） —— */
+.det-contact-stage {
+  padding: 2.8rem 1.15rem 3.4rem;
+  background: #f7f8fa;
+  color: var(--det-ink);
+}
+
+.det-contact-stage__inner {
+  max-width: 26rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.det-contact-stage__eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--det-red);
+}
+
+.det-contact-stage__title {
+  margin: 0 0 0.45rem;
+  font-family: var(--det-serif);
+  font-size: clamp(1.2rem, 4.2vw, 1.45rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--det-navy);
+  line-height: 1.45;
+}
+
+.det-contact-stage__lead {
+  margin: 0 0 1.15rem;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--det-ink-soft);
+}
+
+.det-contact-form {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  text-align: left;
+  padding: 1.1rem 1rem 1.15rem;
+  background: #fff;
+  border: 1px solid rgba(31, 36, 48, 0.1);
+}
+
+.det-contact-form__field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.det-contact-form__field > span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--det-navy);
+}
+
+.det-contact-form__field em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--det-muted);
+}
+
+.det-contact-form__field abbr {
+  text-decoration: none;
+  color: var(--det-red);
+}
+
+.det-contact-form input,
+.det-contact-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(31, 36, 48, 0.16);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--det-ink);
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.det-contact-form textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.det-contact-form input:focus,
+.det-contact-form textarea:focus {
+  outline: 2px solid rgba(217, 70, 58, 0.35);
+  outline-offset: 1px;
+  border-color: rgba(217, 70, 58, 0.45);
+}
+
+.det-contact-form__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.det-contact-form__error {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--det-red);
+}
+
+.det-contact-form__submit {
+  width: 100%;
+  max-width: none;
+  margin-top: 0.15rem;
+}
+
+.det-contact-form__submit:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.det-contact-form--done {
+  text-align: center;
+  padding: 1.4rem 1rem;
+}
+
+.det-contact-form__done-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--det-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--det-navy);
+}
+
+.det-contact-form__done-body {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--det-ink-soft);
 }
 
 /* Blocks on dark surface */

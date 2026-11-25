@@ -146,14 +146,14 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           data-cta-position="sticky"
         >
           <LineIcon />
-          LINEで概算見積り
+          LINEで無料相談
         </a>
         <a
           className="det-sticky__tel"
           href={`tel:${DETECTIVE_TEL}`}
           data-cta-position="sticky"
         >
-          電話で概算見積り
+          電話で無料相談
           <span>{DETECTIVE_TEL_DISPLAY}</span>
         </a>
       </div>

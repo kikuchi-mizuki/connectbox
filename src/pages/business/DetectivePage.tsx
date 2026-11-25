@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import DetectiveLeadForm from "../../components/DetectiveLeadForm";
 import FadeIn from "../../components/FadeIn";
 import {
   DETECTIVE_LINE_URL,
@@ -308,8 +309,8 @@ function SightMark({
 function CtaPair({ position }: { position: "footer" | "price" }) {
   const hint =
     position === "price"
-      ? "プランを決めなくて大丈夫です。金額感だけ確認できます。"
-      : "送るだけ・話すだけでも大丈夫です。契約を急かしません。";
+      ? "状況を伺い、予算に合う進め方をご提案します。契約を急かしません。"
+      : "まずは検討だけでも大丈夫です。予算のご相談も個別に乗ります。";
 
   return (
     <div className="det-cta-pair">
@@ -321,15 +322,22 @@ function CtaPair({ position }: { position: "footer" | "price" }) {
         data-cta-position={position}
       >
         <LineIcon />
-        LINEで概算見積り
+        LINEで無料相談
       </a>
       <a
         className="det-btn det-btn--tel det-btn--lg"
         href={`tel:${DETECTIVE_TEL}`}
         data-cta-position={position}
       >
-        電話で概算見積り
+        電話で無料相談
         <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
+      </a>
+      <a
+        className="det-btn det-btn--form det-btn--lg"
+        href="#det-contact"
+        data-cta-position={`${position}-form`}
+      >
+        フォームで無料相談
       </a>
       <p className="det-cta-pair__hint">{hint}</p>
     </div>
@@ -405,14 +413,27 @@ export default function DetectivePage() {
           </div>
 
           <div className="det-fv__meta">
+            <ul className="det-fv__stats" aria-label="実績">
+              <li>
+                <strong>{tentOffice.partnerYears}</strong>
+                <span>{tentOffice.partnerYearsLabel}</span>
+              </li>
+              <li>
+                <strong>{tentOffice.partnerCases}</strong>
+                <span>{tentOffice.partnerCasesLabel}</span>
+              </li>
+            </ul>
+            <p className="det-fv__stats-note">
+              ※提携調査会社の創業年数・累計調査件数
+            </p>
             <p className="det-fv__support">
-              同性の担当が伺います。契約を急かしません。
+              同性の担当が状況を伺います。予算も個別にご相談ください。
             </p>
             <p className="det-fv__price-line">
-              おまかせ定額
+              入口
               <strong>
-                {tentOffice.flatPlanTotal}
-                <span>（{tentOffice.flatPlanTaxNote}）</span>
+                {tentOffice.minPrice}
+                <span>〜（税込）</span>
               </strong>
               <em>相談・見積り無料</em>
             </p>
@@ -428,28 +449,35 @@ export default function DetectivePage() {
                 data-cta-position="fv"
               >
                 <LineIcon />
-                LINEで概算見積り
+                LINEで無料相談
               </a>
               <a
                 className="det-btn det-btn--tel det-fv__cta"
                 href={`tel:${DETECTIVE_TEL}`}
                 data-cta-position="fv"
               >
-                電話で概算見積り
+                電話で無料相談
                 <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
+              </a>
+              <a
+                className="det-btn det-btn--form det-fv__cta"
+                href="#det-contact"
+                data-cta-position="fv-form"
+              >
+                フォームで無料相談
               </a>
             </div>
             <p className="det-fv__reassure">
-              プランを決めなくて大丈夫。
+              依頼を決めていなくて大丈夫です。
               <br className="det-br-narrow" />
-              送るだけでもOKです。
+              まずは金額感だけでも確認できます。
             </p>
           </div>
 
           <nav className="det-jump" aria-label="ページ内リンク">
             <a href="#det-trust">見逃さない理由</a>
             <a href="#det-price">料金の目安</a>
-            <a href="#det-voice">お客様の声</a>
+            <a href="#det-contact">無料相談</a>
           </nav>
         </div>
       </section>
@@ -494,7 +522,9 @@ export default function DetectivePage() {
         ))}
       </div>
       <p className="det-tiny det-trust__cred">
-        調査は提携調査会社が担当（創業約30年・累計1万件以上）。
+        調査は提携調査会社が担当（{tentOffice.partnerYearsLabel}
+        {tentOffice.partnerYears}・{tentOffice.partnerCasesLabel}
+        {tentOffice.partnerCases}）。
       </p>
 
       <section
@@ -513,9 +543,9 @@ export default function DetectivePage() {
             決めなくて大丈夫です
           </h2>
           <p className="det-block__lead">
-            プランを選ぶ必要はありません。
+            相談・お見積りは無料です。いきなり55万円を決める必要はありません。
             <br />
-            いまの状況に合う金額感を知るための目安です。
+            入口は{tentOffice.minPrice}〜。まずは金額感だけ確かめられます。
           </p>
 
           <div className="det-price__plans det-price__plans--ladder">
@@ -538,7 +568,7 @@ export default function DetectivePage() {
               <p className="det-price__plan-body">
                 名前・住所・勤務先の確認。報告書つき。
               </p>
-              <span className="det-price__plan-cta">LINEで概算見積り</span>
+              <span className="det-price__plan-cta">LINEで無料相談</span>
             </a>
             <div className="det-price__plans-rest">
               <a
@@ -562,7 +592,7 @@ export default function DetectivePage() {
                 <p className="det-price__plan-body">
                   調査員2名・移動・撮影・報告書まで。
                 </p>
-                <span className="det-price__plan-cta">LINEで概算見積り</span>
+                <span className="det-price__plan-cta">LINEで無料相談</span>
               </a>
               <a
                 className="det-price__plan det-price__plan--link det-price__plan--quiet"
@@ -582,7 +612,7 @@ export default function DetectivePage() {
                 <p className="det-price__plan-body">
                   証拠が取れた場合のみ追加あり。
                 </p>
-                <span className="det-price__plan-cta">LINEで概算見積り</span>
+                <span className="det-price__plan-cta">LINEで無料相談</span>
               </a>
             </div>
           </div>
@@ -767,16 +797,35 @@ export default function DetectivePage() {
           <SightMark className="det-final__sight" size={40} />
           <p className="det-final__eyebrow">ひとりで決めなくていい</p>
           <h2 id="final-title">
-            まずは、いまの気持ちを
+            まずは、いまの状況を
             <br />
-            LINEか電話で聞かせてください
+            聞かせてください
           </h2>
           <p className="det-final__lead">
-            匿名でかまいません。
+            匿名でかまいません。予算も個別にご相談できます。
             <br />
             依頼するかどうかは、お話のあとで決められます。
           </p>
           <CtaPair position="footer" />
+        </FadeIn>
+      </section>
+
+      <section
+        className="det-contact-stage"
+        id="det-contact"
+        aria-labelledby="contact-form-title"
+      >
+        <FadeIn className="det-contact-stage__inner">
+          <p className="det-contact-stage__eyebrow">無料相談</p>
+          <h2 id="contact-form-title" className="det-contact-stage__title">
+            フォームで相談・お見積り
+          </h2>
+          <p className="det-contact-stage__lead">
+            状況とご予算を伺い、進め方をご提案します。契約の強制はありません。
+            <br />
+            連絡先だけでも大丈夫です。内容を確認のうえ、ご連絡します。
+          </p>
+          <DetectiveLeadForm />
         </FadeIn>
       </section>
     </main>
