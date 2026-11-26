@@ -8,7 +8,12 @@ import {
 } from "../../components/BackOfficeIcons";
 import ConnectBoxLeadForm from "../../components/ConnectBoxLeadForm";
 import FadeIn from "../../components/FadeIn";
-import { SITE_URL } from "../../constants";
+import {
+  CONNECT_BOX_EMAIL,
+  CONNECT_BOX_TEL,
+  CONNECT_BOX_TEL_DISPLAY,
+  SITE_URL,
+} from "../../constants";
 import { usePageMeta } from "../../hooks/usePageMeta";
 
 const PAGE_PATH = "/connect-box/ads/back-office";
@@ -611,7 +616,7 @@ export default function BackOfficeAdsLp() {
             先に試してください
           </h2>
           <p>
-            入口はひとつです。会社名とメールを送っていただければ、無料トライアルのご案内をします。
+            まずはフォームから。会社名とメールを送っていただければ、無料トライアルのご案内をします。
           </p>
 
           <div className="bo-cta-forms">
@@ -630,6 +635,22 @@ export default function BackOfficeAdsLp() {
                   onClick={scrollToDiagnostic}
                 >
                   話す前に、無料簡易診断を見る →
+                </a>
+              </p>
+              <p className="bo-cta-soft">
+                フォーム以外はこちら：
+                <a
+                  href={`mailto:${CONNECT_BOX_EMAIL}`}
+                  data-cta-position="footer_email"
+                >
+                  メール（{CONNECT_BOX_EMAIL}）
+                </a>
+                <span aria-hidden="true"> ／ </span>
+                <a
+                  href={`tel:${CONNECT_BOX_TEL}`}
+                  data-cta-position="footer_tel"
+                >
+                  電話（{CONNECT_BOX_TEL_DISPLAY}）
                 </a>
               </p>
             </div>

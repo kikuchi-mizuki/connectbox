@@ -69,6 +69,8 @@ export const CONNECT_BOX_LINE_URL = "https://lin.ee/RBa333H";
 export const CONNECT_BOX_MEETING_URL =
   "https://timerex.net/s/t-tanaka_f957_ccee/2b993f18";
 export const CONNECT_BOX_EMAIL = "m-tanaka@t-cnct.com";
+export const CONNECT_BOX_TEL = "08088081739";
+export const CONNECT_BOX_TEL_DISPLAY = "080-8808-1739";
 
 /** サービス資料（リード獲得後にダウンロード） */
 export const CONNECT_BOX_MATERIAL_URL = "/connect-box/materials/connect-box.pdf";

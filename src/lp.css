@@ -657,6 +657,21 @@
   text-underline-offset: 0.18em;
 }
 
+.bo-cta-soft {
+  margin: 1rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-align: left;
+}
+
+.bo-cta-soft a {
+  color: var(--brand-deep);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .bo-trial-rules {
   list-style: none;
   margin: 1.5rem 0 0;
