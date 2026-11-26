@@ -9,6 +9,16 @@ function isGtagReady() {
   return typeof window !== "undefined" && typeof window.gtag === "function";
 }
 
+function isDetectivePath(pathname = window.location.pathname) {
+  return pathname === "/detective" || pathname.startsWith("/detective/");
+}
+
+function isConnectBoxPath(pathname = window.location.pathname) {
+  return (
+    pathname === "/connect-box" || pathname.startsWith("/connect-box/")
+  );
+}
+
 type ClickParams = {
   page_path: string;
   cta_position: string;
@@ -16,6 +26,17 @@ type ClickParams = {
   link_url: string;
   utm_term?: string;
 };
+
+type LeadParams = Record<string, string>;
+
+/** GA4 へイベント送信（常に測定IDを指定） */
+function sendGaEvent(name: string, params: Record<string, string | undefined>) {
+  if (!isGtagReady()) return;
+  window.gtag("event", name, {
+    ...params,
+    send_to: GA_MEASUREMENT_ID,
+  });
+}
 
 function readUtmTerm(explicit?: string) {
   if (explicit) return explicit;
@@ -66,15 +87,20 @@ export function trackPageView(pagePath: string, pageTitle: string) {
 export function trackLineClick(params: ClickParams) {
   if (!isGtagReady()) return;
   const p = withUtm(params);
-  window.gtag("event", "line_click", {
+  const payload = {
     page_path: p.page_path,
     page_location: window.location.href,
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
     utm_term: p.utm_term,
-    send_to: GA_MEASUREMENT_ID,
-  });
+  };
+  sendGaEvent("line_click", payload);
+  if (isDetectivePath()) {
+    sendGaEvent("detective_line_click", payload);
+  } else if (isConnectBoxPath()) {
+    sendGaEvent("cb_line_click", payload);
+  }
   sendAdsConversion(GOOGLE_ADS_CONV_LINE, {
     cta_position: p.cta_position,
     utm_term: p.utm_term,
@@ -85,43 +111,50 @@ export function trackLineClick(params: ClickParams) {
 export function trackScheduleClick(params: ClickParams) {
   if (!isGtagReady()) return;
   const p = withUtm(params);
-  window.gtag("event", "schedule_click", {
+  sendGaEvent("schedule_click", {
     page_path: p.page_path,
     page_location: window.location.href,
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
     utm_term: p.utm_term,
-    send_to: GA_MEASUREMENT_ID,
   });
 }
 
 export function trackEmailClick(params: ClickParams) {
   if (!isGtagReady()) return;
   const p = withUtm(params);
-  window.gtag("event", "email_click", {
+  const payload = {
     page_path: p.page_path,
     page_location: window.location.href,
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
     utm_term: p.utm_term,
-    send_to: GA_MEASUREMENT_ID,
-  });
+  };
+  sendGaEvent("email_click", payload);
+  if (isConnectBoxPath()) {
+    sendGaEvent("cb_email_click", payload);
+  }
 }
 
 export function trackTelClick(params: ClickParams) {
   if (!isGtagReady()) return;
   const p = withUtm(params);
-  window.gtag("event", "tel_click", {
+  const payload = {
     page_path: p.page_path,
     page_location: window.location.href,
     cta_position: p.cta_position,
     cta_text: p.cta_text,
     link_url: p.link_url,
     utm_term: p.utm_term,
-    send_to: GA_MEASUREMENT_ID,
-  });
+  };
+  sendGaEvent("tel_click", payload);
+  if (isDetectivePath()) {
+    sendGaEvent("detective_tel_click", payload);
+  } else if (isConnectBoxPath()) {
+    sendGaEvent("cb_tel_click", payload);
+  }
   sendAdsConversion(GOOGLE_ADS_CONV_TEL, {
     cta_position: p.cta_position,
     utm_term: p.utm_term,
@@ -133,26 +166,37 @@ export function trackTelClick(params: ClickParams) {
  * 問い合わせフォーム送信が正常完了したときのみ呼ぶ。
  * 送信ボタンのクリックだけでは発火させないこと。
  */
-export function trackGenerateLead(params?: Record<string, string>) {
-  if (!isGtagReady()) return;
-  window.gtag("event", "generate_lead", {
-    ...params,
-    send_to: GA_MEASUREMENT_ID,
-  });
+export function trackGenerateLead(params?: LeadParams) {
+  sendGaEvent("generate_lead", params ?? {});
 }
 
 /** 探偵LP（/detective）相談フォーム送信成功時。generate_lead と併せて送る。 */
-export function trackDetectiveFormSubmit(params?: {
-  lead_source?: string;
-  page_path?: string;
-  cta_position?: string;
-}) {
-  if (!isGtagReady()) return;
-  window.gtag("event", "detective_form_submit", {
-    lead_source: params?.lead_source ?? "detective_form",
-    page_path: params?.page_path ?? window.location.pathname,
-    cta_position: params?.cta_position ?? "form",
-    send_to: GA_MEASUREMENT_ID,
+export function trackDetectiveFormSubmit(params?: LeadParams) {
+  sendGaEvent("detective_form_submit", {
+    lead_source: "detective_form",
+    page_path: window.location.pathname,
+    cta_position: "form",
+    ...params,
+  });
+}
+
+/** Connect Box 資料ダウンロード送信成功時。generate_lead と併せて送る。 */
+export function trackCbMaterialDownload(params?: LeadParams) {
+  sendGaEvent("cb_material_download", {
+    lead_source: "connect_box_material",
+    page_path: `${window.location.pathname}${window.location.search}`,
+    cta_position: "download",
+    ...params,
+  });
+}
+
+/** Connect Box 無料トライアル／お問い合わせ送信成功時。generate_lead と併せて送る。 */
+export function trackCbInquirySubmit(params?: LeadParams) {
+  sendGaEvent("cb_inquiry_submit", {
+    lead_source: "connect_box_inquiry",
+    page_path: `${window.location.pathname}${window.location.search}`,
+    cta_position: "inquiry_form",
+    ...params,
   });
 }
 

@@ -4,7 +4,11 @@ import {
   CONNECT_BOX_MATERIAL_FILENAME,
   CONNECT_BOX_MATERIAL_URL,
 } from "../constants";
-import { trackGenerateLead } from "../lib/ga";
+import {
+  trackCbInquirySubmit,
+  trackCbMaterialDownload,
+  trackGenerateLead,
+} from "../lib/ga";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -101,15 +105,21 @@ export default function ConnectBoxLeadForm({
         throw new Error(`submit_failed_${res.status}`);
       }
 
-      trackGenerateLead({
+      const leadParams = {
         lead_source:
           leadSource ??
           (isMaterial ? "connect_box_material" : "connect_box_inquiry"),
         page_path: `${window.location.pathname}${window.location.search}`,
         cta_position:
           ctaPosition ?? (isMaterial ? "download" : "inquiry_form"),
-      });
-      if (isMaterial) triggerDownload();
+      };
+      trackGenerateLead(leadParams);
+      if (isMaterial) {
+        trackCbMaterialDownload(leadParams);
+        triggerDownload();
+      } else {
+        trackCbInquirySubmit(leadParams);
+      }
       setStatus("success");
       form.reset();
     } catch {
