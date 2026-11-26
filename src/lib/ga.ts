@@ -141,6 +141,21 @@ export function trackGenerateLead(params?: Record<string, string>) {
   });
 }
 
+/** 探偵LP（/detective）相談フォーム送信成功時。generate_lead と併せて送る。 */
+export function trackDetectiveFormSubmit(params?: {
+  lead_source?: string;
+  page_path?: string;
+  cta_position?: string;
+}) {
+  if (!isGtagReady()) return;
+  window.gtag("event", "detective_form_submit", {
+    lead_source: params?.lead_source ?? "detective_form",
+    page_path: params?.page_path ?? window.location.pathname,
+    cta_position: params?.cta_position ?? "form",
+    send_to: GA_MEASUREMENT_ID,
+  });
+}
+
 export function isLineHref(href: string | null | undefined): boolean {
   if (!href) return false;
   try {

@@ -4,7 +4,7 @@ import {
   DETECTIVE_GOOGLE_FORM_ACTION,
   DETECTIVE_GOOGLE_FORM_ENTRIES,
 } from "../constants";
-import { trackGenerateLead } from "../lib/ga";
+import { trackDetectiveFormSubmit, trackGenerateLead } from "../lib/ga";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -64,6 +64,11 @@ export default function DetectiveLeadForm() {
       trackGenerateLead({
         lead_source: "detective_form",
         page_path: `${window.location.pathname}${window.location.search}`,
+        cta_position: "form",
+      });
+      trackDetectiveFormSubmit({
+        lead_source: "detective_form",
+        page_path: window.location.pathname,
         cta_position: "form",
       });
       setStatus("success");
