@@ -18,7 +18,7 @@ import { usePageMeta } from "../../hooks/usePageMeta";
 
 const FV_VIDEO_SRC = "/detective/fv-opening.mp4";
 
-/** 初回表示をポスター優先にし、アイドル後に動画を読み込む */
+/** ポスターで先に見せ、アイドル後に動画を読み込む（広告着地の速度優先） */
 function DetHeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -37,10 +37,13 @@ function DetHeroVideo() {
     const slowNet =
       connection?.saveData ||
       connection?.effectiveType === "slow-2g" ||
-      connection?.effectiveType === "2g";
+      connection?.effectiveType === "2g" ||
+      connection?.effectiveType === "3g";
     if (reduceMotion || slowNet) return;
 
     let cancelled = false;
+    let idleId: number | undefined;
+    let deferId: number | undefined;
     const start = () => {
       if (cancelled || el.getAttribute("src")) return;
       el.src = FV_VIDEO_SRC;
@@ -48,11 +51,25 @@ function DetHeroVideo() {
       void el.play().catch(() => {});
     };
 
-    // FVの主役なので遅延せずすぐ再生
-    start();
+    const ric = window as Window & {
+      requestIdleCallback?: (
+        cb: IdleRequestCallback,
+        opts?: IdleRequestOptions,
+      ) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (typeof ric.requestIdleCallback === "function") {
+      idleId = ric.requestIdleCallback(() => start(), { timeout: 2500 });
+    } else {
+      deferId = window.setTimeout(start, 1800);
+    }
+    const fallbackId = window.setTimeout(start, 3200);
 
     return () => {
       cancelled = true;
+      if (idleId !== undefined) ric.cancelIdleCallback?.(idleId);
+      if (deferId !== undefined) window.clearTimeout(deferId);
+      window.clearTimeout(fallbackId);
     };
   }, []);
 
@@ -64,7 +81,7 @@ function DetHeroVideo() {
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="none"
       aria-hidden="true"
     />
   );
@@ -222,22 +239,33 @@ const flow = [
   },
 ];
 
-const faqs = [
+type FaqItem = {
+  q: string;
+  a: string;
+  /** 費用・結果系など、開いた直後に相談導線を出す */
+  withCta?: boolean;
+};
+
+const faqs: FaqItem[] = [
   {
     q: "相談だけでもいいですか？",
     a: "はい。ご相談とお見積りは、ご契約まで無料です。契約を急かすことはありません。",
+    withCta: true,
   },
   {
     q: "いくらかかりますか？",
     a: `まずはLINEか電話で、必要な範囲だけお見積りします。浮気調査の入口は${tentOffice.minPrice}〜（税込）、おまかせは${tentOffice.flatPlanTotal}（${tentOffice.flatPlanTaxNote}）。人探し・素行・ストーカーなどもご相談いただけます。`,
-  },
-  {
-    q: "浮気以外の調査もお願いできますか？",
-    a: "はい。メインは浮気・不倫調査ですが、ストーカー調査、盗聴・盗撮調査、婚前・素行調査、人探し・所在調査にも対応しています。料金はLINEか電話でお見積りします。",
+    withCta: true,
   },
   {
     q: "証拠が取れなかったら？",
     a: `${PRIMARY_CLAIM}。すべての調査が対象です。条件はご契約前に書面でご説明します。`,
+    withCta: true,
+  },
+  {
+    q: "慰謝料はどのくらいですか？",
+    a: "一般的には50万〜300万円とされることがありますが、ケースにより異なります。受け取りを約束するものではありません。調査費用の目安も、状況を伺ったうえでお伝えできます。",
+    withCta: true,
   },
   {
     q: "探偵と興信所は違いますか？",
@@ -252,6 +280,10 @@ const faqs = [
     a: "連絡の方法と時間帯はご希望に合わせます。ご相談内容は秘密として守ります。",
   },
   {
+    q: "浮気以外の調査もお願いできますか？",
+    a: "はい。メインは浮気・不倫調査ですが、ストーカー調査、盗聴・盗撮調査、婚前・素行調査、人探し・所在調査にも対応しています。料金はLINEか電話でお見積りします。",
+  },
+  {
     q: "途中でやめられますか？",
     a: tentOffice.cancelPolicy,
   },
@@ -262,10 +294,6 @@ const faqs = [
   {
     q: "同性の相談員に相談できますか？",
     a: "はい。ご希望に合わせて、同性の相談員が対応します。男性・女性どちらからもご相談いただけます。",
-  },
-  {
-    q: "慰謝料はどのくらいですか？",
-    a: "一般的には50万〜300万円とされることがありますが、ケースにより異なります。受け取りを約束するものではありません。",
   },
 ];
 
@@ -306,7 +334,11 @@ function SightMark({
   );
 }
 
-function CtaPair({ position }: { position: "footer" | "price" }) {
+function CtaPair({
+  position,
+}: {
+  position: "footer" | "price";
+}) {
   const hint =
     position === "price"
       ? "状況を伺い、予算に合う進め方をご提案します。契約を急かしません。"
@@ -332,15 +364,32 @@ function CtaPair({ position }: { position: "footer" | "price" }) {
         電話で無料相談
         <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
       </a>
-      <a
-        className="det-btn det-btn--form det-btn--lg"
-        href="#det-contact"
-        data-cta-position={`${position}-form`}
-      >
-        フォームで無料相談
-      </a>
+      <p className="det-cta-pair__form">
+        <a href="#det-contact" data-cta-position={`${position}-form`}>
+          フォームで相談する
+        </a>
+      </p>
       <p className="det-cta-pair__hint">{hint}</p>
     </div>
+  );
+}
+
+function FaqInlineCta() {
+  return (
+    <p className="det-faq__cta">
+      <a
+        href={DETECTIVE_LINE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-cta-position="faq-inline"
+      >
+        LINEで金額感だけ聞く
+      </a>
+      <span aria-hidden="true">／</span>
+      <a href="#det-contact" data-cta-position="faq-inline-form">
+        フォームで相談
+      </a>
+    </p>
   );
 }
 
@@ -369,7 +418,7 @@ export default function DetectivePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className="det-fv det-fv--sight" id="det-hero" aria-label="ファーストビュー">
+      <section className="det-fv det-fv--sight det-fv--compact" id="det-hero" aria-label="ファーストビュー">
         <div className="det-fv__media" aria-hidden="true">
           <img
             src="/detective/fv/hero.jpg"
@@ -408,27 +457,10 @@ export default function DetectivePage() {
                   </strong>
                 </span>
               </p>
-              <p className="det-fv__note">{PRIMARY_NOTE}</p>
             </div>
           </div>
 
           <div className="det-fv__meta">
-            <ul className="det-fv__stats" aria-label="実績">
-              <li>
-                <strong>{tentOffice.partnerYears}</strong>
-                <span>{tentOffice.partnerYearsLabel}</span>
-              </li>
-              <li>
-                <strong>{tentOffice.partnerCases}</strong>
-                <span>{tentOffice.partnerCasesLabel}</span>
-              </li>
-            </ul>
-            <p className="det-fv__stats-note">
-              ※提携調査会社の創業年数・累計調査件数
-            </p>
-            <p className="det-fv__support">
-              同性の担当が状況を伺います。予算も個別にご相談ください。
-            </p>
             <p className="det-fv__price-line">
               入口
               <strong>
@@ -459,25 +491,37 @@ export default function DetectivePage() {
                 電話で無料相談
                 <span className="det-btn__sub">{DETECTIVE_TEL_DISPLAY}</span>
               </a>
-              <a
-                className="det-btn det-btn--form det-fv__cta"
-                href="#det-contact"
-                data-cta-position="fv-form"
-              >
-                フォームで無料相談
-              </a>
             </div>
+            <p className="det-fv__form-link">
+              <a href="#det-contact" data-cta-position="fv-form">
+                フォームで相談する
+              </a>
+            </p>
             <p className="det-fv__reassure">
-              依頼を決めていなくて大丈夫です。
-              <br className="det-br-narrow" />
-              まずは金額感だけでも確認できます。
+              依頼前で大丈夫。まずは金額感だけでも確認できます。
+            </p>
+          </div>
+
+          <div className="det-fv__proof">
+            <ul className="det-fv__stats det-fv__stats--inline" aria-label="実績">
+              <li>
+                <strong>{tentOffice.partnerYears}</strong>
+                <span>{tentOffice.partnerYearsLabel}</span>
+              </li>
+              <li>
+                <strong>{tentOffice.partnerCases}</strong>
+                <span>{tentOffice.partnerCasesLabel}</span>
+              </li>
+            </ul>
+            <p className="det-fv__support">
+              同性の担当が伺います（提携調査会社実績）
             </p>
           </div>
 
           <nav className="det-jump" aria-label="ページ内リンク">
-            <a href="#det-trust">見逃さない理由</a>
-            <a href="#det-price">料金の目安</a>
-            <a href="#det-contact">無料相談</a>
+            <a href="#det-price">料金</a>
+            <a href="#det-faq">よくある質問</a>
+            <a href="#det-contact">相談フォーム</a>
           </nav>
         </div>
       </section>
@@ -638,10 +682,38 @@ export default function DetectivePage() {
           </p>
 
           <CtaPair position="price" />
+        </FadeIn>
+      </section>
 
-          <div className="det-survey det-survey--secondary" id="det-survey">
+      <section
+        className="det-block det-faq-stage det-faq-stage--sight"
+        id="det-faq"
+        aria-labelledby="faq-title"
+      >
+        <FadeIn className="det-block__inner">
+          <h2 id="faq-title" className="det-block__title">
+            よくあるご質問
+          </h2>
+          <p className="det-faq-stage__lead">
+            費用・バレないか・この先のことが気になる方へ。開いたまま、そのまま相談できます。
+          </p>
+          <div className="det-faq">
+            {faqs.map((f) => (
+              <details key={f.q}>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+                {f.withCta ? <FaqInlineCta /> : null}
+              </details>
+            ))}
+          </div>
+        </FadeIn>
+      </section>
+
+      <section className="det-block det-survey-stage" id="det-survey" aria-labelledby="survey-title">
+        <FadeIn className="det-block__inner">
+          <div className="det-survey det-survey--secondary">
             <p className="det-survey__eyebrow">メイン以外のご相談</p>
-            <h3 className="det-survey__title">
+            <h3 id="survey-title" className="det-survey__title">
               浮気以外も、
               <br />
               ご相談いただけます
@@ -767,22 +839,6 @@ export default function DetectivePage() {
           ))}
         </ol>
         <p className="det-tiny">ご相談・お見積りは、ご契約まで無料です。</p>
-      </section>
-
-      <section className="det-block det-faq-stage det-faq-stage--sight" aria-labelledby="faq-title">
-        <FadeIn className="det-block__inner">
-          <h2 id="faq-title" className="det-block__title">
-            よくあるご質問
-          </h2>
-          <div className="det-faq">
-            {faqs.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </FadeIn>
       </section>
 
       <section
