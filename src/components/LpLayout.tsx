@@ -9,6 +9,11 @@ export default function LpLayout() {
   const { pathname } = useLocation();
   const service = getService(slug);
   const [showStickyCta, setShowStickyCta] = useState(false);
+  const isAdsLp = pathname.startsWith("/connect-box/ads/");
+  const ctaLabel =
+    isAdsLp && slug === "back-office"
+      ? "2週間無料で試す"
+      : "相談方法を見る";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,7 +44,15 @@ export default function LpLayout() {
   }, [pathname]);
 
   return (
-    <div className={`lp lp--${slug ?? "default"}`}>
+    <div
+      className={[
+        "lp",
+        `lp--${slug ?? "default"}`,
+        isAdsLp ? "lp--ads" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <header className="lp-header">
         <div className="lp-header__inner">
           <Link className="lp-header__home" to="/">
@@ -50,15 +63,17 @@ export default function LpLayout() {
             </span>
           </Link>
           <div className="lp-header__actions">
-            <Link className="lp-header__back" to="/connect-box">
-              Connect Boxへ
-            </Link>
+            {!isAdsLp ? (
+              <Link className="lp-header__back" to="/connect-box">
+                Connect Boxへ
+              </Link>
+            ) : null}
             <a
               className="btn btn--primary btn--compact header-cta"
               href="#final-cta"
               data-cta-position="header"
             >
-              相談方法を見る
+              {ctaLabel}
             </a>
           </div>
         </div>
@@ -75,7 +90,7 @@ export default function LpLayout() {
           href="#final-cta"
           data-cta-position="sticky"
         >
-          相談方法を見る
+          {ctaLabel}
         </a>
       </div>
 

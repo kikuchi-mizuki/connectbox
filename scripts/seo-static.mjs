@@ -53,6 +53,21 @@ export const PUBLIC_SITE_PAGES = [
     ogImage: DEFAULT_OG_IMAGE,
   },
   {
+    path: "/connect-box/ads/back-office",
+    priority: 0.1,
+    changefreq: "monthly",
+    /** 広告流入専用。検索インデックス・サイトマップ対象外 */
+    noindex: true,
+    excludeFromSitemap: true,
+    title: "オンライン秘書・事務代行｜月8万円から・2週間無料｜Connect Box",
+    description:
+      "オンライン秘書・事務代行を比較中の方向け。アポ・返信・追客まで対応。人材業界10年が人選し、顔合わせ後に開始。まずは2週間無料、続くなら月8万円から。",
+    keywords:
+      "オンライン秘書,オンライン秘書 費用,事務代行,バックオフィス代行,無料トライアル,Connect Box",
+    siteName: "T-connect",
+    ogImage: DEFAULT_OG_IMAGE,
+  },
+  {
     path: "/connect-box/ryohi-one",
     priority: 0.8,
     changefreq: "monthly",

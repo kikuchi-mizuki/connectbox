@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ConnectBoxPage from "./pages/business/ConnectBoxPage";
 import DetectivePage from "./pages/business/DetectivePage";
+import AdsLpPage from "./pages/AdsLpPage";
 import LpPage from "./pages/LpPage";
 
 function LegacyConnectBoxServiceRedirect() {
@@ -35,6 +36,11 @@ export function AppRoutes() {
         ) : (
           <Route path="/detective" element={<Navigate to="/" replace />} />
         )}
+
+        {/* 広告専用（noindex）。通常の :slug より先に定義する */}
+        <Route path="/connect-box/ads/:slug" element={<LpLayout />}>
+          <Route index element={<AdsLpPage />} />
+        </Route>
 
         <Route path="/connect-box/:slug" element={<LpLayout />}>
           <Route index element={<LpPage />} />

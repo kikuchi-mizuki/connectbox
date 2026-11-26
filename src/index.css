@@ -2969,7 +2969,8 @@ button {
   color: #e09038;
 }
 
-.cb-lead-form__field input {
+.cb-lead-form__field input,
+.cb-lead-form__field textarea {
   width: 100%;
   padding: 0.75rem 0.85rem;
   border: 1px solid var(--line);
@@ -2980,7 +2981,20 @@ button {
   color: var(--ink);
 }
 
-.cb-lead-form__field input:focus {
+.cb-lead-form__field textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+  line-height: 1.55;
+}
+
+.cb-lead-form__field em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.cb-lead-form__field input:focus,
+.cb-lead-form__field textarea:focus {
   outline: 2px solid rgba(56, 72, 136, 0.35);
   outline-offset: 1px;
   border-color: #384888;
