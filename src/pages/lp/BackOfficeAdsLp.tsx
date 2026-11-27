@@ -252,15 +252,21 @@ export default function BackOfficeAdsLp() {
         aria-label="メインビジュアル"
       >
         <div className="bo-hero__bg" aria-hidden="true">
-          <span className="bo-hero__glow bo-hero__glow--a" />
-          <span className="bo-hero__glow bo-hero__glow--b" />
-          <span className="bo-hero__grid" />
+          <img
+            className="bo-hero__photo"
+            src="/connect-box/lp/desk-ops.jpg"
+            alt=""
+            width={1600}
+            height={900}
+            fetchPriority="high"
+          />
+          <span className="bo-hero__veil" />
         </div>
         <div className="bo-hero__content">
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 28 }}
+            initial={reduce ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="bo-hero__brand">Connect Box.</p>
             <p className="bo-hero__eyebrow">オンライン秘書・事務代行</p>
@@ -269,8 +275,11 @@ export default function BackOfficeAdsLp() {
               <br />
               <span className="bo-hero__price">月8万円から。</span>
             </h1>
+            <p className="bo-hero__hook">
+              商談が減るのは、営業力が落ちたからではない。
+            </p>
             <p className="bo-hero__lead">
-              アポ・返信・追客を任せられます。人材業界10年が人選し、顔合わせしてから開始。
+              アポ・返信・追客が止まると、売れる時間が消えます。人材業界10年が人選し、顔合わせしてから開始。
               <br />
               <strong>まずは2週間無料。</strong>
               合うかは、数字を見てから判断できます。
@@ -301,7 +310,35 @@ export default function BackOfficeAdsLp() {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="compare-title">
+      <section className="section bo-empathy" aria-labelledby="empathy-title">
+        <FadeIn className="section__inner bo-empathy__grid">
+          <figure className="bo-empathy__visual">
+            <img
+              src="/connect-box/lp/bo-pain-desk.jpg"
+              alt="電話と予定に追われる経営者の机"
+              width={1600}
+              height={900}
+              loading="eager"
+            />
+          </figure>
+          <div>
+            <p className="section__label">Reality</p>
+            <h2 className="section__title" id="empathy-title">
+              採用するほどではない。
+              <br />
+              でも、自分がやるしかない。
+            </h2>
+            <p className="section__lead">
+              問い合わせの一次返信、日程調整、前日リマインド、名刺の追客。どれも小さく見える。でも止まると、商談の入口から消えていきます。
+            </p>
+            <p className="bo-empathy__quote">
+              「安い秘書代行」ではなく、売上の手前を止めない人手が必要です。
+            </p>
+          </div>
+        </FadeIn>
+      </section>
+
+      <section className="section section--muted" aria-labelledby="compare-title">
         <FadeIn className="section__inner">
           <p className="section__label">Difference</p>
           <h2 className="section__title" id="compare-title">
@@ -325,7 +362,7 @@ export default function BackOfficeAdsLp() {
         </FadeIn>
       </section>
 
-      <section className="section section--muted" aria-labelledby="issue-title">
+      <section className="section" aria-labelledby="issue-title">
         <FadeIn className="section__inner">
           <p className="section__label">Issue</p>
           <h2 className="section__title" id="issue-title">
@@ -346,18 +383,6 @@ export default function BackOfficeAdsLp() {
               </li>
             ))}
           </ul>
-          <figure className="bo-photo">
-            <img
-              src="/connect-box/lp/desk-ops.jpg"
-              alt="日程表と電話が並ぶ営業事務のデスク"
-              width={1600}
-              height={900}
-              loading="lazy"
-            />
-            <figcaption>
-              日程調整・返信・リマインドが回る机上が、売上の手前です。
-            </figcaption>
-          </figure>
         </FadeIn>
       </section>
 
@@ -366,13 +391,26 @@ export default function BackOfficeAdsLp() {
         aria-labelledby="mechanism-title"
       >
         <FadeIn className="section__inner">
-          <p className="section__label">Why it pays</p>
-          <h2 className="section__title" id="mechanism-title">
-            なぜ、売上が動くのか
-          </h2>
-          <p className="section__lead">
-            商談の中身には触れません。判断は社内に残したまま、数と率だけを押し上げます。
-          </p>
+          <div className="bo-story-split">
+            <div>
+              <p className="section__label">Why it pays</p>
+              <h2 className="section__title" id="mechanism-title">
+                なぜ、売上が動くのか
+              </h2>
+              <p className="section__lead">
+                商談の中身には触れません。判断は社内に残したまま、数と率だけを押し上げます。
+              </p>
+            </div>
+            <figure className="bo-story-split__visual">
+              <img
+                src="/connect-box/lp/bo-sales-flow.jpg"
+                alt="アポと追客が整い、商談に集中できるイメージ"
+                width={1600}
+                height={900}
+                loading="lazy"
+              />
+            </figure>
+          </div>
           <div className="bo-formula" aria-label="受注は商談の数かける決まる率">
             <div className="bo-formula__box">
               <IconTrend className="bo-formula__icon" />
@@ -543,13 +581,26 @@ export default function BackOfficeAdsLp() {
         aria-labelledby="trust-title"
       >
         <FadeIn className="section__inner">
-          <p className="section__label">People</p>
-          <h2 className="section__title" id="trust-title">
-            誰がやり、どう守るか
-          </h2>
-          <p className="section__lead">
-            月8万円は安さ勝負の金額ではありません。無料トライアルも「誰が来るのか」が分からないと不安です。人と体制を先に公開します。
-          </p>
+          <div className="bo-story-split bo-story-split--reverse">
+            <div>
+              <p className="section__label">People</p>
+              <h2 className="section__title" id="trust-title">
+                誰がやり、どう守るか
+              </h2>
+              <p className="section__lead">
+                月8万円は安さ勝負の金額ではありません。無料トライアルも「誰が来るのか」が分からないと不安です。人と体制を先に公開します。
+              </p>
+            </div>
+            <figure className="bo-story-split__visual">
+              <img
+                src="/connect-box/lp/bo-meet-face.jpg"
+                alt="開始前に担当者と顔合わせするイメージ"
+                width={1600}
+                height={900}
+                loading="lazy"
+              />
+            </figure>
+          </div>
           <ul className="bo-trust-list">
             {trustPoints.map((item) => (
               <li key={item.title}>
