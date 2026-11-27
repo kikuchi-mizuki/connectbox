@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes, useParams } from "react-router-dom";
+import ConnectBoxClarity from "./components/ConnectBoxClarity";
 import DetectiveLayout from "./components/DetectiveLayout";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import HpLayout from "./components/HpLayout";
@@ -22,6 +23,7 @@ export function AppRoutes() {
   return (
     <>
       <GoogleAnalytics />
+      <ConnectBoxClarity />
       <Routes>
         <Route element={<HpLayout />}>
           <Route path="/" element={<HomePage />} />

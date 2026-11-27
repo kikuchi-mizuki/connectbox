@@ -83,7 +83,7 @@ export function applyRouteMeta(html, shell, canonical) {
 /** Microsoft Clarity（ページ専用。既存があれば差し替え） */
 export function injectClarity(html, projectId) {
   const id = escapeAttr(projectId);
-  const tag = `<script id="ms-clarity" type="text/javascript">
+  const tag = `<script id="ms-clarity" type="text/javascript" data-clarity-project="${id}">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;

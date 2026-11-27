@@ -17,6 +17,9 @@ export const DETECTIVE_LINE_URL = "https://lin.ee/qr4Ccoc";
 /** Microsoft Clarity（/detective のみ） */
 export const DETECTIVE_CLARITY_ID = "zbvmrpjlf9";
 
+/** Microsoft Clarity（/connect-box 以下。探偵LPとは別プロジェクト） */
+export const CONNECT_BOX_CLARITY_ID = "zjztvsdiy0";
+
 /** 探偵事業の相談フォーム（同一LP内アンカー） */
 export const DETECTIVE_FORM_URL = "/detective#det-contact";
 

@@ -39,6 +39,7 @@ export const PUBLIC_SITE_PAGES = [
       "Connect Box,コネクトボックス,BPO,バックオフィス代行,旅費One,外部経営チーム,業務委託,T-connect",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
+    clarityProjectId: "zjztvsdiy0",
   },
   {
     path: "/connect-box/back-office",
@@ -51,6 +52,7 @@ export const PUBLIC_SITE_PAGES = [
       "事務代行,バックオフィス代行,バックオフィス業務代行,経理代行,総務代行,営業事務,Connect Box,コネクトボックス,BPO",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
+    clarityProjectId: "zjztvsdiy0",
   },
   {
     path: "/connect-box/ads/back-office",
@@ -66,6 +68,7 @@ export const PUBLIC_SITE_PAGES = [
       "オンライン秘書,オンライン秘書 費用,事務代行,バックオフィス代行,無料トライアル,Connect Box",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
+    clarityProjectId: "zjztvsdiy0",
   },
   {
     path: "/connect-box/ryohi-one",
@@ -78,6 +81,7 @@ export const PUBLIC_SITE_PAGES = [
       "旅費One,旅費管理,出張管理,日当,出張報告書,GPS,Connect Box,コネクトボックス,リリース前",
     siteName: "T-connect",
     ogImage: DEFAULT_OG_IMAGE,
+    clarityProjectId: "zjztvsdiy0",
   },
   {
     path: "/detective",

@@ -63,10 +63,13 @@ export default function DetectiveLayout() {
 
   useEffect(() => {
     const id = "ms-clarity";
-    if (document.getElementById(id)) return;
+    const existing = document.getElementById(id);
+    if (existing?.dataset.clarityProject === DETECTIVE_CLARITY_ID) return;
+    existing?.remove();
     const script = document.createElement("script");
     script.id = id;
     script.type = "text/javascript";
+    script.dataset.clarityProject = DETECTIVE_CLARITY_ID;
     script.text = `(function(c,l,a,r,i,t,y){
 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
